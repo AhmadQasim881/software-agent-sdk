@@ -47,3 +47,4 @@ namespaces = true
 "*" = ["py.typed", "**/*.j2"]
 "openhands.tools.preset.subagents" = ["*.md"]
 "openhands.tools.browser_use" = ["js/*.js"]
+"openhands.tools.research_harness" = ["skills/*/SKILL.md"]

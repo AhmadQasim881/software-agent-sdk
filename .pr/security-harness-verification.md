@@ -26,7 +26,7 @@ from live paid-model verification. No credentials are required for the former.
 | 2 | Bounded inventory, external records, local readiness | Passed |
 | 3 | Context selection, inventory comparison, queryable snapshots | Passed |
 | 4 | Shared CLI, MCP, and OpenHands tool interfaces | Passed |
-| 5 | Skills, lifecycle hooks, compaction checkpoint | Pending |
+| 5 | Skills, lifecycle hooks, compaction checkpoint | Passed |
 | 6 | End-to-end workflow, installation, packaging, documentation | Pending |
 
 ### Stage 0
@@ -110,3 +110,29 @@ from live paid-model verification. No credentials are required for the former.
   to signed 64-bit values. New regressions verify finite one-record pagination.
 - No dependency or lock changes. Existing warnings: missing tmux fallback and a
   Pydantic warning about an upstream TypedDict ReadOnly qualifier.
+
+### Stage 5
+
+- Focused gate: **43 passed** across native hooks (19), session/condenser (20),
+  and isolated CLI/MCP launch paths (4). All twelve changed/new files passed
+  pre-commit. Native subprocess/session cases use scripted LLM transport.
+- All six SDK lifecycle events are exercised through real conversations. Policy
+  denial prevents execution; SessionStart adds actual context; SessionEnd fires
+  on close. Failed/damaged input returns native deny output. Ledger reads remain
+  finite. Advisory SDK lifecycle semantics are explicitly documented.
+- Generated hook commands use `python -I`; a harmless workspace module-shadowing
+  regression proves inspected source cannot replace the installed hook module.
+- Condenser tests verify synchronous/asynchronous checkpoint-before-attempt,
+  no-op thresholds, failure preservation, hard reset, view immutability, and
+  serialization. `hook.pre_compact` is an adapter attempt, not a native SDK hook
+  or a claim that condensation succeeded.
+- The scoped session factory checks current ambient plugin configuration and
+  rejects additional plugins before construction; it does not change user
+  settings or claim protection from concurrent local changes.
+- A fresh agent used the bundled skill and CLI to compare saved inventories,
+  detect an equal-count content replacement, cite comparison evidence, and save
+  thread version 2. Root verified all three observation runs completed, the
+  assessment cited the comparison, and the source hash was unchanged. That run
+  exposed an ambiguous CLI schema instruction, which was clarified.
+- Skill-format validation passed. Scripted positive/unrelated turns verify
+  progressive disclosure mechanics, not semantic selection by a live provider.

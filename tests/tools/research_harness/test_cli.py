@@ -19,7 +19,7 @@ def _run(directory: Path, *arguments: str) -> subprocess.CompletedProcess[str]:
     ):
         environment.pop(name, None)
     return subprocess.run(
-        [sys.executable, "-m", "openhands.research", *arguments],
+        [sys.executable, "-I", "-m", "openhands.research", *arguments],
         cwd=directory,
         env=environment,
         capture_output=True,

@@ -35,7 +35,10 @@ def _parser() -> argparse.ArgumentParser:
         )
     schema = subcommands.add_parser("schema", help="Inspect operation argument schemas")
     schema.add_argument("name", nargs="?")
+    subcommands.add_parser("skill-path", help="Locate the packaged research workflow")
     subcommands.add_parser("mcp", help="Serve the same operations over MCP stdio")
+    hook = subcommands.add_parser("hook", help="Handle one native SDK hook event")
+    hook.add_argument("--thread", required=True)
     recover = subcommands.add_parser(
         "recover", help="Mark a stopped worker's abandoned run interrupted"
     )
@@ -57,11 +60,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = _parser()
     args = parser.parse_args(argv)
     try:
-        if args.operation == "schema":
+        if args.operation == "skill-path":
+            from .workflow import workflow_path
+
+            result: dict[str, JsonValue] = {"ok": True, "path": str(workflow_path())}
+        elif args.operation == "schema":
             schemas = command_schemas()
             if args.name is not None and args.name not in schemas:
                 raise HarnessError("Unknown operation; use schema to list operations")
-            result: dict[str, JsonValue] = {
+            result = {
                 "ok": True,
                 "schemas": schemas
                 if args.name is None
@@ -70,6 +77,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         else:
             if args.state is None:
                 parser.error("--state is required for this operation")
+            if args.operation == "hook":
+                from .hooks import run_hook
+
+                return run_hook(
+                    workspace=args.workspace,
+                    state_dir=args.state,
+                    thread_id=args.thread,
+                )
             service = HarnessService(
                 workspace=args.workspace,
                 state_dir=args.state,

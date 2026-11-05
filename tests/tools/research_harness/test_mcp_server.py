@@ -30,6 +30,7 @@ async def server_session(workspace: Path, state: Path) -> AsyncIterator[ClientSe
     parameters = StdioServerParameters(
         command=sys.executable,
         args=[
+            "-I",
             "-m",
             "openhands.research",
             "--workspace",
