@@ -25,7 +25,7 @@ from live paid-model verification. No credentials are required for the former.
 | 1 | Durable threads, evidence, artifacts, run and event records | Passed |
 | 2 | Bounded inventory, external records, local readiness | Passed |
 | 3 | Context selection, inventory comparison, queryable snapshots | Passed |
-| 4 | Shared CLI, MCP, and OpenHands tool interfaces | Pending |
+| 4 | Shared CLI, MCP, and OpenHands tool interfaces | Passed |
 | 5 | Skills, lifecycle hooks, compaction checkpoint | Pending |
 | 6 | End-to-end workflow, installation, packaging, documentation | Pending |
 
@@ -89,3 +89,24 @@ from live paid-model verification. No credentials are required for the former.
 - Artifact views reassemble exact bytes across Unicode boundaries. JSONL exports
   are bounded, resumable views of SQLite events, with no independent dual-written
   ledger or cursor advancement past omitted records.
+
+### Stage 4
+
+- Full harness suite plus existing tool initialization/preset tests: **210 passed**
+  in 77.20s. File-level pre-commit passed for all changed interface files.
+- CLI tests use real processes outside the checkout, with model credentials
+  removed. They verify restart persistence, JSON-only stdout, success/failure exit
+  codes, invalid cursors, and corrupted SQLite handling.
+- MCP tests use real stdio processes and real cancellation messages. Structured
+  failure results retain evidence references and `isError=true`. The MCP library
+  acknowledges cancellation before handler cleanup; the owned worker is still
+  drained before the handler exits.
+- SDK tests use real `Conversation.run()` and `arun()` with only model transport
+  scripted. They verify action parsing, observation events, evidence/session IDs,
+  sync/async cancellation, actual fixture cleanup, and SDK secret masking. This
+  is functional integration verification, not live-model selection/evaluation.
+- Independent review found a ledger pagination feedback loop and SQLite integer
+  overflow. Ledger/artifact reads now avoid self-audit events; cursors are bounded
+  to signed 64-bit values. New regressions verify finite one-record pagination.
+- No dependency or lock changes. Existing warnings: missing tmux fallback and a
+  Pydantic warning about an upstream TypedDict ReadOnly qualifier.

@@ -68,8 +68,8 @@ def _record_json(record: Record) -> str:
 
 
 def _page(limit: int, offset: int = 0) -> None:
-    if not 1 <= limit <= 200 or offset < 0:
-        raise HarnessError("Pages require limit 1..200 and a nonnegative offset")
+    if not 1 <= limit <= 200 or not 0 <= offset <= 9_223_372_036_854_775_807:
+        raise HarnessError("Pages require limit 1..200 and a signed-64-bit offset")
 
 
 def _load[T: Record](
@@ -534,8 +534,8 @@ class HarnessStore:
         thread_id: str | None = None,
         run_id: str | None = None,
     ) -> list[EventRecord]:
-        if after_seq < 0:
-            raise HarnessError("Event cursor must be nonnegative")
+        if not 0 <= after_seq <= 9_223_372_036_854_775_807:
+            raise HarnessError("Event cursor must be a nonnegative signed-64-bit value")
         return self._events(after_seq, limit, thread_id, run_id, tail=False)
 
     def tail_events(

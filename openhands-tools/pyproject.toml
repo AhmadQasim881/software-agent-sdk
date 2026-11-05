@@ -26,6 +26,9 @@ Homepage = "https://github.com/OpenHands/software-agent-sdk"
 Documentation = "https://docs.openhands.dev/sdk"
 "Bug Tracker" = "https://github.com/OpenHands/software-agent-sdk/issues"
 
+[project.scripts]
+openhands-research = "openhands.research:main"
+
 [build-system]
 requires = ["setuptools>=83.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -37,7 +40,7 @@ include-package-data = true
 "" = "."
 
 [tool.setuptools.packages.find]
-include = ["openhands.tools*"]
+include = ["openhands.tools*", "openhands.research*"]
 namespaces = true
 
 [tool.setuptools.package-data]
