@@ -42,6 +42,13 @@ You can even use the SDK to build new developer experiences: it’s the engine b
 
 Get started with some [examples](https://docs.openhands.dev/sdk/guides/hello-world) or [check out the docs](https://docs.openhands.dev/sdk) to learn more.
 
+## Research harness in this fork
+
+The `feature/security_harness` branch adds persistent research records, bounded
+observations, and shared CLI, MCP, and SDK interfaces. See the
+[implementation guide](New_security_Harness_Design/README_IMPLEMENTATION.md) for
+the PDF mapping, setup, and a runnable example that requires no model API key.
+
 ## Quick Start
 
 Here's what building with the SDK looks like:

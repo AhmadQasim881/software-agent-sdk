@@ -27,7 +27,7 @@ from live paid-model verification. No credentials are required for the former.
 | 3 | Context selection, inventory comparison, queryable snapshots | Passed |
 | 4 | Shared CLI, MCP, and OpenHands tool interfaces | Passed |
 | 5 | Skills, lifecycle hooks, compaction checkpoint | Passed |
-| 6 | End-to-end workflow, installation, packaging, documentation | Pending |
+| 6 | End-to-end workflow, installation, packaging, documentation | Passed |
 
 ### Stage 0
 
@@ -136,3 +136,42 @@ from live paid-model verification. No credentials are required for the former.
   exposed an ambiguous CLI schema instruction, which was clarified.
 - Skill-format validation passed. Scripted positive/unrelated turns verify
   progressive disclosure mechanics, not semantic selection by a live provider.
+
+### Stage 6
+
+- Final regression command:
+  `OPENHANDS_SUPPRESS_BANNER=1 LITELLM_LOCAL_MODEL_COST_MAP=True uv run --frozen --no-sync pytest tests/tools/research_harness tests/tools/test_init.py tests/tools/test_preset_default.py -q`.
+  **249 passed** in 316.19s: 244 harness cases and 5 existing tool initialization
+  and preset cases. The two warnings are the existing Pydantic ReadOnly and
+  missing-tmux fallback warnings described above.
+- Added `examples/01_standalone_sdk/60_research_harness/main.py` and registered
+  its directory in the example discovery gate. The selected command
+  `pytest tests/examples/test_examples.py --run-examples -k 'research_harness or directory_example_is_discovered'`
+  passed **2 tests**, with 70 deselected, in 5.49s. No unrelated model examples
+  were run. Actual example exit code was 0 and `EXAMPLE_COST` was 0.0.
+- The example verifies equal-count import replacement, exact snapshot query,
+  owned fixture readiness and cleanup, context bytes/manifest, assessment evidence
+  references, thread version/history, five persisted evidence records, state
+  reopening, and removal of its owned temporary files.
+- Built and installed the tools wheel in a fresh environment outside the checkout.
+  All 182 installed distributions matched committed lock versions; all 21 loaded
+  research/bootstrap modules came from wheel `site-packages`; all 24 packaged
+  research/bootstrap files matched source. Actual CLI processes, packaged skill,
+  generated native hook, and two real MCP server processes passed. Full commands,
+  wheel digest, and evidence identifiers are in
+  [research-harness-wheel-verification.md](research-harness-wheel-verification.md).
+- All 50 changed/new files passed final pre-commit, including formatting, lint,
+  pyright, dependency import rules, and tool registration checks. `uv.lock` is
+  unchanged from the base. `git diff --check` passed.
+- Added the implementation guide with PDF responsibility mapping, model-free
+  setup, persistent CLI use, MCP registration, SDK integration, and explicit
+  supported scope. Six local links resolved; nine shell blocks passed `bash -n`,
+  the Python block parsed, and the JSON block decoded.
+- Independent final code and documentation review found no material correctness
+  or scope blocker. Native OpenHands lifecycle wiring is explicitly distinguished
+  from the shared operations available to MCP hosts.
+- Verification used no paid model requests. Live GitHub success, desktop-client
+  installation, remote Agent Server/Docker/PyInstaller deployment, and live-model
+  semantic skill selection remain unverified; the implementation guide states
+  these limits. The only live external metadata attempt failed at DNS as recorded
+  in Stage 2.

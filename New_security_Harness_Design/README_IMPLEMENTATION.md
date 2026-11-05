@@ -1,0 +1,356 @@
+# Research harness implementation
+
+This branch adds a persistent, bounded research harness to `openhands-tools`.
+The CLI, MCP stdio server, and OpenHands SDK tool share validated operations and
+state. The core and runnable demonstration make no model requests, so you can
+test them without an API key.
+
+The source is [Harness Engineering for Vulnerability Research](2026-unprompted-harness-engineering.pdf),
+with a [complete Markdown transcription](Vulnerability_Harness_Engineering/Vulnerability_Harness_Engineering.md).
+The workshop describes responsibilities and examples rather than publishing one
+fixed reference implementation. This package implements those responsibilities
+using Python import inventories, public repository metadata, and an owned local
+fixture. The exploitation case studies are not executable package features.
+
+PDF SHA-256: `81843e4a0359c602a201ba7bfaa222a6ad6a63ec729059a5ce7823a9b8473fe9`.
+
+## 1. First run: no model or API key
+
+For your existing checkout:
+
+```bash
+export SDK_REPO="$HOME/Harness_Security_Research/software-agent-sdk"
+cd "$SDK_REPO"
+git switch feature/security_harness
+git pull --ff-only origin feature/security_harness
+uv sync --frozen --dev
+
+"$SDK_REPO/.venv/bin/python" -I \
+  "$SDK_REPO/examples/01_standalone_sdk/60_research_harness/main.py"
+```
+
+Adjust `SDK_REPO` if necessary. The normal development setup, `make build`, also
+installs the workspace and pre-commit hooks.
+
+The example records two inventories with equal import counts but different
+declarations, compares content, queries the saved snapshot, validates the local
+fixture, builds bounded context, updates an assessment with evidence references,
+and reopens persisted state. Assertions check actual values. Successful output
+includes `"ok": true`, added/removed imports, fixture cleanup, resumed thread
+version `2`, and `EXAMPLE_COST: 0.0`.
+
+The example removes temporary source, state, and artifacts after completion.
+Its only network activity is its own loopback fixture. Use the persistent setup
+below to keep research records.
+
+## 2. Architecture and PDF mapping
+
+```mermaid
+flowchart TD
+    CLI["Local CLI"] --> Service["Validated harness service"]
+    MCP["MCP stdio"] --> Service
+    SDK["OpenHands conversation"] --> Service
+    SDK --> Hooks["Native hooks and compaction checkpoint"]
+    Service --> State["SQLite records and hashed artifacts"]
+    Service --> Observe["Bounded observations"]
+    Hooks --> State
+```
+
+The feature is additive. Existing SDK tools and default agent behavior are
+unchanged. The scoped conversation helper selects the research tool, workflow
+skill, native hooks, and checkpointing condenser.
+
+| PDF responsibility | Implementation | Modules |
+| --- | --- | --- |
+| Validation, pp. 9–13 | Owned loopback fixture; verify HTTP response, instance identity, normal item response, socket closure, and cleanup. | `fixture.py`, `core.py` |
+| Integrations, pp. 14–18 | Optional bounded public GitHub metadata, source/time, raw response digest, actual outcome. | `network.py`, `_http_worker.py` |
+| Interfaces, pp. 19–25 | Shared strict schemas and service dispatch for CLI, MCP, and SDK. | `commands.py`, `service.py`, `cli.py`, `mcp_server.py`, `definition.py` |
+| Memory, pp. 26–31 | Versioned questions, conditions, assessments, next actions, evidence, outcomes, history, closure and reopening conditions. | `models.py`, `store.py`, `artifacts.py` |
+| Context, pp. 32–36 | Actual text under an exact UTF-8 budget, saved selection manifest, explicit omissions. | `context.py` |
+| Telemetry, pp. 37–40 | Transactional SQLite ledger, correlated interface events, bounded retrieval, derived resumable JSONL. | `store.py`, `service.py`, `views.py` |
+| Skills, pp. 41–44 | Packaged `research-review` workflow using native SDK progressive disclosure. | `workflow.py`, `skills/research-review/SKILL.md` |
+| Deterministic tools, pp. 45–49 | Static Python import parsing, file hashes, coverage/exclusions, partial results, declaration-content comparison. | `inventory.py`, `snapshots.py` |
+| Hooks, pp. 50–53 | Six actual SDK events, operation validation, context injection, checkpoint before condenser attempts. | `hooks.py`, `condenser.py`, `session.py` |
+| Oracles, pp. 54–56 | Exact queries over validated saved import snapshots with provenance/completeness. | `snapshots.py` |
+
+Module paths are relative to
+[`openhands-tools/openhands/tools/research_harness`](../openhands-tools/openhands/tools/research_harness/).
+The oracle is an import-snapshot oracle, not the PDF's Kubernetes RBAC corpus.
+It reports facts without inferring exploitability. Fixture readiness applies
+only to the built-in application.
+
+## 3. Persistent CLI setup
+
+The operator fixes workspace and state paths at startup; operations cannot
+replace them. The workspace must exist. The directories must be disjoint,
+with neither containing the other. For a small first review:
+
+```bash
+export RESEARCH_WORKSPACE="$SDK_REPO/openhands-tools/openhands/tools/research_harness"
+export RESEARCH_STATE="$HOME/.local/state/openhands-research/sdk-harness"
+
+research() {
+  "$SDK_REPO/.venv/bin/python" -I -m openhands.research \
+    --workspace "$RESEARCH_WORKSPACE" \
+    --state "$RESEARCH_STATE" "$@"
+}
+
+research schema
+research schema inventory
+research thread.create '{"question":"Which Python imports are declared here?","conditions":{"scope":"local package import declarations"},"next_action":"Record an inventory"}'
+```
+
+Copy `record.id` from the creation result:
+
+```bash
+RESEARCH_THREAD="thread_REPLACE_WITH_RETURNED_ID"
+research inventory "{\"thread_id\":\"$RESEARCH_THREAD\"}"
+research fixture "{\"thread_id\":\"$RESEARCH_THREAD\"}"
+research context "{\"thread_id\":\"$RESEARCH_THREAD\",\"max_bytes\":4096}"
+research run.list "{\"thread_id\":\"$RESEARCH_THREAD\",\"limit\":10}"
+research evidence.list "{\"thread_id\":\"$RESEARCH_THREAD\",\"limit\":10}"
+```
+
+`openhands-research` is the equivalent console command. Absolute Python with
+`-I -m openhands.research` prevents working-directory shadowing of the installed
+launch module. CLI `schema` and `schema inventory` take no JSON object; ordinary
+operations take JSON or `--json-stdin`. Exit codes: `0` success, `1` observed
+unsuccessful result, `2` invalid input/storage error, `130` handled interruption.
+Normal results use JSON stdout.
+
+### Inspect evidence and update the assessment
+
+Observations return `run_id`, `evidence_id`, and `artifact_sha` plus a compact
+summary. Copy returned references into these commands:
+
+```bash
+RESEARCH_EVIDENCE="evidence_REPLACE_WITH_RETURNED_ID"
+RESEARCH_SHA="REPLACE_WITH_64_CHARACTER_ARTIFACT_SHA"
+research evidence.get "{\"evidence_id\":\"$RESEARCH_EVIDENCE\"}"
+research artifact.read "{\"digest\":\"$RESEARCH_SHA\",\"offset\":0,\"limit\":4096}"
+research thread.get "{\"thread_id\":\"$RESEARCH_THREAD\"}"
+research schema thread.update
+```
+
+Read slices at `next_offset` until `eof`; respect `encoding` (`utf-8` or `base64`).
+Large service responses can return `output_artifact_sha` instead. The
+[example's `read_json` helper](../examples/01_standalone_sdk/60_research_harness/main.py)
+shows complete retrieval.
+
+Read the current version before updating. For a newly created, unchanged thread,
+pass edited JSON of this shape to `thread.update`:
+
+```json
+{
+  "thread_id": "thread_REPLACE_WITH_RETURNED_ID",
+  "expected_version": 1,
+  "assessment": "Describe observed facts and cite evidence IDs and digests actually inspected.",
+  "next_action": "Review recorded exclusions before extending the assessment."
+}
+```
+
+A stale version raises a conflict; reload and reconcile. Closing requires
+`closure_reason` and `reopen_condition`. New processes with the same paths reopen
+saved records. SDK transcripts and research threads are separate records.
+
+| Area | Shared operations |
+| --- | --- |
+| Threads | `thread.create`, `thread.get`, `thread.list`, `thread.update`, `thread.history` |
+| Outcomes | `run.get`, `run.list` |
+| Evidence | `evidence.get`, `evidence.list` |
+| Observations | `inventory`, `github`, `fixture`, `compare`, `query` |
+| Context/inspection | `context`, `artifact.read`, `events`, `events.export` |
+
+`compare` takes `before_sha` and `after_sha`; `query` takes `artifact_sha` and
+optional exact `module`, `name`, and `path` filters. Both require `thread_id`.
+Schemas provide the complete contract. Query execution can succeed on a partial
+saved dataset: inspect `dataset_complete`, coverage, and omissions. Comparison
+ignores line movement, counts duplicate declarations, and reports incompatible
+Python parser versions. Equal counts do not establish content equality.
+
+## 4. MCP connection
+
+An MCP client launches this command and communicates over stdio:
+
+```bash
+"$SDK_REPO/.venv/bin/python" -I -m openhands.research \
+  --workspace "$RESEARCH_WORKSPACE" --state "$RESEARCH_STATE" mcp
+```
+
+The single `research_harness` tool takes `operation` and `arguments`. Discover
+schemas with `{"operation":"schema","arguments":{}}`. For Codex CLI:
+
+```bash
+codex mcp add openhands-research -- \
+  "$SDK_REPO/.venv/bin/python" -I -m openhands.research \
+  --workspace "$RESEARCH_WORKSPACE" --state "$RESEARCH_STATE" mcp
+codex mcp list
+```
+
+This follows [official Codex MCP documentation](https://developers.openai.com/codex/mcp)
+and installed CLI help. These are instructions: this change does not modify
+Codex or Claude settings. Other clients use their supported local-command config.
+
+MCP exposes operations and state; it does not replace the host agent loop or
+install OpenHands hooks, skills, or condenser behavior into the host. Model usage
+remains subject to the host provider/account. The server makes no LLM requests
+and provides no authentication bridge. Locate the packaged workflow with:
+
+```bash
+"$SDK_REPO/.venv/bin/python" -I -m openhands.research skill-path
+```
+
+The SDK helper loads it automatically. MCP alone does not install host skills.
+
+## 5. Complete OpenHands conversation integration
+
+Supply an already configured `LLM` and existing thread. The helper wires the
+tool, workflow skill, hooks, SDK persistence, and condenser checkpoint:
+
+```python
+from pathlib import Path
+
+from openhands.sdk import LLM
+from openhands.tools.research_harness.session import create_research_conversation
+
+
+def review_with_llm(llm: LLM, workspace: Path, state_dir: Path, thread_id: str) -> None:
+    conversation = create_research_conversation(
+        llm=llm, workspace=workspace, state_dir=state_dir, thread_id=thread_id
+    )
+    try:
+        conversation.send_message(
+            "Use research-review to resume the thread, inspect recorded evidence "
+            "and limitations, and update the next action."
+        )
+        conversation.run()
+    finally:
+        conversation.close()
+```
+
+Construction makes no model request. `run()` and the default summarizing condenser
+use the supplied LLM. A custom `RollingCondenser` can be passed as `condenser=`;
+the checkpoint adapter wraps it. Model authentication/billing remain caller config.
+
+The helper checks currently discoverable user/project plugins and rejects ambient
+plugins before construction, leaving settings unchanged. This does not protect
+against concurrent configuration changes. CLI, MCP, and the tool in custom SDK
+sessions remain available.
+
+| Lifecycle entry | Behavior |
+| --- | --- |
+| `SessionStart` | Build and inject actual bounded thread context. |
+| `UserPromptSubmit` | Record minimal lifecycle metadata. |
+| `PreToolUse` | Validate tool set/arguments; emit native denial for invalid actions. |
+| `PostToolUse` | Record minimal tool metadata. |
+| `Stop` | Record the lifecycle event. |
+| `SessionEnd` | Record the event when the conversation closes. |
+| Condenser entry points | Save a manifest and `hook.pre_compact` before sync/async condensation or hard-reset attempts. |
+
+`hook.pre_compact` is an adapter event, not a native SDK `PreCompact` hook. It
+records an attempt, not delegate success. Tests cover ordering, no-op thresholds,
+failures, serialization, and sync/async paths. Some lifecycle hooks are advisory;
+service validation and selected tools enforce their own constraints. Generated
+hooks use isolated Python loading. The hook ledger excludes raw prompts/tool
+bodies; SDK history retains ordinary events. Hooks are not an OS sandbox.
+
+## 6. Evidence and execution semantics
+
+State holds `state.sqlite3`, content-addressed artifacts, and optional SDK
+history. SQLite is authoritative; JSONL exports are derived pages. Record mutations
+and lifecycle events share a transaction. Threads are versioned, and terminal
+run transitions cannot be applied twice.
+
+Observations start a run before working, persist artifact/evidence, then record
+the actual terminal outcome. Failures and ordinary interruptions retain available
+observations and limitations. Evidence includes status at capture; check the
+current outcome before claiming completion. Context uses a coherent SQLite read
+snapshot and includes current outcomes.
+
+Artifacts are immutable through the API and digest-checked on read. Context
+returns exact text, byte count, selection, and omissions; its manifest includes
+the text and selection decisions, including older records outside the candidate
+window. Raw artifacts and telemetry are retrieved only when requested.
+
+`events`, `events.export`, and `artifact.read` do not audit their own reads, so
+pagination does not continually extend the ledger. Ordinary interface events have
+correlation IDs and argument-artifact references. Submitted arguments, notes,
+artifacts, and SDK transcripts can contain sensitive data; their content and
+filesystem access remain operator responsibilities.
+
+Cancellation signals owned workers and drains cleanup. Network work has a
+parent-enforced total deadline. MCP can acknowledge cancellation before the
+handler finishes draining; the handler waits for cleanup before exiting. A hard
+process kill can leave `running` state. After confirming the worker stopped:
+
+```bash
+research recover run_REPLACE_WITH_ABANDONED_ID "Worker stopped; operator verified it is no longer running"
+```
+
+Recovery is operator-only, not agent-facing. Opening state does not automatically
+classify a running worker as abandoned.
+
+## 7. Bounds and scope
+
+| Resource | Bound/rule |
+| --- | --- |
+| Arguments | 16 KiB canonical JSON, strict fields, finite values |
+| Records | 64 KiB; run input/result fields each 16 KiB |
+| Artifacts | 1 MiB each, verified on read |
+| Inline response | 64 KiB; larger results saved as artifacts |
+| List page | At most 100 requested records, bounded output and continuation |
+| Artifact slice | 1–4,096 bytes |
+| Context | 512–16,384 UTF-8 bytes; default 8,192; newest 1–50 candidates, default 32 |
+| Inventory | 500 files, 256 KiB/file, 8 MiB total input, bounded traversal/output, 5-second cooperative budget |
+| Query/comparison | At most 100 rows or change groups per side, bounded selected bytes, explicit omissions |
+| GitHub | Opt-in public endpoint, no credentials/redirects/retries, 15-second worker deadline, 256 KiB body |
+| Hooks | 256 KiB input, 30-second generated command timeout |
+
+Inventory includes tests and reports hidden/vendor directory, non-Python,
+symlink, and special-file exclusions. Anchored POSIX reads never import or execute
+workspace code. Parse errors/limits retain incomplete results. Start with a small
+package: the whole SDK may exceed the file bound. Cooperative budgets do not make
+filesystem calls hard-real-time.
+
+Enable public metadata with `--allow-github` before the CLI subcommand, or
+`allow_github=True` in the service/helper. Call `github` with `thread_id` and
+`repository`, such as `AhmadQasim881/software-agent-sdk`. This does not enable
+arbitrary destinations or private repository authentication.
+
+Verification covers Linux, local SDK conversations, and real MCP stdio processes.
+Remote Agent Server deployment, Docker/PyInstaller packaging, and desktop-client
+installation are separate work. The fixture is an owned readiness check, not a
+general launcher or isolation boundary. API immutability cannot protect data from
+another process with the same filesystem permissions. Queries report recorded
+facts without vulnerability classification or exploit reproduction.
+
+## 8. Verification
+
+See [staged verification](../.pr/security-harness-verification.md) and
+[installed-wheel verification](../.pr/research-harness-wheel-verification.md)
+for actual commands and outcomes. From the repo root:
+
+```bash
+OPENHANDS_SUPPRESS_BANNER=1 LITELLM_LOCAL_MODEL_COST_MAP=True \
+  uv run --frozen --no-sync pytest tests/tools/research_harness \
+    tests/tools/test_init.py tests/tools/test_preset_default.py -q
+
+OPENHANDS_SUPPRESS_BANNER=1 LITELLM_LOCAL_MODEL_COST_MAP=True \
+  uv run --frozen --no-sync pytest tests/examples/test_examples.py \
+    --run-examples -k 'research_harness or directory_example_is_discovered' -q
+```
+
+Tests exercise SQLite, CLI subprocess restart, MCP stdio/cancellation, native
+hooks, real SDK conversation events, fixture cleanup, and package assets. LLM
+transport is scripted: no paid provider was used, and live-model workflow
+selection quality is not established. The cost-map flag avoids an unrelated
+LiteLLM import-time network lookup.
+
+The live public GitHub attempt failed at DNS resolution here and was recorded
+as failed. Controlled HTTP/worker tests verify behavior; no successful live
+external response is claimed.
+
+For extensions, add strict schemas, shared dispatch, bounded observations with
+provenance, and appropriate success/failure/partial/cancellation tests. Keep
+context selection separate from artifacts, and host lifecycle wiring separate
+from shared operations.
