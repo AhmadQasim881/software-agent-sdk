@@ -7,7 +7,9 @@ MCP smoke workflow on Linux with Python 3.13.5. Verification ran outside the
 checkout in a fresh virtual environment. No model requests or external metadata
 requests were made.
 
-- Source commit: `0df0c9315b8dd50fac67799a60d3f444d9653ba2`
+- Source commit in the local validation history:
+  `0df0c9315b8dd50fac67799a60d3f444d9653ba2`
+- Verified source tree: `e9c2b6034e7af9a99031f4bc6a24144bed812e07`.
 - Package: `openhands-tools` 1.60.1; SDK: 1.60.1 from the same checkout.
 - Wheel: `openhands_tools-1.60.1-py3-none-any.whl`, 263,123 bytes.
 - Wheel SHA-256:
@@ -23,6 +25,10 @@ requests were made.
 The wheel digest identifies the artifact tested here; this does not claim that
 separate builds produce identical wheel bytes. Build artifacts and the virtual
 environment are temporary and are not committed.
+
+Publication through the connected GitHub app creates new commit metadata. Each
+published stage's complete tree is checked against its local validated tree,
+so published commit IDs can differ while the tested source bytes remain exact.
 
 ## Installation and dependency evidence
 
