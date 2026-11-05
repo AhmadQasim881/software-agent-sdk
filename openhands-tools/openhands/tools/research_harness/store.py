@@ -463,6 +463,40 @@ class HarnessStore:
             ).fetchall()
         return [EvidenceRecord.model_validate_json(row[0]) for row in rows]
 
+    def context_records(
+        self,
+        thread_id: str,
+        *,
+        limit: int = 32,
+    ) -> tuple[ThreadRecord, list[tuple[EvidenceRecord, RunRecord]], int]:
+        """Read the current thread and newest evidence/outcomes in one snapshot."""
+        if (
+            isinstance(limit, bool)
+            or not isinstance(limit, int)
+            or not 1 <= limit <= 50
+        ):
+            raise HarnessError("Context records require limit 1..50")
+        with self._connection() as connection:
+            connection.execute("BEGIN")
+            thread = _load(connection, "threads", thread_id, ThreadRecord)
+            total = connection.execute(
+                "SELECT COUNT(*) FROM evidence WHERE thread_id=?", (thread_id,)
+            ).fetchone()[0]
+            rows = connection.execute(
+                "SELECT e.record AS evidence_record, r.record AS run_record "
+                "FROM evidence AS e JOIN runs AS r ON e.run_id=r.id "
+                "WHERE e.thread_id=? ORDER BY e.rowid DESC LIMIT ?",
+                (thread_id, limit),
+            ).fetchall()
+        records = [
+            (
+                EvidenceRecord.model_validate_json(row["evidence_record"]),
+                RunRecord.model_validate_json(row["run_record"]),
+            )
+            for row in rows
+        ]
+        return thread, records, int(total)
+
     def append_event(
         self,
         kind: str,

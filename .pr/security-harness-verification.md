@@ -24,7 +24,7 @@ from live paid-model verification. No credentials are required for the former.
 | 0 | Inspect instructions, source, interfaces, and baseline | Passed |
 | 1 | Durable threads, evidence, artifacts, run and event records | Passed |
 | 2 | Bounded inventory, external records, local readiness | Passed |
-| 3 | Context selection, inventory comparison, queryable snapshots | Pending |
+| 3 | Context selection, inventory comparison, queryable snapshots | Passed |
 | 4 | Shared CLI, MCP, and OpenHands tool interfaces | Pending |
 | 5 | Skills, lifecycle hooks, compaction checkpoint | Pending |
 | 6 | End-to-end workflow, installation, packaging, documentation | Pending |
@@ -73,3 +73,19 @@ from live paid-model verification. No credentials are required for the former.
   gaps. Seventeen regressions cover exact byte limits, all terminal statuses,
   interruption at each persistence boundary, committed outcomes, and cleanup
   failure preserving the original interruption.
+
+### Stage 3
+
+- Full harness suite: **134 passed**; all seven changed/new Python files passed
+  file-level pre-commit.
+- Context tests verify exact UTF-8 budgets, current failed outcomes, newest-first
+  selection, explicit omissions, restart behavior, and a real concurrent SQLite
+  writer proving the read snapshot is coherent. Full selection manifests are
+  saved without recursively generating new research evidence.
+- Snapshot tests verify equal-count replacements, duplicate multiplicities,
+  line-only changes, exact filters, malformed/partial datasets, output bounds,
+  and incompatible parser versions. Oracle results describe recorded facts and
+  retain their provenance; they do not produce security verdicts.
+- Artifact views reassemble exact bytes across Unicode boundaries. JSONL exports
+  are bounded, resumable views of SQLite events, with no independent dual-written
+  ledger or cursor advancement past omitted records.
