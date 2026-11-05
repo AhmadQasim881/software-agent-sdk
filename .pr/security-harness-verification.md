@@ -23,7 +23,7 @@ from live paid-model verification. No credentials are required for the former.
 | --- | --- | --- |
 | 0 | Inspect instructions, source, interfaces, and baseline | Passed |
 | 1 | Durable threads, evidence, artifacts, run and event records | Passed |
-| 2 | Bounded inventory, external records, local readiness | Pending |
+| 2 | Bounded inventory, external records, local readiness | Passed |
 | 3 | Context selection, inventory comparison, queryable snapshots | Pending |
 | 4 | Shared CLI, MCP, and OpenHands tool interfaces | Pending |
 | 5 | Skills, lifecycle hooks, compaction checkpoint | Pending |
@@ -54,3 +54,22 @@ from live paid-model verification. No credentials are required for the former.
   the successful-run transition. No successful record is fabricated on failure.
 - API immutability and digest checking do not claim protection against an
   unrestricted process with the same filesystem permissions.
+
+### Stage 2
+
+- `uv run pytest tests/tools/research_harness -q`: **90 passed**.
+- File-level pre-commit: passed for all eleven changed/new Python files.
+- AST inventory includes tests, records exclusions and coverage, rejects symlinks
+  and special files, and preserves partial output when limits or parsing fail.
+- Controlled HTTP and real subprocess tests verified identity validation, no
+  redirects/retries/credentials, body/output limits, total deadline, cancellation,
+  and process reaping. They are not a live GitHub success claim.
+- Live public metadata attempt for `AhmadQasim881/software-agent-sdk`: failed
+  with DNS `gaierror` in this execution environment; the failed run and observation
+  were recorded correctly. No successful external response was observed.
+- Live owned loopback fixture: HTTP success, instance identity, expected normal
+  item, server close and thread termination all passed.
+- Independent review found and fixed terminal-record capacity and interruption
+  gaps. Seventeen regressions cover exact byte limits, all terminal statuses,
+  interruption at each persistence boundary, committed outcomes, and cleanup
+  failure preserving the original interruption.

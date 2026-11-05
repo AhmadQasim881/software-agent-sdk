@@ -28,6 +28,7 @@ from .models import (
 
 _SCHEMA_VERSION = 1
 _MAX_RECORD_BYTES = 65_536
+_MAX_RUN_FIELD_BYTES = 16_384
 _SCHEMA = (
     "CREATE TABLE metadata (key TEXT PRIMARY KEY, value TEXT NOT NULL)",
     "CREATE TABLE threads (id TEXT PRIMARY KEY, version INTEGER NOT NULL, "
@@ -313,6 +314,8 @@ class HarnessStore:
         inputs: dict[str, JsonValue] | None = None,
         session_id: str | None = None,
     ) -> RunRecord:
+        if len(canonical_json(inputs or {})) > _MAX_RUN_FIELD_BYTES:
+            raise HarnessError("Run inputs exceed 16384 UTF-8 bytes")
         record = RunRecord(
             id=f"run_{uuid.uuid4().hex}",
             thread_id=thread_id,
@@ -369,6 +372,8 @@ class HarnessStore:
         result: dict[str, JsonValue] | None = None,
         error: str | None = None,
     ) -> RunRecord:
+        if len(canonical_json(result or {})) > _MAX_RUN_FIELD_BYTES:
+            raise HarnessError("Run result exceeds 16384 UTF-8 bytes")
         with self._connection(write=True) as connection:
             current = _load(connection, "runs", run_id, RunRecord)
             if current.status != "running":
