@@ -1,0 +1,56 @@
+# Security harness implementation verification
+
+## Source and scope
+
+- Branch: `feature/security_harness`
+- Base commit: `34f04eb2426a2a6b90a0cce504c292155b12dcc1`
+- Workshop: `New_security_Harness_Design/2026-unprompted-harness-engineering.pdf`
+- PDF SHA-256: `81843e4a0359c602a201ba7bfaa222a6ad6a63ec729059a5ce7823a9b8473fe9`
+- Environment: Linux, Python 3.13.5, uv 0.13.5, SDK 1.60.1.
+
+Implement the workshop responsibilities as an additive tool package with a
+model-independent core and shared CLI, MCP, and OpenHands interfaces. Demonstrations
+use benign local fixtures and read-only inventories. The PDF's exploitation case
+studies are motivation, not runnable workflows in this package.
+
+Each stage must pass its focused tests and file-level pre-commit checks before the
+next stage begins. Verification with scripted model responses is distinguished
+from live paid-model verification. No credentials are required for the former.
+
+## Stages
+
+| Stage | Scope | Result |
+| --- | --- | --- |
+| 0 | Inspect instructions, source, interfaces, and baseline | Passed |
+| 1 | Durable threads, evidence, artifacts, run and event records | Passed |
+| 2 | Bounded inventory, external records, local readiness | Pending |
+| 3 | Context selection, inventory comparison, queryable snapshots | Pending |
+| 4 | Shared CLI, MCP, and OpenHands tool interfaces | Pending |
+| 5 | Skills, lifecycle hooks, compaction checkpoint | Pending |
+| 6 | End-to-end workflow, installation, packaging, documentation | Pending |
+
+### Stage 0
+
+- `make build`: passed using the committed dependency lock; no lock changes.
+- `uv run pytest tests/tools/test_init.py tests/tools/test_preset_default.py -q`:
+  **5 passed**. Existing warning: tmux absent, terminal uses subprocess fallback.
+- `uv run pre-commit run --files openhands-tools/openhands/tools/__init__.py`:
+  passed.
+- SDK native hooks: SessionStart, UserPromptSubmit, PreToolUse, PostToolUse, Stop,
+  SessionEnd. PreCompact requires a tested condenser adapter, not an unsupported
+  HookConfig entry.
+- The workshop specifies outcomes and examples; database schema, module layout,
+  interfaces, and test cases here are project implementation decisions.
+
+### Stage 1
+
+- `uv run pytest tests/tools/research_harness -q`: **25 passed**.
+- File-level pre-commit: passed for all six new Python files.
+- Verified concurrent artifact publication, corrupt/missing/symlinked/special-file
+  artifacts, bounded bytes, SQLite restart persistence, assessment history,
+  closed-thread rejection, optimistic update conflicts, cross-thread reference
+  rejection, failed/interrupted outcomes, explicit recovery, and event pagination.
+- A real SQLite trigger fault verified that failed event publication rolls back
+  the successful-run transition. No successful record is fabricated on failure.
+- API immutability and digest checking do not claim protection against an
+  unrestricted process with the same filesystem permissions.
