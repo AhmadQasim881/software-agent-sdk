@@ -1,0 +1,1939 @@
+{
+  "status": "passed",
+  "started_at": "2026-11-06T18:50:06.168151+00:00",
+  "scope": "linux/amd64 source-minimal, installed bytes and server MCP reads",
+  "model_calls": 0,
+  "observations": {
+    "attach-before": {
+      "ok": true,
+      "run": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185006-d725-research-container",
+      "url": "http://127.0.0.1:32768",
+      "mode": "attach"
+    },
+    "ready-before-1": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-2": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-3": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-4": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-5": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-6": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-7": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-8": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-9": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-10": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-11": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-12": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-13": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-14": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-15": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-16": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-17": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-18": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-19": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-20": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-21": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-22": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-before-23": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "GET",
+        "path": "/ready",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "18",
+          "content-type": "application/json"
+        },
+        "body": {
+          "status": "ready"
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 8,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185006-d725-research-container/evidence/container/ready-before.json"
+    },
+    "doctor-before": {
+      "ok": true,
+      "run": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185006-d725-research-container",
+      "url": "http://127.0.0.1:32768",
+      "checks": [
+        {
+          "name": "/alive",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "/health",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "/ready",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "server-info",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "version": "1.60.1",
+            "sdk_version": "1.60.1",
+            "build_git_sha": "e88179608fd37b852a32fe193725df6f57e2f56b",
+            "expected_sha": null,
+            "usable_tools": [
+              "ClassifyAndSwitchLLMTool",
+              "ask_oracle",
+              "file_editor",
+              "task_tool_set",
+              "task",
+              "task_tracker",
+              "terminal",
+              "workflow_tool_set",
+              "workflow",
+              "research_harness",
+              "start_child_conversation",
+              "edit",
+              "list_directory",
+              "read_file",
+              "write_file",
+              "glob",
+              "grep",
+              "planning_file_editor"
+            ]
+          }
+        },
+        {
+          "name": "auth-rejects-missing-key",
+          "ok": true,
+          "required": true,
+          "detail": 401
+        },
+        {
+          "name": "auth-accepts-key",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200,
+            "dormant": false
+          }
+        },
+        {
+          "name": "openapi",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "operations": 179
+          }
+        },
+        {
+          "name": "ws-rejects-bad-key",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "path": "/sockets/bash-events",
+            "auth": "bad",
+            "open": false,
+            "close_code": 4001
+          }
+        },
+        {
+          "name": "ws-accepts-first-frame-auth",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "path": "/sockets/bash-events",
+            "auth": "first-frame",
+            "open": true
+          }
+        }
+      ]
+    },
+    "server-info-before": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "GET",
+        "path": "/server_info",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1287",
+          "content-type": "application/json"
+        },
+        "body": {
+          "uptime": 5.0,
+          "idle_time": 5.0,
+          "title": "OpenHands Agent Server",
+          "version": "1.60.1",
+          "sdk_version": "1.60.1",
+          "tools_version": "1.60.1",
+          "workspace_version": "1.60.1",
+          "build_git_sha": "e88179608fd37b852a32fe193725df6f57e2f56b",
+          "build_git_ref": "refs/heads/feature/security_harness",
+          "python_version": "3.13.17 (main, Oct 21 2026, 17:49:22) [Clang 23.1.3 ]",
+          "usable_tools": [
+            "ClassifyAndSwitchLLMTool",
+            "ask_oracle",
+            "file_editor",
+            "task_tool_set",
+            "task",
+            "task_tracker",
+            "terminal",
+            "workflow_tool_set",
+            "workflow",
+            "research_harness",
+            "start_child_conversation",
+            "edit",
+            "list_directory",
+            "read_file",
+            "write_file",
+            "glob",
+            "grep",
+            "planning_file_editor"
+          ],
+          "runtime_idle_timeout_seconds": null,
+          "conversation_runtime": "local",
+          "available_conversation_runtimes": [],
+          "capabilities": [
+            "conversation_runtime_routes_v1",
+            "profile_secret_scope_v1",
+            "profile_persona_v1",
+            "credential_binding_v1",
+            "credential_binding_readiness_probe_v1",
+            "credential_binding_activation_guard_v1",
+            "idempotent_conversation_create_v1",
+            "tool_catalog_v1",
+            "agent_profile_draft_materialize_v1",
+            "agent_launch_pipeline_v1",
+            "profile_public_skills_v1",
+            "skill_catalog_v1",
+            "canvas_app_backend_secret_grants_v1",
+            "canvas_app_backend_enable_lifecycle_v1"
+          ],
+          "app_backend_ingress_url": null,
+          "max_foreground_terminal_timeout_seconds": null,
+          "docs": "/docs",
+          "redoc": "/redoc"
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 8,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185006-d725-research-container/evidence/container/server-info-before.json"
+    },
+    "count-before": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "GET",
+        "path": "/api/conversations/count",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1",
+          "content-type": "application/json"
+        },
+        "body": 0,
+        "truncated": false
+      },
+      "elapsed_ms": 7,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185006-d725-research-container/evidence/container/count-before.json"
+    },
+    "operator-provenance": {
+      "uid": 10001,
+      "python": "/agent-server/.venv/bin/python",
+      "python_version": "3.13.17 (main, Oct 21 2026, 17:49:22) [Clang 23.1.3 ]",
+      "site_packages": "/agent-server/.venv/lib/python3.13/site-packages",
+      "distributions": {
+        "openhands-sdk": {
+          "version": "1.60.1",
+          "direct_url": {
+            "url": "file:///agent-server/openhands-sdk",
+            "dir_info": {
+              "editable": false
+            }
+          }
+        },
+        "openhands-tools": {
+          "version": "1.60.1",
+          "direct_url": {
+            "url": "file:///agent-server/openhands-tools",
+            "dir_info": {
+              "editable": false
+            }
+          }
+        },
+        "openhands-workspace": {
+          "version": "1.60.1",
+          "direct_url": {
+            "url": "file:///agent-server/openhands-workspace",
+            "dir_info": {
+              "editable": false
+            }
+          }
+        },
+        "openhands-agent-server": {
+          "version": "1.60.1",
+          "direct_url": {
+            "url": "file:///agent-server/openhands-agent-server",
+            "dir_info": {
+              "editable": false
+            }
+          }
+        }
+      },
+      "verified_files": [
+        {
+          "distribution": "openhands-agent-server",
+          "path": "openhands/agent_server/__init__.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/agent_server/__init__.py"
+        },
+        {
+          "distribution": "openhands-agent-server",
+          "path": "openhands/agent_server/__main__.py",
+          "sha256": "1663cb43390f410721857939349b9f9ef58c3ac467a46a0ae4caffb9ee597120",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/agent_server/__main__.py"
+        },
+        {
+          "distribution": "openhands-agent-server",
+          "path": "openhands/agent_server/mcp_router.py",
+          "sha256": "e06f661be499ed88d3c20484b1fd8c4061913dda201d8074125828a0e69774ec",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/agent_server/mcp_router.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/research/__init__.py",
+          "sha256": "f72a19de2bbb74c3737f33bb3e49740f34aa69fbfcf8b562e182d8ac72037e19",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/research/__init__.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/research/__main__.py",
+          "sha256": "0ee5405bd0abacf0e303cfbe86639bfc0898bbdd52f878b3c1dc8b0885657074",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/research/__main__.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/research/runtime.py",
+          "sha256": "0e084daef71c697a33d9ccb5451b23a526cf5cc99868cd5af49fffaf79f8372b",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/research/runtime.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/__init__.py",
+          "sha256": "3ebae55902c7aceea070dd2c5535bc9b1994ae58b9f98234258428635affdfa7",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/__init__.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/_http_worker.py",
+          "sha256": "4b942163e40c6ce37b5a74476299c94576c1315072f55bfb9f63c3006f8c717b",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/_http_worker.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/agentmemory.py",
+          "sha256": "c34a7fcbcd7966c3d2e29dd7c2094805c9ddaae46e77f34df9f3a0fca2e7a07b",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/agentmemory.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/artifacts.py",
+          "sha256": "5eb242b4ff37643349613a1d632b4d731869d3a7a53a076d4e3b5567a87abf8c",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/artifacts.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/cli.py",
+          "sha256": "67aa0c08e58c711553f630c227d19ff2ac786f0f3be62b10b79e4189e8d9a1a8",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/cli.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/commands.py",
+          "sha256": "ec38abefc991eebacda44d160799c431bf9e262af20e3d17ce4c384023856b16",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/commands.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/condenser.py",
+          "sha256": "bb2b201d0d489780975fdcb93ce9ae32a180ef85b7419c9871ce4abac52e60c7",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/condenser.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/context.py",
+          "sha256": "fbcd4dca6fe947c7d4544b489a3a9e557ca6adae6e4659e4a7519836b2935d6b",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/context.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/core.py",
+          "sha256": "10255f79e971382bd01ed8e86c86743a7679abcf7d1dc1cbbc61709f69ef0055",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/core.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/definition.py",
+          "sha256": "02eb4d156adcbfb29c50ff9c0b22a12c56c849369bd07713ce66edc4cd4dcb98",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/definition.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/evaluation.py",
+          "sha256": "288913468a4f371bf3e78c8b64e42cffe4bf7b2583b5e71c5f906c86449f500b",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/evaluation.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/fixture.py",
+          "sha256": "df483510a18020e4db815ab5a687bff003e1b82c75c6cb375316659d0c685647",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/fixture.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/hooks.py",
+          "sha256": "e5468db21a4e5b16b8e30bf63a555aa96534c7dc1829d5480c40b45a1b05d387",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/hooks.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/hosts.py",
+          "sha256": "1a063f489c92b36e32b1f353389ebc11f929e27dd60eac84b0fe8e3f62d63af1",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/hosts.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/inventory.py",
+          "sha256": "a13ef9f5b079648326930c218037de104f98a5fc17dbbf585f1ca52cd019e0d2",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/inventory.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/mcp_server.py",
+          "sha256": "70746530fa7a34fc335a31cf6f8f8ddb78accec021a21fdab418506c3dca4d22",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/mcp_server.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/models.py",
+          "sha256": "9f506063bb12fcd03eaef85300d1a44c39bbbeb0519be6a480d65aea55aa4cc1",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/models.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/network.py",
+          "sha256": "a743dd75657e62b7ddf8bb8db3b1dddba1b15ad8699ff867ff1ef55912f79801",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/network.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/service.py",
+          "sha256": "7a8ab6b74a6b9bd571cb203c12b9f4917413fdbf00c1430ce324f8d1a5e8066b",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/service.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/session.py",
+          "sha256": "b0a7b99748970f9e69475e28064386cdf87fa77b50f5acbe62351f19d8d721ff",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/session.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/skills/research-review/SKILL.md",
+          "sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/skills/research-review/SKILL.md"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/snapshots.py",
+          "sha256": "f324c4b91248f3b79b5bcfe9579cccbe59d24945509b0a0e1f86b3a0b788916b",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/snapshots.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/store.py",
+          "sha256": "02b5ed1f564137c1924dc3d7506a703fcd158ef36aef2a8d6efa376d8b3b1750",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/store.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/views.py",
+          "sha256": "059d392aacdfac1f9ec74efa8aa6a9a46066c91cec3c1a1f6d29be4d116882e1",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/views.py"
+        },
+        {
+          "distribution": "openhands-tools",
+          "path": "openhands/tools/research_harness/workflow.py",
+          "sha256": "0ff041bff1cc362e8c70529d3336ba1b1e41d48d508a04fc70a8c6046137959b",
+          "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/workflow.py"
+        }
+      ],
+      "module_origins": {
+        "openhands.research": "/agent-server/.venv/lib/python3.13/site-packages/openhands/research/__init__.py",
+        "openhands.tools.research_harness": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/__init__.py",
+        "openhands.tools.research_harness.agentmemory": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/agentmemory.py",
+        "openhands.agent_server": "/agent-server/.venv/lib/python3.13/site-packages/openhands/agent_server/__init__.py"
+      },
+      "skill_sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020"
+    },
+    "operator-seed": {
+      "original": {
+        "id": "memory_84989876ca0d483d92aad35953b005d4",
+        "thread_id": "thread_350349b23f774eb49caf260c6ad48171",
+        "text": "Retain the inventory baseline with its evidence.",
+        "source": "Owned container acceptance",
+        "kind": "decision",
+        "tags": [
+          "inventory"
+        ],
+        "evidence_ids": [
+          "evidence_2642946ae8604a3e83f827add0735870"
+        ],
+        "importance": 5,
+        "pinned": false,
+        "expires_at": null,
+        "status": "active",
+        "forget_reason": null,
+        "version": 1,
+        "created_at": "2026-11-06T18:50:29.383890+00:00",
+        "updated_at": "2026-11-06T18:50:29.383890+00:00"
+      },
+      "inventory": {
+        "ok": true,
+        "status": "completed",
+        "run_id": "run_5c943c2ee00649c3afb290b162b98d25",
+        "evidence_id": "evidence_2642946ae8604a3e83f827add0735870",
+        "artifact_sha": "d752f70ef15e1ad42425738177fb8cf4dbc007eebf900b0bcd47cf0931422b33",
+        "summary": "Recorded 1 imports from 1 parsed Python files; complete within scope",
+        "summary_truncated": false,
+        "limitations": [
+          "Inventory of static Python import declarations; no security verdict.",
+          "Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excl",
+          "Dynamic imports and runtime behavior are not evaluated; source is never executed. Tests directories are included.",
+          "Each file is observed separately; this is not an atomic repository snapshot. The time/cancellation budget is cooperative between"
+        ],
+        "limitations_omitted": 0,
+        "limitations_truncated": true,
+        "duration_ms": 0.342,
+        "detail": "Retrieve the referenced evidence for the complete observation"
+      },
+      "other_note": {
+        "id": "memory_ad9536a9c9264925ab0586cac091f369",
+        "thread_id": "thread_6c1bd5ef0bea49818db735c608d468b6",
+        "text": "Inventory from the other thread",
+        "source": "Owned container acceptance",
+        "kind": "note",
+        "tags": [],
+        "evidence_ids": [],
+        "importance": 5,
+        "pinned": false,
+        "expires_at": null,
+        "status": "active",
+        "forget_reason": null,
+        "version": 1,
+        "created_at": "2026-11-06T18:50:29.396932+00:00",
+        "updated_at": "2026-11-06T18:50:29.396932+00:00"
+      }
+    },
+    "get-before": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "container-memory-acceptance",
+          "timeout": 30,
+          "server": {
+            "transport": "stdio",
+            "command": "/agent-server/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/workspace/research-harness-acceptance/workspace",
+              "--state",
+              "/workspace/research-harness-acceptance/state",
+              "mcp"
+            ],
+            "cwd": "/workspace/research-harness-acceptance/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.get",
+              "arguments": {
+                "thread_id": "thread_350349b23f774eb49caf260c6ad48171",
+                "memory_id": "memory_84989876ca0d483d92aad35953b005d4"
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "651",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"ok\":true,\"record\":{\"created_at\":\"2026-11-06T18:50:29.383890+00:00\",\"evidence_ids\":[\"evidence_2642946ae8604a3e83f827add0735870\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_84989876ca0d483d92aad35953b005d4\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned container acceptance\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Retain the inventory baseline with its evidence.\",\"thread_id\":\"thread_350349b23f774eb49caf260c6ad48171\",\"updated_at\":\"2026-11-06T18:50:29.383890+00:00\",\"version\":1}}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 4755,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185006-d725-research-container/evidence/container/get-before.json"
+    },
+    "operator-children": {
+      "remaining_mcp_children": []
+    },
+    "get-before-cleanup": {
+      "remaining_mcp_children": []
+    },
+    "recall-before": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "container-memory-acceptance",
+          "timeout": 30,
+          "server": {
+            "transport": "stdio",
+            "command": "/agent-server/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/workspace/research-harness-acceptance/workspace",
+              "--state",
+              "/workspace/research-harness-acceptance/state",
+              "mcp"
+            ],
+            "cwd": "/workspace/research-harness-acceptance/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.recall",
+              "arguments": {
+                "thread_id": "thread_350349b23f774eb49caf260c6ad48171",
+                "query": "inventory",
+                "limit": 5
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1782",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"as_of\":\"2026-11-06T18:50:39.089266+00:00\",\"byte_limit\":49152,\"candidate_limit\":200,\"candidate_notes\":1,\"candidates_scanned\":1,\"candidates_truncated\":false,\"eligible_notes\":1,\"excluded\":{\"expired\":0,\"forgotten\":0},\"limit\":5,\"matching_notes\":1,\"ok\":true,\"omissions\":{\"byte_budget\":0,\"candidate_limit\":0,\"result_limit\":0},\"pinned_constraints_supplemented\":0,\"policy\":\"agentmemory-lexical/1\",\"query\":\"inventory\",\"records\":[{\"lexical_similarity\":0.7126966450997982,\"matched_query\":true,\"record\":{\"created_at\":\"2026-11-06T18:50:29.383890+00:00\",\"evidence_ids\":[\"evidence_2642946ae8604a3e83f827add0735870\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_84989876ca0d483d92aad35953b005d4\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned container acceptance\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Retain the inventory baseline with its evidence.\",\"thread_id\":\"thread_350349b23f774eb49caf260c6ad48171\",\"updated_at\":\"2026-11-06T18:50:29.383890+00:00\",\"version\":1},\"score\":0.04918032786885246,\"selection_reason\":\"literal_match\"}],\"scope\":{\"candidate_order\":\"pinned DESC, updated_at DESC, id ASC\",\"kind\":null,\"pinned_constraint_supplement\":false,\"query_match\":\"literal case-folded substring of text or tags\",\"query_source\":\"explicit\",\"query_terms\":null,\"ranking_scope\":\"bounded candidates, pinned first, then lexical RRF\",\"snapshot\":\"one SQLite read transaction; no access-time writes\",\"tag_match\":\"all exact case-folded tags\",\"tags\":[],\"term_policy\":null,\"thread_id\":\"thread_350349b23f774eb49caf260c6ad48171\"},\"total_notes\":1}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 4783,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185006-d725-research-container/evidence/container/recall-before.json"
+    },
+    "recall-before-cleanup": {
+      "remaining_mcp_children": []
+    },
+    "operator-update": {
+      "original": {
+        "id": "memory_84989876ca0d483d92aad35953b005d4",
+        "thread_id": "thread_350349b23f774eb49caf260c6ad48171",
+        "text": "Retain the inventory baseline with its evidence.",
+        "source": "Owned container acceptance",
+        "kind": "decision",
+        "tags": [
+          "inventory"
+        ],
+        "evidence_ids": [
+          "evidence_2642946ae8604a3e83f827add0735870"
+        ],
+        "importance": 5,
+        "pinned": false,
+        "expires_at": null,
+        "status": "active",
+        "forget_reason": null,
+        "version": 1,
+        "created_at": "2026-11-06T18:50:29.383890+00:00",
+        "updated_at": "2026-11-06T18:50:29.383890+00:00"
+      },
+      "inventory": {
+        "ok": true,
+        "status": "completed",
+        "run_id": "run_5c943c2ee00649c3afb290b162b98d25",
+        "evidence_id": "evidence_2642946ae8604a3e83f827add0735870",
+        "artifact_sha": "d752f70ef15e1ad42425738177fb8cf4dbc007eebf900b0bcd47cf0931422b33",
+        "summary": "Recorded 1 imports from 1 parsed Python files; complete within scope",
+        "summary_truncated": false,
+        "limitations": [
+          "Inventory of static Python import declarations; no security verdict.",
+          "Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excl",
+          "Dynamic imports and runtime behavior are not evaluated; source is never executed. Tests directories are included.",
+          "Each file is observed separately; this is not an atomic repository snapshot. The time/cancellation budget is cooperative between"
+        ],
+        "limitations_omitted": 0,
+        "limitations_truncated": true,
+        "duration_ms": 0.342,
+        "detail": "Retrieve the referenced evidence for the complete observation"
+      },
+      "other_note": {
+        "id": "memory_ad9536a9c9264925ab0586cac091f369",
+        "thread_id": "thread_6c1bd5ef0bea49818db735c608d468b6",
+        "text": "Inventory from the other thread",
+        "source": "Owned container acceptance",
+        "kind": "note",
+        "tags": [],
+        "evidence_ids": [],
+        "importance": 5,
+        "pinned": false,
+        "expires_at": null,
+        "status": "active",
+        "forget_reason": null,
+        "version": 1,
+        "created_at": "2026-11-06T18:50:29.396932+00:00",
+        "updated_at": "2026-11-06T18:50:29.396932+00:00"
+      },
+      "updated": {
+        "id": "memory_84989876ca0d483d92aad35953b005d4",
+        "thread_id": "thread_350349b23f774eb49caf260c6ad48171",
+        "text": "Keep the inventory baseline and its source together.",
+        "source": "Owned container acceptance",
+        "kind": "decision",
+        "tags": [
+          "inventory"
+        ],
+        "evidence_ids": [
+          "evidence_2642946ae8604a3e83f827add0735870"
+        ],
+        "importance": 5,
+        "pinned": false,
+        "expires_at": null,
+        "status": "active",
+        "forget_reason": null,
+        "version": 2,
+        "created_at": "2026-11-06T18:50:29.383890+00:00",
+        "updated_at": "2026-11-06T18:50:43.966785+00:00"
+      }
+    },
+    "attach-after": {
+      "ok": true,
+      "run": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container",
+      "url": "http://127.0.0.1:32769",
+      "mode": "attach"
+    },
+    "ready-after-1": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-2": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-3": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-4": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-5": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-6": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-7": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-8": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-9": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-10": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-11": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-12": {
+      "ok": false,
+      "exit": 3,
+      "error": "ReadError: [Errno 104] Connection reset by peer",
+      "hint": "Is the server up? `control-agent-server doctor`"
+    },
+    "ready-after-13": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "GET",
+        "path": "/ready",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "18",
+          "content-type": "application/json"
+        },
+        "body": {
+          "status": "ready"
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 7,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container/evidence/container/ready-after.json"
+    },
+    "doctor-after": {
+      "ok": true,
+      "run": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container",
+      "url": "http://127.0.0.1:32769",
+      "checks": [
+        {
+          "name": "/alive",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "/health",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "/ready",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "server-info",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "version": "1.60.1",
+            "sdk_version": "1.60.1",
+            "build_git_sha": "e88179608fd37b852a32fe193725df6f57e2f56b",
+            "expected_sha": null,
+            "usable_tools": [
+              "ClassifyAndSwitchLLMTool",
+              "ask_oracle",
+              "file_editor",
+              "task_tool_set",
+              "task",
+              "task_tracker",
+              "terminal",
+              "workflow_tool_set",
+              "workflow",
+              "research_harness",
+              "start_child_conversation",
+              "edit",
+              "list_directory",
+              "read_file",
+              "write_file",
+              "glob",
+              "grep",
+              "planning_file_editor"
+            ]
+          }
+        },
+        {
+          "name": "auth-rejects-missing-key",
+          "ok": true,
+          "required": true,
+          "detail": 401
+        },
+        {
+          "name": "auth-accepts-key",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200,
+            "dormant": false
+          }
+        },
+        {
+          "name": "openapi",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "operations": 179
+          }
+        },
+        {
+          "name": "ws-rejects-bad-key",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "path": "/sockets/bash-events",
+            "auth": "bad",
+            "open": false,
+            "close_code": 4001
+          }
+        },
+        {
+          "name": "ws-accepts-first-frame-auth",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "path": "/sockets/bash-events",
+            "auth": "first-frame",
+            "open": true
+          }
+        }
+      ]
+    },
+    "server-info-after": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "GET",
+        "path": "/server_info",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1287",
+          "content-type": "application/json"
+        },
+        "body": {
+          "uptime": 4.0,
+          "idle_time": 4.0,
+          "title": "OpenHands Agent Server",
+          "version": "1.60.1",
+          "sdk_version": "1.60.1",
+          "tools_version": "1.60.1",
+          "workspace_version": "1.60.1",
+          "build_git_sha": "e88179608fd37b852a32fe193725df6f57e2f56b",
+          "build_git_ref": "refs/heads/feature/security_harness",
+          "python_version": "3.13.17 (main, Oct 21 2026, 17:49:22) [Clang 23.1.3 ]",
+          "usable_tools": [
+            "ClassifyAndSwitchLLMTool",
+            "ask_oracle",
+            "file_editor",
+            "task_tool_set",
+            "task",
+            "task_tracker",
+            "terminal",
+            "workflow_tool_set",
+            "workflow",
+            "research_harness",
+            "start_child_conversation",
+            "edit",
+            "list_directory",
+            "read_file",
+            "write_file",
+            "glob",
+            "grep",
+            "planning_file_editor"
+          ],
+          "runtime_idle_timeout_seconds": null,
+          "conversation_runtime": "local",
+          "available_conversation_runtimes": [],
+          "capabilities": [
+            "conversation_runtime_routes_v1",
+            "profile_secret_scope_v1",
+            "profile_persona_v1",
+            "credential_binding_v1",
+            "credential_binding_readiness_probe_v1",
+            "credential_binding_activation_guard_v1",
+            "idempotent_conversation_create_v1",
+            "tool_catalog_v1",
+            "agent_profile_draft_materialize_v1",
+            "agent_launch_pipeline_v1",
+            "profile_public_skills_v1",
+            "skill_catalog_v1",
+            "canvas_app_backend_secret_grants_v1",
+            "canvas_app_backend_enable_lifecycle_v1"
+          ],
+          "app_backend_ingress_url": null,
+          "max_foreground_terminal_timeout_seconds": null,
+          "docs": "/docs",
+          "redoc": "/redoc"
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 8,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container/evidence/container/server-info-after.json"
+    },
+    "get-after": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "container-memory-acceptance",
+          "timeout": 30,
+          "server": {
+            "transport": "stdio",
+            "command": "/agent-server/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/workspace/research-harness-acceptance/workspace",
+              "--state",
+              "/workspace/research-harness-acceptance/state",
+              "mcp"
+            ],
+            "cwd": "/workspace/research-harness-acceptance/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.get",
+              "arguments": {
+                "thread_id": "thread_350349b23f774eb49caf260c6ad48171",
+                "memory_id": "memory_84989876ca0d483d92aad35953b005d4"
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "655",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"ok\":true,\"record\":{\"created_at\":\"2026-11-06T18:50:29.383890+00:00\",\"evidence_ids\":[\"evidence_2642946ae8604a3e83f827add0735870\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_84989876ca0d483d92aad35953b005d4\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned container acceptance\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Keep the inventory baseline and its source together.\",\"thread_id\":\"thread_350349b23f774eb49caf260c6ad48171\",\"updated_at\":\"2026-11-06T18:50:43.966785+00:00\",\"version\":2}}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 4789,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container/evidence/container/get-after.json"
+    },
+    "get-after-cleanup": {
+      "remaining_mcp_children": []
+    },
+    "recall-after": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "container-memory-acceptance",
+          "timeout": 30,
+          "server": {
+            "transport": "stdio",
+            "command": "/agent-server/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/workspace/research-harness-acceptance/workspace",
+              "--state",
+              "/workspace/research-harness-acceptance/state",
+              "mcp"
+            ],
+            "cwd": "/workspace/research-harness-acceptance/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.recall",
+              "arguments": {
+                "thread_id": "thread_350349b23f774eb49caf260c6ad48171",
+                "query": "inventory",
+                "limit": 5
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1786",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"as_of\":\"2026-11-06T18:51:02.959881+00:00\",\"byte_limit\":49152,\"candidate_limit\":200,\"candidate_notes\":1,\"candidates_scanned\":1,\"candidates_truncated\":false,\"eligible_notes\":1,\"excluded\":{\"expired\":0,\"forgotten\":0},\"limit\":5,\"matching_notes\":1,\"ok\":true,\"omissions\":{\"byte_budget\":0,\"candidate_limit\":0,\"result_limit\":0},\"pinned_constraints_supplemented\":0,\"policy\":\"agentmemory-lexical/1\",\"query\":\"inventory\",\"records\":[{\"lexical_similarity\":0.6620847108818944,\"matched_query\":true,\"record\":{\"created_at\":\"2026-11-06T18:50:29.383890+00:00\",\"evidence_ids\":[\"evidence_2642946ae8604a3e83f827add0735870\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_84989876ca0d483d92aad35953b005d4\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned container acceptance\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Keep the inventory baseline and its source together.\",\"thread_id\":\"thread_350349b23f774eb49caf260c6ad48171\",\"updated_at\":\"2026-11-06T18:50:43.966785+00:00\",\"version\":2},\"score\":0.04918032786885246,\"selection_reason\":\"literal_match\"}],\"scope\":{\"candidate_order\":\"pinned DESC, updated_at DESC, id ASC\",\"kind\":null,\"pinned_constraint_supplement\":false,\"query_match\":\"literal case-folded substring of text or tags\",\"query_source\":\"explicit\",\"query_terms\":null,\"ranking_scope\":\"bounded candidates, pinned first, then lexical RRF\",\"snapshot\":\"one SQLite read transaction; no access-time writes\",\"tag_match\":\"all exact case-folded tags\",\"tags\":[],\"term_policy\":null,\"thread_id\":\"thread_350349b23f774eb49caf260c6ad48171\"},\"total_notes\":1}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 4790,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container/evidence/container/recall-after.json"
+    },
+    "recall-after-cleanup": {
+      "remaining_mcp_children": []
+    },
+    "history-after": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "container-memory-acceptance",
+          "timeout": 30,
+          "server": {
+            "transport": "stdio",
+            "command": "/agent-server/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/workspace/research-harness-acceptance/workspace",
+              "--state",
+              "/workspace/research-harness-acceptance/state",
+              "mcp"
+            ],
+            "cwd": "/workspace/research-harness-acceptance/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.history",
+              "arguments": {
+                "thread_id": "thread_350349b23f774eb49caf260c6ad48171",
+                "memory_id": "memory_84989876ca0d483d92aad35953b005d4"
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1252",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"has_more\":false,\"next_offset\":2,\"offset\":0,\"ok\":true,\"records\":[{\"created_at\":\"2026-11-06T18:50:29.383890+00:00\",\"evidence_ids\":[\"evidence_2642946ae8604a3e83f827add0735870\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_84989876ca0d483d92aad35953b005d4\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned container acceptance\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Retain the inventory baseline with its evidence.\",\"thread_id\":\"thread_350349b23f774eb49caf260c6ad48171\",\"updated_at\":\"2026-11-06T18:50:29.383890+00:00\",\"version\":1},{\"created_at\":\"2026-11-06T18:50:29.383890+00:00\",\"evidence_ids\":[\"evidence_2642946ae8604a3e83f827add0735870\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_84989876ca0d483d92aad35953b005d4\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned container acceptance\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Keep the inventory baseline and its source together.\",\"thread_id\":\"thread_350349b23f774eb49caf260c6ad48171\",\"updated_at\":\"2026-11-06T18:50:43.966785+00:00\",\"version\":2}]}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 4801,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container/evidence/container/history-after.json"
+    },
+    "history-after-cleanup": {
+      "remaining_mcp_children": []
+    },
+    "count-after": {
+      "ok": true,
+      "status": 200,
+      "request": {
+        "method": "GET",
+        "path": "/api/conversations/count",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1",
+          "content-type": "application/json"
+        },
+        "body": 0,
+        "truncated": false
+      },
+      "elapsed_ms": 7,
+      "saved": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container/evidence/container/count-after.json"
+    },
+    "stop-verification-20261106-185006-d725-research-container": {
+      "ok": true,
+      "run": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185006-d725-research-container",
+      "helpers": [],
+      "orphans_reaped": [],
+      "purged": true,
+      "evidence": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185006-d725-research-container/evidence",
+      "evidence_files": 5
+    },
+    "stop-verification-20261106-185045-32d3-research-container": {
+      "ok": true,
+      "run": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container",
+      "helpers": [],
+      "orphans_reaped": [],
+      "purged": true,
+      "evidence": "/home/runner/work/_temp/research-harness-container.rd28GD/verify/20261106-185045-32d3-research-container/evidence",
+      "evidence_files": 6
+    }
+  },
+  "image": {
+    "id": "sha256:c5ca6833858757e43f10ebd74897a8e5e89fdf6efa08aaf1f60f9f5a366be160",
+    "repo_digests": [],
+    "os": "linux",
+    "architecture": "amd64",
+    "size": 1587367435
+  },
+  "source": {
+    "checkout_sha": "e88179608fd37b852a32fe193725df6f57e2f56b",
+    "source_tree": "9c3559af353fd052486ed7eb8e5c507ba5271f17",
+    "sdist_sha256": "5c213831c243bf72af9c505c539b28476a3cc8c121dc49eb626224e63225935c",
+    "dockerfile_sha256": "2c4e52e46cb082a0fb31639b8a0061ed19472c4f7d9c65ab213d09c16a7cbcd3",
+    "uv_lock_sha256": "16ddd3b2915bbe9ba6c22d03fa1682e74e2ff33682a3a2f394125099fb884ec4",
+    "files": [
+      {
+        "distribution": "openhands-agent-server",
+        "path": "openhands/agent_server/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "distribution": "openhands-agent-server",
+        "path": "openhands/agent_server/__main__.py",
+        "sha256": "1663cb43390f410721857939349b9f9ef58c3ac467a46a0ae4caffb9ee597120"
+      },
+      {
+        "distribution": "openhands-agent-server",
+        "path": "openhands/agent_server/mcp_router.py",
+        "sha256": "e06f661be499ed88d3c20484b1fd8c4061913dda201d8074125828a0e69774ec"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/research/__init__.py",
+        "sha256": "f72a19de2bbb74c3737f33bb3e49740f34aa69fbfcf8b562e182d8ac72037e19"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/research/__main__.py",
+        "sha256": "0ee5405bd0abacf0e303cfbe86639bfc0898bbdd52f878b3c1dc8b0885657074"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/research/runtime.py",
+        "sha256": "0e084daef71c697a33d9ccb5451b23a526cf5cc99868cd5af49fffaf79f8372b"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/__init__.py",
+        "sha256": "3ebae55902c7aceea070dd2c5535bc9b1994ae58b9f98234258428635affdfa7"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/_http_worker.py",
+        "sha256": "4b942163e40c6ce37b5a74476299c94576c1315072f55bfb9f63c3006f8c717b"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/agentmemory.py",
+        "sha256": "c34a7fcbcd7966c3d2e29dd7c2094805c9ddaae46e77f34df9f3a0fca2e7a07b"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/artifacts.py",
+        "sha256": "5eb242b4ff37643349613a1d632b4d731869d3a7a53a076d4e3b5567a87abf8c"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/cli.py",
+        "sha256": "67aa0c08e58c711553f630c227d19ff2ac786f0f3be62b10b79e4189e8d9a1a8"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/commands.py",
+        "sha256": "ec38abefc991eebacda44d160799c431bf9e262af20e3d17ce4c384023856b16"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/condenser.py",
+        "sha256": "bb2b201d0d489780975fdcb93ce9ae32a180ef85b7419c9871ce4abac52e60c7"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/context.py",
+        "sha256": "fbcd4dca6fe947c7d4544b489a3a9e557ca6adae6e4659e4a7519836b2935d6b"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/core.py",
+        "sha256": "10255f79e971382bd01ed8e86c86743a7679abcf7d1dc1cbbc61709f69ef0055"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/definition.py",
+        "sha256": "02eb4d156adcbfb29c50ff9c0b22a12c56c849369bd07713ce66edc4cd4dcb98"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/evaluation.py",
+        "sha256": "288913468a4f371bf3e78c8b64e42cffe4bf7b2583b5e71c5f906c86449f500b"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/fixture.py",
+        "sha256": "df483510a18020e4db815ab5a687bff003e1b82c75c6cb375316659d0c685647"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/hooks.py",
+        "sha256": "e5468db21a4e5b16b8e30bf63a555aa96534c7dc1829d5480c40b45a1b05d387"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/hosts.py",
+        "sha256": "1a063f489c92b36e32b1f353389ebc11f929e27dd60eac84b0fe8e3f62d63af1"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/inventory.py",
+        "sha256": "a13ef9f5b079648326930c218037de104f98a5fc17dbbf585f1ca52cd019e0d2"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/mcp_server.py",
+        "sha256": "70746530fa7a34fc335a31cf6f8f8ddb78accec021a21fdab418506c3dca4d22"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/models.py",
+        "sha256": "9f506063bb12fcd03eaef85300d1a44c39bbbeb0519be6a480d65aea55aa4cc1"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/network.py",
+        "sha256": "a743dd75657e62b7ddf8bb8db3b1dddba1b15ad8699ff867ff1ef55912f79801"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/service.py",
+        "sha256": "7a8ab6b74a6b9bd571cb203c12b9f4917413fdbf00c1430ce324f8d1a5e8066b"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/session.py",
+        "sha256": "b0a7b99748970f9e69475e28064386cdf87fa77b50f5acbe62351f19d8d721ff"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/skills/research-review/SKILL.md",
+        "sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/snapshots.py",
+        "sha256": "f324c4b91248f3b79b5bcfe9579cccbe59d24945509b0a0e1f86b3a0b788916b"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/store.py",
+        "sha256": "02b5ed1f564137c1924dc3d7506a703fcd158ef36aef2a8d6efa376d8b3b1750"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/views.py",
+        "sha256": "059d392aacdfac1f9ec74efa8aa6a9a46066c91cec3c1a1f6d29be4d116882e1"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/workflow.py",
+        "sha256": "0ff041bff1cc362e8c70529d3336ba1b1e41d48d508a04fc70a8c6046137959b"
+      }
+    ]
+  },
+  "public_image_digest_lines": [
+    "#4 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+    "#4 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done",
+    "#13 [internal] load metadata for docker.io/library/debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#16 resolve docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c 0.0s done",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#19 FROM ghcr.io/astral-sh/uv:0.13.5@sha256:32a7bb39b496babbd997b0a39a4d66c126bdaf5661b302bf6f06abda8deca6ff",
+    "#19 resolve ghcr.io/astral-sh/uv:0.13.5@sha256:32a7bb39b496babbd997b0a39a4d66c126bdaf5661b302bf6f06abda8deca6ff 0.0s done",
+    "#20 [pip-revendored 1/3] FROM docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd",
+    "#20 resolve docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd 0.0s done",
+    "#21 [python-node-runtime 1/7] FROM docker.io/library/debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2",
+    "#21 resolve docker.io/library/debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2 0.0s done",
+    "#20 [pip-revendored 1/3] FROM docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd",
+    "#22 [node-runtime 1/1] FROM docker.io/library/node:24.22.1-trixie-slim@sha256:89c5244bc22a9bc3287d89ebc7e49b9cb5bb84cd40e6175ac3421d5a9f68b95a",
+    "#22 resolve docker.io/library/node:24.22.1-trixie-slim@sha256:89c5244bc22a9bc3287d89ebc7e49b9cb5bb84cd40e6175ac3421d5a9f68b95a 0.0s done",
+    "#23 [python-runtime 1/1] FROM docker.io/library/python:3.13.15-slim-trixie@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b",
+    "#23 resolve docker.io/library/python:3.13.15-slim-trixie@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b 0.0s done",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#22 [node-runtime 1/1] FROM docker.io/library/node:24.22.1-trixie-slim@sha256:89c5244bc22a9bc3287d89ebc7e49b9cb5bb84cd40e6175ac3421d5a9f68b95a",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#20 [pip-revendored 1/3] FROM docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#16 [builder  1/10] FROM docker.io/library/python:3.13-bookworm@sha256:cc55e4ded9c95f6ce2133b3d096db43f214d280c2a8af65d83e246c8fa7d168c",
+    "#20 [pip-revendored 1/3] FROM docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd",
+    "#20 [pip-revendored 1/3] FROM docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd",
+    "#20 [pip-revendored 1/3] FROM docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd",
+    "#20 [pip-revendored 1/3] FROM docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd",
+    "#20 [pip-revendored 1/3] FROM docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd",
+    "#20 [pip-revendored 1/3] FROM docker.io/library/python:3.13.17-trixie@sha256:d5a186865324088bd10d1671801b42297a8fe3f8059143fb22b2e2b776ffa6dd"
+  ],
+  "container_before_restart": {
+    "id": "32d7bad74d1dff2ce9734fa2c22ada9ea8b49d12caaf909e2bf89903303b4ba6",
+    "image": "sha256:c5ca6833858757e43f10ebd74897a8e5e89fdf6efa08aaf1f60f9f5a366be160",
+    "user": "openhands",
+    "labels": {
+      "org.openhands.research-acceptance.owner": "6763027b0df2eae3f6214b8f4b88ea38"
+    },
+    "state": {
+      "Dead": false,
+      "Error": "",
+      "ExitCode": 0,
+      "FinishedAt": "0001-01-01T00:00:00Z",
+      "OOMKilled": false,
+      "Paused": false,
+      "Pid": 7056,
+      "Restarting": false,
+      "Running": true,
+      "StartedAt": "2026-11-06T18:50:06.342957022Z",
+      "Status": "running"
+    },
+    "ports": {
+      "8000/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "32768"
+        }
+      ]
+    }
+  },
+  "installed": {
+    "uid": 10001,
+    "python": "/agent-server/.venv/bin/python",
+    "python_version": "3.13.17 (main, Oct 21 2026, 17:49:22) [Clang 23.1.3 ]",
+    "site_packages": "/agent-server/.venv/lib/python3.13/site-packages",
+    "distributions": {
+      "openhands-sdk": {
+        "version": "1.60.1",
+        "direct_url": {
+          "url": "file:///agent-server/openhands-sdk",
+          "dir_info": {
+            "editable": false
+          }
+        }
+      },
+      "openhands-tools": {
+        "version": "1.60.1",
+        "direct_url": {
+          "url": "file:///agent-server/openhands-tools",
+          "dir_info": {
+            "editable": false
+          }
+        }
+      },
+      "openhands-workspace": {
+        "version": "1.60.1",
+        "direct_url": {
+          "url": "file:///agent-server/openhands-workspace",
+          "dir_info": {
+            "editable": false
+          }
+        }
+      },
+      "openhands-agent-server": {
+        "version": "1.60.1",
+        "direct_url": {
+          "url": "file:///agent-server/openhands-agent-server",
+          "dir_info": {
+            "editable": false
+          }
+        }
+      }
+    },
+    "verified_files": [
+      {
+        "distribution": "openhands-agent-server",
+        "path": "openhands/agent_server/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/agent_server/__init__.py"
+      },
+      {
+        "distribution": "openhands-agent-server",
+        "path": "openhands/agent_server/__main__.py",
+        "sha256": "1663cb43390f410721857939349b9f9ef58c3ac467a46a0ae4caffb9ee597120",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/agent_server/__main__.py"
+      },
+      {
+        "distribution": "openhands-agent-server",
+        "path": "openhands/agent_server/mcp_router.py",
+        "sha256": "e06f661be499ed88d3c20484b1fd8c4061913dda201d8074125828a0e69774ec",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/agent_server/mcp_router.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/research/__init__.py",
+        "sha256": "f72a19de2bbb74c3737f33bb3e49740f34aa69fbfcf8b562e182d8ac72037e19",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/research/__init__.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/research/__main__.py",
+        "sha256": "0ee5405bd0abacf0e303cfbe86639bfc0898bbdd52f878b3c1dc8b0885657074",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/research/__main__.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/research/runtime.py",
+        "sha256": "0e084daef71c697a33d9ccb5451b23a526cf5cc99868cd5af49fffaf79f8372b",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/research/runtime.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/__init__.py",
+        "sha256": "3ebae55902c7aceea070dd2c5535bc9b1994ae58b9f98234258428635affdfa7",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/__init__.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/_http_worker.py",
+        "sha256": "4b942163e40c6ce37b5a74476299c94576c1315072f55bfb9f63c3006f8c717b",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/_http_worker.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/agentmemory.py",
+        "sha256": "c34a7fcbcd7966c3d2e29dd7c2094805c9ddaae46e77f34df9f3a0fca2e7a07b",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/agentmemory.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/artifacts.py",
+        "sha256": "5eb242b4ff37643349613a1d632b4d731869d3a7a53a076d4e3b5567a87abf8c",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/artifacts.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/cli.py",
+        "sha256": "67aa0c08e58c711553f630c227d19ff2ac786f0f3be62b10b79e4189e8d9a1a8",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/cli.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/commands.py",
+        "sha256": "ec38abefc991eebacda44d160799c431bf9e262af20e3d17ce4c384023856b16",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/commands.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/condenser.py",
+        "sha256": "bb2b201d0d489780975fdcb93ce9ae32a180ef85b7419c9871ce4abac52e60c7",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/condenser.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/context.py",
+        "sha256": "fbcd4dca6fe947c7d4544b489a3a9e557ca6adae6e4659e4a7519836b2935d6b",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/context.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/core.py",
+        "sha256": "10255f79e971382bd01ed8e86c86743a7679abcf7d1dc1cbbc61709f69ef0055",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/core.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/definition.py",
+        "sha256": "02eb4d156adcbfb29c50ff9c0b22a12c56c849369bd07713ce66edc4cd4dcb98",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/definition.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/evaluation.py",
+        "sha256": "288913468a4f371bf3e78c8b64e42cffe4bf7b2583b5e71c5f906c86449f500b",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/evaluation.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/fixture.py",
+        "sha256": "df483510a18020e4db815ab5a687bff003e1b82c75c6cb375316659d0c685647",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/fixture.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/hooks.py",
+        "sha256": "e5468db21a4e5b16b8e30bf63a555aa96534c7dc1829d5480c40b45a1b05d387",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/hooks.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/hosts.py",
+        "sha256": "1a063f489c92b36e32b1f353389ebc11f929e27dd60eac84b0fe8e3f62d63af1",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/hosts.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/inventory.py",
+        "sha256": "a13ef9f5b079648326930c218037de104f98a5fc17dbbf585f1ca52cd019e0d2",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/inventory.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/mcp_server.py",
+        "sha256": "70746530fa7a34fc335a31cf6f8f8ddb78accec021a21fdab418506c3dca4d22",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/mcp_server.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/models.py",
+        "sha256": "9f506063bb12fcd03eaef85300d1a44c39bbbeb0519be6a480d65aea55aa4cc1",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/models.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/network.py",
+        "sha256": "a743dd75657e62b7ddf8bb8db3b1dddba1b15ad8699ff867ff1ef55912f79801",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/network.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/service.py",
+        "sha256": "7a8ab6b74a6b9bd571cb203c12b9f4917413fdbf00c1430ce324f8d1a5e8066b",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/service.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/session.py",
+        "sha256": "b0a7b99748970f9e69475e28064386cdf87fa77b50f5acbe62351f19d8d721ff",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/session.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/skills/research-review/SKILL.md",
+        "sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/skills/research-review/SKILL.md"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/snapshots.py",
+        "sha256": "f324c4b91248f3b79b5bcfe9579cccbe59d24945509b0a0e1f86b3a0b788916b",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/snapshots.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/store.py",
+        "sha256": "02b5ed1f564137c1924dc3d7506a703fcd158ef36aef2a8d6efa376d8b3b1750",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/store.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/views.py",
+        "sha256": "059d392aacdfac1f9ec74efa8aa6a9a46066c91cec3c1a1f6d29be4d116882e1",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/views.py"
+      },
+      {
+        "distribution": "openhands-tools",
+        "path": "openhands/tools/research_harness/workflow.py",
+        "sha256": "0ff041bff1cc362e8c70529d3336ba1b1e41d48d508a04fc70a8c6046137959b",
+        "installed": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/workflow.py"
+      }
+    ],
+    "module_origins": {
+      "openhands.research": "/agent-server/.venv/lib/python3.13/site-packages/openhands/research/__init__.py",
+      "openhands.tools.research_harness": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/__init__.py",
+      "openhands.tools.research_harness.agentmemory": "/agent-server/.venv/lib/python3.13/site-packages/openhands/tools/research_harness/agentmemory.py",
+      "openhands.agent_server": "/agent-server/.venv/lib/python3.13/site-packages/openhands/agent_server/__init__.py"
+    },
+    "skill_sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020"
+  },
+  "container_after_restart": {
+    "id": "32d7bad74d1dff2ce9734fa2c22ada9ea8b49d12caaf909e2bf89903303b4ba6",
+    "image": "sha256:c5ca6833858757e43f10ebd74897a8e5e89fdf6efa08aaf1f60f9f5a366be160",
+    "user": "openhands",
+    "labels": {
+      "org.openhands.research-acceptance.owner": "6763027b0df2eae3f6214b8f4b88ea38"
+    },
+    "state": {
+      "Dead": false,
+      "Error": "",
+      "ExitCode": 0,
+      "FinishedAt": "2026-11-06T18:50:45.071165303Z",
+      "OOMKilled": false,
+      "Paused": false,
+      "Pid": 7374,
+      "Restarting": false,
+      "Running": true,
+      "StartedAt": "2026-11-06T18:50:45.162631839Z",
+      "Status": "running"
+    },
+    "ports": {
+      "8000/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "32769"
+        }
+      ]
+    }
+  },
+  "checks_passed": true,
+  "cleanup": {
+    "errors": [],
+    "container_removed": true,
+    "port_closed": true,
+    "image_tag_removed": true,
+    "verification_profiles_removed": [
+      "20261106-185006-d725-research-container",
+      "20261106-185045-32d3-research-container"
+    ],
+    "private_state_removed": true,
+    "ok": true
+  },
+  "finished_at": "2026-11-06T18:51:09.927847+00:00"
+}

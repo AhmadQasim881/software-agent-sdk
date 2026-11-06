@@ -213,6 +213,12 @@ This is a two-case acceptance check, not a general semantic quality benchmark.
 
 The repository's implementation and evidence are independently reviewable:
 
+- [Latest hosted runtime acceptance](../.pr/research-harness-runtime-hosted.md)
+  records 575 passing regressions, fresh installed-wheel and actual frozen
+  CLI/hook/MCP checks, successful HTTP 200 observations through both runtimes,
+  and the separate passing container gate with eight driver tests and actual
+  memory recovery across restart. Both workflows tested the current
+  implementation commit `e88179608fd37b852a32fe193725df6f57e2f56b`.
 - [Memory and runtime completion](../.pr/research-harness-runtime-completion.md)
   records 574 local regression tests plus the acceptance-driver regression, the
   corrected default context query, POSIX process-group cleanup, and actual final
@@ -246,7 +252,8 @@ The repository's implementation and evidence are independently reviewable:
   accepted isolated MCP configuration and a client initialization failure before
   any model completion or tool call.
 
-The hosted workflow closed the fresh-install and successful live GitHub gates.
+The hosted workflow closed the fresh-install, Linux frozen runtime and successful
+live GitHub gates, including an actual request through the frozen HTTP worker.
 Local requests remain blocked by this workspace's DNS environment; the retained
 hosted report identifies the separate runtime and actual successful response.
 No provider API credential is present for the OpenHands live semantic check.

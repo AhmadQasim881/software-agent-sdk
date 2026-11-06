@@ -427,13 +427,21 @@ facts without vulnerability classification or exploit reproduction.
 
 ## 8. Verification
 
+The [latest hosted acceptance](../.pr/research-harness-runtime-hosted.md) passed
+**575 tests**, a fresh installed wheel, an actual frozen executable and real HTTP
+200 public metadata requests through both installed runtimes. Its separate
+container workflow passed **eight driver tests**, four non-editable workspace
+packages and real MCP memory recovery across restart. Both workflows tested
+implementation commit `e88179608fd37b852a32fe193725df6f57e2f56b`; their runtime
+reports are retained in the repository.
+
 The [runtime completion](../.pr/research-harness-runtime-completion.md) passed
 **574 local regression tests**, an additional acceptance-driver regression and
 real final-binary checks, with retained memory, MCP, hook, server and cleanup
 evidence. It also adds frozen executable acceptance to the installed-wheel
 workflow.
 
-The [hosted acceptance run](../.pr/research-harness-hosted-acceptance.md) passed all
+The earlier [hosted acceptance run](../.pr/research-harness-hosted-acceptance.md) passed all
 411 tests, built and installed a standard tools wheel in a fresh locked runtime,
 and verified actual CLI/MCP memory operations plus a live GitHub response.
 The separate [container run](../.pr/research-harness-container-acceptance.md)
@@ -472,10 +480,11 @@ credential variable. It records actual skill invocation, completion, cost, and
 cleanup; missing credentials produce a blocked result with zero calls. This is
 a two-case acceptance smoke test, not a general skill-quality benchmark.
 
-The local public GitHub attempt failed at DNS resolution and was recorded as
-failed. The hosted acceptance run later made one actual request through the
-installed harness and received HTTP 200 at 2026-11-06 16:57:05 UTC. Its report
-retains the observed metadata, response digest and installation provenance.
+Local public GitHub attempts failed at DNS resolution and were recorded as
+failed. The latest hosted acceptance made one actual request through the
+installed wheel and one through the frozen executable; both returned HTTP 200
+on 2026-11-06. The retained reports include actual metadata, response digests and
+installation provenance.
 
 For extensions, add strict schemas, shared dispatch, bounded observations with
 provenance, and appropriate success/failure/partial/cancellation tests. Keep

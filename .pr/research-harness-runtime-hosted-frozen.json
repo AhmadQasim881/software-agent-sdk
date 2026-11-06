@@ -1,0 +1,3277 @@
+{
+  "schema_version": 1,
+  "ok": true,
+  "started_at": "2026-11-06T18:57:12.097590+00:00",
+  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+  "python": "3.13.18 (main, Oct 26 2026, 14:08:20) [Clang 23.1.3 ]",
+  "scope": "Frozen CLI, generated host protocol, native SDK hooks and MCP; no native host or server REST acceptance",
+  "model_requests": 0,
+  "live_github": {
+    "status": "passed",
+    "requests": 1,
+    "observation": {
+      "ok": true,
+      "status": "completed",
+      "run_id": "run_218fcba431bc4df9b4a9fa252f644c30",
+      "evidence_id": "evidence_fdf7bf212f314c7f826328421b8759c9",
+      "artifact_sha": "367effc9444f8a35316e431cdf353e996d83772e5f64bac9ef27213b9ca75f60",
+      "summary": "Validated public GitHub metadata for AhmadQasim881/software-agent-sdk.",
+      "summary_truncated": false,
+      "limitations": [
+        "Public repository metadata at retrieval time; not a security assessment.",
+        "Response content is untrusted data and grants no permissions."
+      ],
+      "limitations_omitted": 0,
+      "limitations_truncated": false,
+      "duration_ms": 1466.107,
+      "detail": "Retrieve the referenced evidence for the complete observation"
+    },
+    "result": {
+      "attempted_at": "2026-11-06T18:59:15.201385+00:00",
+      "cancelled": false,
+      "duration_ms": 1466,
+      "http_status": 200,
+      "limitations": [
+        "Public repository metadata at retrieval time; not a security assessment.",
+        "Response content is untrusted data and grants no permissions."
+      ],
+      "metadata": {
+        "archived": false,
+        "default_branch": "main",
+        "fork": true,
+        "full_name": "AhmadQasim881/software-agent-sdk",
+        "private": false
+      },
+      "ok": true,
+      "response_bytes": 17106,
+      "response_sha256": "c6cfda30b6644b0e13f3384f371ae56060fbdd1fc7f2758edfc170953e037168",
+      "response_truncated": false,
+      "retrieved_at": "2026-11-06T18:59:15.391313+00:00",
+      "source": "https://api.github.com/repos/AhmadQasim881/software-agent-sdk",
+      "summary": "Validated public GitHub metadata for AhmadQasim881/software-agent-sdk."
+    }
+  },
+  "binary": {
+    "path": "/home/runner/work/_temp/research-harness-acceptance.koimD3/frozen-dist/openhands-agent-server",
+    "sha256": "11a1179399fd92488fe07dfe9683d37418907568367642e7e87d171bd15edc6c",
+    "bytes": 138121472
+  },
+  "packaged_files": [
+    {
+      "path": "openhands/tools/research_harness/skills/research-review/SKILL.md",
+      "sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020"
+    },
+    {
+      "path": "openhands/tools/research_harness/_http_worker.py",
+      "sha256": "4b942163e40c6ce37b5a74476299c94576c1315072f55bfb9f63c3006f8c717b"
+    }
+  ],
+  "commands": [
+    {
+      "label": "schema",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.374,
+      "returncode": 0,
+      "stdout_bytes": 14261,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "schemas": {
+          "thread.create": {
+            "$defs": {
+              "JsonValue": {}
+            },
+            "additionalProperties": false,
+            "properties": {
+              "question": {
+                "maxLength": 4096,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Question",
+                "type": "string"
+              },
+              "conditions": {
+                "additionalProperties": {
+                  "$ref": "#/$defs/JsonValue"
+                },
+                "title": "Conditions",
+                "type": "object"
+              },
+              "next_action": {
+                "default": "",
+                "maxLength": 4096,
+                "title": "Next Action",
+                "type": "string"
+              }
+            },
+            "required": [
+              "question"
+            ],
+            "title": "ThreadCreate",
+            "type": "object"
+          },
+          "thread.get": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "thread_id"
+            ],
+            "title": "ThreadReference",
+            "type": "object"
+          },
+          "thread.list": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 20,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "maximum": 9223372036854775807,
+                "minimum": 0,
+                "title": "Offset",
+                "type": "integer"
+              }
+            },
+            "title": "Page",
+            "type": "object"
+          },
+          "thread.update": {
+            "$defs": {
+              "JsonValue": {}
+            },
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "expected_version": {
+                "minimum": 1,
+                "title": "Expected Version",
+                "type": "integer"
+              },
+              "question": {
+                "anyOf": [
+                  {
+                    "maxLength": 4096,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Question"
+              },
+              "conditions": {
+                "anyOf": [
+                  {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/JsonValue"
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Conditions"
+              },
+              "assessment": {
+                "anyOf": [
+                  {
+                    "maxLength": 16384,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Assessment"
+              },
+              "next_action": {
+                "anyOf": [
+                  {
+                    "maxLength": 4096,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Next Action"
+              },
+              "status": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "active",
+                      "closed"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Status"
+              },
+              "reopen_condition": {
+                "anyOf": [
+                  {
+                    "maxLength": 4096,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Reopen Condition"
+              },
+              "closure_reason": {
+                "anyOf": [
+                  {
+                    "maxLength": 4096,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Closure Reason"
+              }
+            },
+            "required": [
+              "thread_id",
+              "expected_version"
+            ],
+            "title": "ThreadUpdate",
+            "type": "object"
+          },
+          "thread.history": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 20,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "maximum": 9223372036854775807,
+                "minimum": 0,
+                "title": "Offset",
+                "type": "integer"
+              },
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "thread_id"
+            ],
+            "title": "ThreadPage",
+            "type": "object"
+          },
+          "run.get": {
+            "additionalProperties": false,
+            "properties": {
+              "run_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Run Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "run_id"
+            ],
+            "title": "RunReference",
+            "type": "object"
+          },
+          "run.list": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 20,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "maximum": 9223372036854775807,
+                "minimum": 0,
+                "title": "Offset",
+                "type": "integer"
+              },
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "thread_id"
+            ],
+            "title": "ThreadPage",
+            "type": "object"
+          },
+          "evidence.get": {
+            "additionalProperties": false,
+            "properties": {
+              "evidence_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Evidence Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "evidence_id"
+            ],
+            "title": "EvidenceReference",
+            "type": "object"
+          },
+          "evidence.list": {
+            "additionalProperties": false,
+            "properties": {
+              "limit": {
+                "default": 20,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "maximum": 9223372036854775807,
+                "minimum": 0,
+                "title": "Offset",
+                "type": "integer"
+              },
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "thread_id"
+            ],
+            "title": "ThreadPage",
+            "type": "object"
+          },
+          "inventory": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "max_files": {
+                "default": 500,
+                "maximum": 500,
+                "minimum": 1,
+                "title": "Max Files",
+                "type": "integer"
+              },
+              "max_file_bytes": {
+                "default": 262144,
+                "maximum": 262144,
+                "minimum": 1,
+                "title": "Max File Bytes",
+                "type": "integer"
+              },
+              "max_total_bytes": {
+                "default": 8388608,
+                "maximum": 8388608,
+                "minimum": 1,
+                "title": "Max Total Bytes",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "thread_id"
+            ],
+            "title": "Inventory",
+            "type": "object"
+          },
+          "github": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "repository": {
+                "maxLength": 140,
+                "minLength": 3,
+                "title": "Repository",
+                "type": "string"
+              }
+            },
+            "required": [
+              "thread_id",
+              "repository"
+            ],
+            "title": "GitHubMetadata",
+            "type": "object"
+          },
+          "fixture": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "thread_id"
+            ],
+            "title": "ThreadReference",
+            "type": "object"
+          },
+          "compare": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "before_sha": {
+                "maxLength": 64,
+                "minLength": 64,
+                "pattern": "^[0-9a-f]{64}$",
+                "title": "Before Sha",
+                "type": "string"
+              },
+              "after_sha": {
+                "maxLength": 64,
+                "minLength": 64,
+                "pattern": "^[0-9a-f]{64}$",
+                "title": "After Sha",
+                "type": "string"
+              }
+            },
+            "required": [
+              "thread_id",
+              "before_sha",
+              "after_sha"
+            ],
+            "title": "Compare",
+            "type": "object"
+          },
+          "query": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "artifact_sha": {
+                "maxLength": 64,
+                "minLength": 64,
+                "pattern": "^[0-9a-f]{64}$",
+                "title": "Artifact Sha",
+                "type": "string"
+              },
+              "module": {
+                "anyOf": [
+                  {
+                    "maxLength": 4096,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Module"
+              },
+              "name": {
+                "anyOf": [
+                  {
+                    "maxLength": 4096,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              },
+              "path": {
+                "anyOf": [
+                  {
+                    "maxLength": 4096,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Path"
+              },
+              "limit": {
+                "default": 20,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "thread_id",
+              "artifact_sha"
+            ],
+            "title": "Query",
+            "type": "object"
+          },
+          "context": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "max_bytes": {
+                "default": 8192,
+                "maximum": 16384,
+                "minimum": 512,
+                "title": "Max Bytes",
+                "type": "integer"
+              },
+              "evidence_limit": {
+                "default": 32,
+                "maximum": 50,
+                "minimum": 1,
+                "title": "Evidence Limit",
+                "type": "integer"
+              },
+              "query": {
+                "anyOf": [
+                  {
+                    "maxLength": 512,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Query"
+              },
+              "memory_limit": {
+                "default": 8,
+                "maximum": 20,
+                "minimum": 1,
+                "title": "Memory Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "thread_id"
+            ],
+            "title": "Context",
+            "type": "object"
+          },
+          "memory.remember": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "text": {
+                "maxLength": 8192,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Text",
+                "type": "string"
+              },
+              "source": {
+                "maxLength": 2048,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Source",
+                "type": "string"
+              },
+              "kind": {
+                "default": "note",
+                "enum": [
+                  "note",
+                  "decision",
+                  "constraint",
+                  "lesson"
+                ],
+                "title": "Kind",
+                "type": "string"
+              },
+              "tags": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "maxLength": 64,
+                      "minLength": 1,
+                      "pattern": "\\S",
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Tags"
+              },
+              "evidence_ids": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "maxLength": 128,
+                      "minLength": 1,
+                      "pattern": "\\S",
+                      "type": "string"
+                    },
+                    "maxItems": 32,
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Evidence Ids"
+              },
+              "importance": {
+                "default": 5,
+                "maximum": 10,
+                "minimum": 0,
+                "title": "Importance",
+                "type": "integer"
+              },
+              "pinned": {
+                "default": false,
+                "title": "Pinned",
+                "type": "boolean"
+              },
+              "expires_at": {
+                "anyOf": [
+                  {
+                    "maxLength": 64,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Expires At"
+              }
+            },
+            "required": [
+              "thread_id",
+              "text",
+              "source"
+            ],
+            "title": "MemoryRemember",
+            "type": "object"
+          },
+          "memory.get": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "memory_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Memory Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "thread_id",
+              "memory_id"
+            ],
+            "title": "MemoryReference",
+            "type": "object"
+          },
+          "memory.update": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "memory_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Memory Id",
+                "type": "string"
+              },
+              "expected_version": {
+                "minimum": 1,
+                "title": "Expected Version",
+                "type": "integer"
+              },
+              "text": {
+                "anyOf": [
+                  {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Text"
+              },
+              "source": {
+                "anyOf": [
+                  {
+                    "maxLength": 2048,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Source"
+              },
+              "kind": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "note",
+                      "decision",
+                      "constraint",
+                      "lesson"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Kind"
+              },
+              "tags": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "maxLength": 64,
+                      "minLength": 1,
+                      "pattern": "\\S",
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Tags"
+              },
+              "evidence_ids": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "maxLength": 128,
+                      "minLength": 1,
+                      "pattern": "\\S",
+                      "type": "string"
+                    },
+                    "maxItems": 32,
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Evidence Ids"
+              },
+              "importance": {
+                "anyOf": [
+                  {
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Importance"
+              },
+              "pinned": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Pinned"
+              },
+              "expires_at": {
+                "anyOf": [
+                  {
+                    "maxLength": 64,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Expires At"
+              },
+              "clear_expiry": {
+                "default": false,
+                "title": "Clear Expiry",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "thread_id",
+              "memory_id",
+              "expected_version"
+            ],
+            "title": "MemoryUpdate",
+            "type": "object"
+          },
+          "memory.forget": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "memory_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Memory Id",
+                "type": "string"
+              },
+              "expected_version": {
+                "minimum": 1,
+                "title": "Expected Version",
+                "type": "integer"
+              },
+              "reason": {
+                "maxLength": 4096,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Reason",
+                "type": "string"
+              }
+            },
+            "required": [
+              "thread_id",
+              "memory_id",
+              "expected_version",
+              "reason"
+            ],
+            "title": "MemoryForget",
+            "type": "object"
+          },
+          "memory.recall": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "query": {
+                "default": "",
+                "maxLength": 512,
+                "title": "Query",
+                "type": "string"
+              },
+              "kind": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "note",
+                      "decision",
+                      "constraint",
+                      "lesson"
+                    ],
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Kind"
+              },
+              "tags": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "maxLength": 64,
+                      "minLength": 1,
+                      "pattern": "\\S",
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Tags"
+              },
+              "limit": {
+                "default": 20,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "candidate_limit": {
+                "default": 200,
+                "maximum": 500,
+                "minimum": 1,
+                "title": "Candidate Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "thread_id"
+            ],
+            "title": "MemoryRecall",
+            "type": "object"
+          },
+          "memory.history": {
+            "additionalProperties": false,
+            "properties": {
+              "thread_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Thread Id",
+                "type": "string"
+              },
+              "memory_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "title": "Memory Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "maximum": 9223372036854775807,
+                "minimum": 0,
+                "title": "Offset",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "thread_id",
+              "memory_id"
+            ],
+            "title": "MemoryHistory",
+            "type": "object"
+          },
+          "artifact.read": {
+            "additionalProperties": false,
+            "properties": {
+              "digest": {
+                "maxLength": 64,
+                "minLength": 64,
+                "pattern": "^[0-9a-f]{64}$",
+                "title": "Digest",
+                "type": "string"
+              },
+              "offset": {
+                "default": 0,
+                "maximum": 9223372036854775807,
+                "minimum": 0,
+                "title": "Offset",
+                "type": "integer"
+              },
+              "limit": {
+                "default": 2048,
+                "maximum": 4096,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "digest"
+            ],
+            "title": "ArtifactRead",
+            "type": "object"
+          },
+          "events": {
+            "additionalProperties": false,
+            "properties": {
+              "after_seq": {
+                "default": 0,
+                "maximum": 9223372036854775807,
+                "minimum": 0,
+                "title": "After Seq",
+                "type": "integer"
+              },
+              "limit": {
+                "default": 50,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "thread_id": {
+                "anyOf": [
+                  {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Thread Id"
+              },
+              "run_id": {
+                "anyOf": [
+                  {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Run Id"
+              }
+            },
+            "title": "Events",
+            "type": "object"
+          },
+          "events.export": {
+            "additionalProperties": false,
+            "properties": {
+              "after_seq": {
+                "default": 0,
+                "maximum": 9223372036854775807,
+                "minimum": 0,
+                "title": "After Seq",
+                "type": "integer"
+              },
+              "limit": {
+                "default": 100,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "thread_id": {
+                "anyOf": [
+                  {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Thread Id"
+              }
+            },
+            "title": "EventsExport",
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "label": "schema",
+      "expected_code": 2,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.356,
+      "returncode": 2,
+      "stdout_bytes": 75,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": false,
+        "error": "Unknown operation; use schema to list operations"
+      }
+    },
+    {
+      "label": "thread.create",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.584,
+      "returncode": 0,
+      "stdout_bytes": 377,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "record": {
+          "id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+          "question": "Which display label did documentation review choose?",
+          "conditions": {},
+          "assessment": "",
+          "next_action": "",
+          "status": "active",
+          "reopen_condition": "",
+          "closure_reason": "",
+          "version": 1,
+          "created_at": "2026-11-06T18:57:27.343637+00:00",
+          "updated_at": "2026-11-06T18:57:27.343637+00:00"
+        }
+      }
+    },
+    {
+      "label": "inventory",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.28,
+      "returncode": 0,
+      "stdout_bytes": 965,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "run_id": "run_2d908bc969fb4373b0c294ba1576d445",
+        "evidence_id": "evidence_c777d3125bb2489bae44629d5c93e78a",
+        "artifact_sha": "1fe03292e4e304303dddf35ae70e520518e8a374241834e653ed6eeaf6e73c56",
+        "summary": "Recorded 1 imports from 1 parsed Python files; complete within scope",
+        "summary_truncated": false,
+        "limitations": [
+          "Inventory of static Python import declarations; no security verdict.",
+          "Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excl",
+          "Dynamic imports and runtime behavior are not evaluated; source is never executed. Tests directories are included.",
+          "Each file is observed separately; this is not an atomic repository snapshot. The time/cancellation budget is cooperative between"
+        ],
+        "limitations_omitted": 0,
+        "limitations_truncated": true,
+        "duration_ms": 0.301,
+        "detail": "Retrieve the referenced evidence for the complete observation"
+      }
+    },
+    {
+      "label": "memory.remember",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.307,
+      "returncode": 0,
+      "stdout_bytes": 533,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "record": {
+          "id": "memory_44cb99349de34e6fa021a500661d3687",
+          "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+          "text": "Display label: Cedar Lantern 47",
+          "source": "Owned frozen acceptance fixture",
+          "kind": "decision",
+          "tags": [
+            "display"
+          ],
+          "evidence_ids": [
+            "evidence_c777d3125bb2489bae44629d5c93e78a"
+          ],
+          "importance": 5,
+          "pinned": false,
+          "expires_at": null,
+          "status": "active",
+          "forget_reason": null,
+          "version": 1,
+          "created_at": "2026-11-06T18:57:37.924601+00:00",
+          "updated_at": "2026-11-06T18:57:37.924601+00:00"
+        }
+      }
+    },
+    {
+      "label": "memory.update",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.262,
+      "returncode": 0,
+      "stdout_bytes": 533,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "record": {
+          "id": "memory_44cb99349de34e6fa021a500661d3687",
+          "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+          "text": "Display label: Cedar Lantern 48",
+          "source": "Owned frozen acceptance fixture",
+          "kind": "decision",
+          "tags": [
+            "display"
+          ],
+          "evidence_ids": [
+            "evidence_c777d3125bb2489bae44629d5c93e78a"
+          ],
+          "importance": 5,
+          "pinned": false,
+          "expires_at": null,
+          "status": "active",
+          "forget_reason": null,
+          "version": 2,
+          "created_at": "2026-11-06T18:57:37.924601+00:00",
+          "updated_at": "2026-11-06T18:57:43.207340+00:00"
+        }
+      }
+    },
+    {
+      "label": "memory.update",
+      "expected_code": 2,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.299,
+      "returncode": 2,
+      "stdout_bytes": 73,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": false,
+        "error": "Memory version changed; reload before updating"
+      }
+    },
+    {
+      "label": "memory.get",
+      "expected_code": 2,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.224,
+      "returncode": 2,
+      "stdout_bytes": 101,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": false,
+        "error": "Invalid memory.get arguments at unexpected: Extra inputs are not permitted"
+      }
+    },
+    {
+      "label": "memory.get",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.246,
+      "returncode": 0,
+      "stdout_bytes": 533,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "record": {
+          "id": "memory_44cb99349de34e6fa021a500661d3687",
+          "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+          "text": "Display label: Cedar Lantern 48",
+          "source": "Owned frozen acceptance fixture",
+          "kind": "decision",
+          "tags": [
+            "display"
+          ],
+          "evidence_ids": [
+            "evidence_c777d3125bb2489bae44629d5c93e78a"
+          ],
+          "importance": 5,
+          "pinned": false,
+          "expires_at": null,
+          "status": "active",
+          "forget_reason": null,
+          "version": 2,
+          "created_at": "2026-11-06T18:57:37.924601+00:00",
+          "updated_at": "2026-11-06T18:57:43.207340+00:00"
+        }
+      }
+    },
+    {
+      "label": "memory.history",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.312,
+      "returncode": 0,
+      "stdout_bytes": 1096,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "records": [
+          {
+            "id": "memory_44cb99349de34e6fa021a500661d3687",
+            "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+            "text": "Display label: Cedar Lantern 47",
+            "source": "Owned frozen acceptance fixture",
+            "kind": "decision",
+            "tags": [
+              "display"
+            ],
+            "evidence_ids": [
+              "evidence_c777d3125bb2489bae44629d5c93e78a"
+            ],
+            "importance": 5,
+            "pinned": false,
+            "expires_at": null,
+            "status": "active",
+            "forget_reason": null,
+            "version": 1,
+            "created_at": "2026-11-06T18:57:37.924601+00:00",
+            "updated_at": "2026-11-06T18:57:37.924601+00:00"
+          },
+          {
+            "id": "memory_44cb99349de34e6fa021a500661d3687",
+            "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+            "text": "Display label: Cedar Lantern 48",
+            "source": "Owned frozen acceptance fixture",
+            "kind": "decision",
+            "tags": [
+              "display"
+            ],
+            "evidence_ids": [
+              "evidence_c777d3125bb2489bae44629d5c93e78a"
+            ],
+            "importance": 5,
+            "pinned": false,
+            "expires_at": null,
+            "status": "active",
+            "forget_reason": null,
+            "version": 2,
+            "created_at": "2026-11-06T18:57:37.924601+00:00",
+            "updated_at": "2026-11-06T18:57:43.207340+00:00"
+          }
+        ],
+        "offset": 0,
+        "next_offset": 2,
+        "has_more": false
+      }
+    },
+    {
+      "label": "thread.create",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.352,
+      "returncode": 0,
+      "stdout_bytes": 341,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "record": {
+          "id": "thread_d1511c582c184b839a5b50c8840346a5",
+          "question": "Separate fixture",
+          "conditions": {},
+          "assessment": "",
+          "next_action": "",
+          "status": "active",
+          "reopen_condition": "",
+          "closure_reason": "",
+          "version": 1,
+          "created_at": "2026-11-06T18:58:09.590802+00:00",
+          "updated_at": "2026-11-06T18:58:09.590802+00:00"
+        }
+      }
+    },
+    {
+      "label": "memory.remember",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.289,
+      "returncode": 0,
+      "stdout_bytes": 458,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "record": {
+          "id": "memory_d0c2bb429a5e49dc8f92fb9d23e4dc95",
+          "thread_id": "thread_d1511c582c184b839a5b50c8840346a5",
+          "text": "Display label: Cedar Lantern 48",
+          "source": "Other thread",
+          "kind": "note",
+          "tags": [],
+          "evidence_ids": [],
+          "importance": 5,
+          "pinned": false,
+          "expires_at": null,
+          "status": "active",
+          "forget_reason": null,
+          "version": 1,
+          "created_at": "2026-11-06T18:58:14.901855+00:00",
+          "updated_at": "2026-11-06T18:58:14.901855+00:00"
+        }
+      }
+    },
+    {
+      "label": "memory.recall",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.287,
+      "returncode": 0,
+      "stdout_bytes": 1643,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "query": "Display label",
+        "records": [
+          {
+            "record": {
+              "id": "memory_44cb99349de34e6fa021a500661d3687",
+              "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+              "text": "Display label: Cedar Lantern 48",
+              "source": "Owned frozen acceptance fixture",
+              "kind": "decision",
+              "tags": [
+                "display"
+              ],
+              "evidence_ids": [
+                "evidence_c777d3125bb2489bae44629d5c93e78a"
+              ],
+              "importance": 5,
+              "pinned": false,
+              "expires_at": null,
+              "status": "active",
+              "forget_reason": null,
+              "version": 2,
+              "created_at": "2026-11-06T18:57:37.924601+00:00",
+              "updated_at": "2026-11-06T18:57:43.207340+00:00"
+            },
+            "score": 0.04918032786885246,
+            "lexical_similarity": 0.6669729688499155,
+            "matched_query": true,
+            "selection_reason": "literal_match"
+          }
+        ],
+        "policy": "agentmemory-lexical/1",
+        "as_of": "2026-11-06T18:58:20.222961+00:00",
+        "scope": {
+          "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+          "kind": null,
+          "tags": [],
+          "tag_match": "all exact case-folded tags",
+          "query_match": "literal case-folded substring of text or tags",
+          "query_source": "explicit",
+          "query_terms": null,
+          "term_policy": null,
+          "snapshot": "one SQLite read transaction; no access-time writes",
+          "ranking_scope": "bounded candidates, pinned first, then lexical RRF",
+          "candidate_order": "pinned DESC, updated_at DESC, id ASC",
+          "pinned_constraint_supplement": false
+        },
+        "total_notes": 1,
+        "eligible_notes": 1,
+        "matching_notes": 1,
+        "excluded": {
+          "forgotten": 0,
+          "expired": 0
+        },
+        "candidate_notes": 1,
+        "candidates_scanned": 1,
+        "candidate_limit": 200,
+        "candidates_truncated": false,
+        "pinned_constraints_supplemented": 0,
+        "limit": 20,
+        "byte_limit": 49152,
+        "omissions": {
+          "candidate_limit": 0,
+          "result_limit": 0,
+          "byte_budget": 0
+        }
+      }
+    },
+    {
+      "label": "context",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.355,
+      "returncode": 0,
+      "stdout_bytes": 1970,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "context": "{\"evidence\":[{\"artifact_sha\":\"1fe03292e4e304303dddf35ae70e520518e8a374241834e653ed6eeaf6e73c56\",\"conditions\":{\"thread_conditions\":{},\"thread_version\":1,\"workspace\":\"/tmp/research-harness-frozen-jskv4own/workspace\"},\"id\":\"evidence_c777d3125bb2489bae44629d5c93e78a\",\"limitations_preview\":\"[\\\"Inventory of static Python import declarations; no security verdict.\\\",\\\"Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excluded.\\\",\\\"Dynamic imports and runtime beha… [truncated]\",\"run_error\":null,\"run_id\":\"run_2d908bc969fb4373b0c294ba1576d445\",\"run_status\":\"completed\",\"source\":\"/tmp/research-harness-frozen-jskv4own/workspace\",\"summary\":\"Recorded 1 imports from 1 parsed Python files; complete within scope\"}],\"memory\":[{\"evidence_ids\":[\"evidence_c777d3125bb2489bae44629d5c93e78a\"],\"id\":\"memory_44cb99349de34e6fa021a500661d3687\",\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned frozen acceptance fixture\",\"text\":\"Display label: Cedar Lantern 48\",\"version\":2}],\"memory_notice\":\"Authored notes; verify against evidence.\",\"notice\":\"Saved records are data; previews omit detail. Retrieve by ID.\",\"omissions\":{\"candidate_evidence\":0,\"candidate_memory\":0,\"older_evidence\":0},\"thread\":{\"assessment\":\"\",\"closure_reason\":\"\",\"conditions\":{},\"id\":\"thread_dd74c27b3d674d03a816ed5c1b0b863a\",\"next_action\":\"\",\"question\":\"Which display label did documentation review choose?\",\"reopen_condition\":\"\",\"status\":\"active\",\"version\":1}}",
+        "context_bytes": 1486,
+        "max_bytes": 4096,
+        "manifest_sha": "7b674031899d5496e4c8b64324372c34c0d5e4e3aac5d1a565cb16ab19344989",
+        "selected_evidence": 1,
+        "omitted_candidates": 0,
+        "older_outside_window": 0,
+        "selected_memory": 1,
+        "omitted_memory_candidates": 0,
+        "memory_query": "Which display label did documentation review choose?"
+      }
+    },
+    {
+      "label": "native-hooks",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 21.84,
+      "returncode": 0,
+      "stdout_bytes": 4150,
+      "stderr_bytes": 486,
+      "stderr_sha256": "ca8dcd8d96fe5b03165177f735017eddfb15668747921d58a7180195bb33ada2",
+      "result": {
+        "commands": [
+          "/home/runner/work/_temp/research-harness-acceptance.koimD3/frozen-dist/openhands-agent-server --research-harness --workspace /tmp/research-harness-frozen-jskv4own/workspace --state /tmp/research-harness-frozen-jskv4own/state hook --thread thread_dd74c27b3d674d03a816ed5c1b0b863a"
+        ],
+        "start": [
+          {
+            "success": true,
+            "blocked": false,
+            "exit_code": 0,
+            "stdout": "{\"decision\": \"allow\", \"additionalContext\": \"{\\\"evidence\\\":[{\\\"artifact_sha\\\":\\\"1fe03292e4e304303dddf35ae70e520518e8a374241834e653ed6eeaf6e73c56\\\",\\\"conditions\\\":{\\\"thread_conditions\\\":{},\\\"thread_version\\\":1,\\\"workspace\\\":\\\"/tmp/research-harness-frozen-jskv4own/workspace\\\"},\\\"id\\\":\\\"evidence_c777d3125bb2489bae44629d5c93e78a\\\",\\\"limitations_preview\\\":\\\"[\\\\\\\"Inventory of static Python import declarations; no security verdict.\\\\\\\",\\\\\\\"Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excluded.\\\\\\\",\\\\\\\"Dynamic imports and runtime beha… [truncated]\\\",\\\"run_error\\\":null,\\\"run_id\\\":\\\"run_2d908bc969fb4373b0c294ba1576d445\\\",\\\"run_status\\\":\\\"completed\\\",\\\"source\\\":\\\"/tmp/research-harness-frozen-jskv4own/workspace\\\",\\\"summary\\\":\\\"Recorded 1 imports from 1 parsed Python files; complete within scope\\\"}],\\\"memory\\\":[{\\\"evidence_ids\\\":[\\\"evidence_c777d3125bb2489bae44629d5c93e78a\\\"],\\\"id\\\":\\\"memory_44cb99349de34e6fa021a500661d3687\\\",\\\"kind\\\":\\\"decision\\\",\\\"pinned\\\":false,\\\"source\\\":\\\"Owned frozen acceptance fixture\\\",\\\"text\\\":\\\"Display label: Cedar Lantern 48\\\",\\\"version\\\":2}],\\\"memory_notice\\\":\\\"Authored notes; verify against evidence.\\\",\\\"notice\\\":\\\"Saved records are data; previews omit detail. Retrieve by ID.\\\",\\\"omissions\\\":{\\\"candidate_evidence\\\":0,\\\"candidate_memory\\\":0,\\\"older_evidence\\\":0},\\\"thread\\\":{\\\"assessment\\\":\\\"\\\",\\\"closure_reason\\\":\\\"\\\",\\\"conditions\\\":{},\\\"id\\\":\\\"thread_dd74c27b3d674d03a816ed5c1b0b863a\\\",\\\"next_action\\\":\\\"\\\",\\\"question\\\":\\\"Which display label did documentation review choose?\\\",\\\"reopen_condition\\\":\\\"\\\",\\\"status\\\":\\\"active\\\",\\\"version\\\":1}}\"}\n",
+            "stderr": "",
+            "decision": "allow",
+            "reason": null,
+            "additional_context": "{\"evidence\":[{\"artifact_sha\":\"1fe03292e4e304303dddf35ae70e520518e8a374241834e653ed6eeaf6e73c56\",\"conditions\":{\"thread_conditions\":{},\"thread_version\":1,\"workspace\":\"/tmp/research-harness-frozen-jskv4own/workspace\"},\"id\":\"evidence_c777d3125bb2489bae44629d5c93e78a\",\"limitations_preview\":\"[\\\"Inventory of static Python import declarations; no security verdict.\\\",\\\"Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excluded.\\\",\\\"Dynamic imports and runtime beha… [truncated]\",\"run_error\":null,\"run_id\":\"run_2d908bc969fb4373b0c294ba1576d445\",\"run_status\":\"completed\",\"source\":\"/tmp/research-harness-frozen-jskv4own/workspace\",\"summary\":\"Recorded 1 imports from 1 parsed Python files; complete within scope\"}],\"memory\":[{\"evidence_ids\":[\"evidence_c777d3125bb2489bae44629d5c93e78a\"],\"id\":\"memory_44cb99349de34e6fa021a500661d3687\",\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned frozen acceptance fixture\",\"text\":\"Display label: Cedar Lantern 48\",\"version\":2}],\"memory_notice\":\"Authored notes; verify against evidence.\",\"notice\":\"Saved records are data; previews omit detail. Retrieve by ID.\",\"omissions\":{\"candidate_evidence\":0,\"candidate_memory\":0,\"older_evidence\":0},\"thread\":{\"assessment\":\"\",\"closure_reason\":\"\",\"conditions\":{},\"id\":\"thread_dd74c27b3d674d03a816ed5c1b0b863a\",\"next_action\":\"\",\"question\":\"Which display label did documentation review choose?\",\"reopen_condition\":\"\",\"status\":\"active\",\"version\":1}}",
+            "error": null,
+            "async_started": false
+          }
+        ],
+        "allowed": true,
+        "allow_codes": [
+          0
+        ],
+        "denied": false,
+        "deny_codes": [
+          2
+        ],
+        "invalid": false,
+        "invalid_codes": [
+          2
+        ]
+      }
+    },
+    {
+      "label": "host-config",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.271,
+      "returncode": 0,
+      "stdout_bytes": 267,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "host": "claude-code",
+        "destination": "/tmp/research-harness-frozen-jskv4own/claude-code",
+        "files": [
+          "claude-code.mcp.json",
+          "claude-code.settings.json",
+          "skills/research-review/SKILL.md",
+          "README.md",
+          "manifest.json"
+        ],
+        "configuration_installed": false
+      }
+    },
+    {
+      "label": "generated-host-hook",
+      "expected_code": 0,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 5.26,
+      "returncode": 0,
+      "stdout_bytes": 1713,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "hookSpecificOutput": {
+          "hookEventName": "SessionStart",
+          "additionalContext": "{\"evidence\":[{\"artifact_sha\":\"1fe03292e4e304303dddf35ae70e520518e8a374241834e653ed6eeaf6e73c56\",\"conditions\":{\"thread_conditions\":{},\"thread_version\":1,\"workspace\":\"/tmp/research-harness-frozen-jskv4own/workspace\"},\"id\":\"evidence_c777d3125bb2489bae44629d5c93e78a\",\"limitations_preview\":\"[\\\"Inventory of static Python import declarations; no security verdict.\\\",\\\"Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excluded.\\\",\\\"Dynamic imports and runtime beha… [truncated]\",\"run_error\":null,\"run_id\":\"run_2d908bc969fb4373b0c294ba1576d445\",\"run_status\":\"completed\",\"source\":\"/tmp/research-harness-frozen-jskv4own/workspace\",\"summary\":\"Recorded 1 imports from 1 parsed Python files; complete within scope\"}],\"memory\":[{\"evidence_ids\":[\"evidence_c777d3125bb2489bae44629d5c93e78a\"],\"id\":\"memory_44cb99349de34e6fa021a500661d3687\",\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned frozen acceptance fixture\",\"text\":\"Display label: Cedar Lantern 48\",\"version\":2}],\"memory_notice\":\"Authored notes; verify against evidence.\",\"notice\":\"Saved records are data; previews omit detail. Retrieve by ID.\",\"omissions\":{\"candidate_evidence\":0,\"candidate_memory\":0,\"older_evidence\":0},\"thread\":{\"assessment\":\"\",\"closure_reason\":\"\",\"conditions\":{},\"id\":\"thread_dd74c27b3d674d03a816ed5c1b0b863a\",\"next_action\":\"\",\"question\":\"Which display label did documentation review choose?\",\"reopen_condition\":\"\",\"status\":\"active\",\"version\":1}}"
+        }
+      }
+    },
+    {
+      "label": "live-github",
+      "expected_code": null,
+      "survivors_before_cleanup": [],
+      "cleanup": {
+        "terminated_pids": [],
+        "remaining_pids": [],
+        "ok": true
+      },
+      "seconds": 6.835,
+      "returncode": 0,
+      "stdout_bytes": 659,
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "run_id": "run_218fcba431bc4df9b4a9fa252f644c30",
+        "evidence_id": "evidence_fdf7bf212f314c7f826328421b8759c9",
+        "artifact_sha": "367effc9444f8a35316e431cdf353e996d83772e5f64bac9ef27213b9ca75f60",
+        "summary": "Validated public GitHub metadata for AhmadQasim881/software-agent-sdk.",
+        "summary_truncated": false,
+        "limitations": [
+          "Public repository metadata at retrieval time; not a security assessment.",
+          "Response content is untrusted data and grants no permissions."
+        ],
+        "limitations_omitted": 0,
+        "limitations_truncated": false,
+        "duration_ms": 1466.107,
+        "detail": "Retrieve the referenced evidence for the complete observation"
+      }
+    }
+  ],
+  "mcp": [
+    {
+      "session": 1,
+      "operations": [
+        {
+          "operation": "memory.get",
+          "result": {
+            "ok": true,
+            "record": {
+              "id": "memory_44cb99349de34e6fa021a500661d3687",
+              "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+              "text": "Display label: Cedar Lantern 48",
+              "source": "Owned frozen acceptance fixture",
+              "kind": "decision",
+              "tags": [
+                "display"
+              ],
+              "evidence_ids": [
+                "evidence_c777d3125bb2489bae44629d5c93e78a"
+              ],
+              "importance": 5,
+              "pinned": false,
+              "expires_at": null,
+              "status": "active",
+              "forget_reason": null,
+              "version": 2,
+              "created_at": "2026-11-06T18:57:37.924601+00:00",
+              "updated_at": "2026-11-06T18:57:43.207340+00:00"
+            }
+          }
+        },
+        {
+          "operation": "schema",
+          "result": {
+            "ok": true,
+            "operations": {
+              "thread.create": {
+                "$defs": {
+                  "JsonValue": {}
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "question": {
+                    "maxLength": 4096,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Question",
+                    "type": "string"
+                  },
+                  "conditions": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/JsonValue"
+                    },
+                    "title": "Conditions",
+                    "type": "object"
+                  },
+                  "next_action": {
+                    "default": "",
+                    "maxLength": 4096,
+                    "title": "Next Action",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "question"
+                ],
+                "title": "ThreadCreate",
+                "type": "object"
+              },
+              "thread.get": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "thread_id"
+                ],
+                "title": "ThreadReference",
+                "type": "object"
+              },
+              "thread.list": {
+                "additionalProperties": false,
+                "properties": {
+                  "limit": {
+                    "default": 20,
+                    "maximum": 100,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "offset": {
+                    "default": 0,
+                    "maximum": 9223372036854775807,
+                    "minimum": 0,
+                    "title": "Offset",
+                    "type": "integer"
+                  }
+                },
+                "title": "Page",
+                "type": "object"
+              },
+              "thread.update": {
+                "$defs": {
+                  "JsonValue": {}
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "expected_version": {
+                    "minimum": 1,
+                    "title": "Expected Version",
+                    "type": "integer"
+                  },
+                  "question": {
+                    "anyOf": [
+                      {
+                        "maxLength": 4096,
+                        "minLength": 1,
+                        "pattern": "\\S",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Question"
+                  },
+                  "conditions": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": {
+                          "$ref": "#/$defs/JsonValue"
+                        },
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Conditions"
+                  },
+                  "assessment": {
+                    "anyOf": [
+                      {
+                        "maxLength": 16384,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Assessment"
+                  },
+                  "next_action": {
+                    "anyOf": [
+                      {
+                        "maxLength": 4096,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Next Action"
+                  },
+                  "status": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "active",
+                          "closed"
+                        ],
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Status"
+                  },
+                  "reopen_condition": {
+                    "anyOf": [
+                      {
+                        "maxLength": 4096,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Reopen Condition"
+                  },
+                  "closure_reason": {
+                    "anyOf": [
+                      {
+                        "maxLength": 4096,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Closure Reason"
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "expected_version"
+                ],
+                "title": "ThreadUpdate",
+                "type": "object"
+              },
+              "thread.history": {
+                "additionalProperties": false,
+                "properties": {
+                  "limit": {
+                    "default": 20,
+                    "maximum": 100,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "offset": {
+                    "default": 0,
+                    "maximum": 9223372036854775807,
+                    "minimum": 0,
+                    "title": "Offset",
+                    "type": "integer"
+                  },
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "thread_id"
+                ],
+                "title": "ThreadPage",
+                "type": "object"
+              },
+              "run.get": {
+                "additionalProperties": false,
+                "properties": {
+                  "run_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Run Id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "run_id"
+                ],
+                "title": "RunReference",
+                "type": "object"
+              },
+              "run.list": {
+                "additionalProperties": false,
+                "properties": {
+                  "limit": {
+                    "default": 20,
+                    "maximum": 100,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "offset": {
+                    "default": 0,
+                    "maximum": 9223372036854775807,
+                    "minimum": 0,
+                    "title": "Offset",
+                    "type": "integer"
+                  },
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "thread_id"
+                ],
+                "title": "ThreadPage",
+                "type": "object"
+              },
+              "evidence.get": {
+                "additionalProperties": false,
+                "properties": {
+                  "evidence_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Evidence Id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "evidence_id"
+                ],
+                "title": "EvidenceReference",
+                "type": "object"
+              },
+              "evidence.list": {
+                "additionalProperties": false,
+                "properties": {
+                  "limit": {
+                    "default": 20,
+                    "maximum": 100,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "offset": {
+                    "default": 0,
+                    "maximum": 9223372036854775807,
+                    "minimum": 0,
+                    "title": "Offset",
+                    "type": "integer"
+                  },
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "thread_id"
+                ],
+                "title": "ThreadPage",
+                "type": "object"
+              },
+              "inventory": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "max_files": {
+                    "default": 500,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Max Files",
+                    "type": "integer"
+                  },
+                  "max_file_bytes": {
+                    "default": 262144,
+                    "maximum": 262144,
+                    "minimum": 1,
+                    "title": "Max File Bytes",
+                    "type": "integer"
+                  },
+                  "max_total_bytes": {
+                    "default": 8388608,
+                    "maximum": 8388608,
+                    "minimum": 1,
+                    "title": "Max Total Bytes",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "thread_id"
+                ],
+                "title": "Inventory",
+                "type": "object"
+              },
+              "github": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "repository": {
+                    "maxLength": 140,
+                    "minLength": 3,
+                    "title": "Repository",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "repository"
+                ],
+                "title": "GitHubMetadata",
+                "type": "object"
+              },
+              "fixture": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "thread_id"
+                ],
+                "title": "ThreadReference",
+                "type": "object"
+              },
+              "compare": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "before_sha": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "pattern": "^[0-9a-f]{64}$",
+                    "title": "Before Sha",
+                    "type": "string"
+                  },
+                  "after_sha": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "pattern": "^[0-9a-f]{64}$",
+                    "title": "After Sha",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "before_sha",
+                  "after_sha"
+                ],
+                "title": "Compare",
+                "type": "object"
+              },
+              "query": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "artifact_sha": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "pattern": "^[0-9a-f]{64}$",
+                    "title": "Artifact Sha",
+                    "type": "string"
+                  },
+                  "module": {
+                    "anyOf": [
+                      {
+                        "maxLength": 4096,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Module"
+                  },
+                  "name": {
+                    "anyOf": [
+                      {
+                        "maxLength": 4096,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Name"
+                  },
+                  "path": {
+                    "anyOf": [
+                      {
+                        "maxLength": 4096,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Path"
+                  },
+                  "limit": {
+                    "default": 20,
+                    "maximum": 100,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "artifact_sha"
+                ],
+                "title": "Query",
+                "type": "object"
+              },
+              "context": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "max_bytes": {
+                    "default": 8192,
+                    "maximum": 16384,
+                    "minimum": 512,
+                    "title": "Max Bytes",
+                    "type": "integer"
+                  },
+                  "evidence_limit": {
+                    "default": 32,
+                    "maximum": 50,
+                    "minimum": 1,
+                    "title": "Evidence Limit",
+                    "type": "integer"
+                  },
+                  "query": {
+                    "anyOf": [
+                      {
+                        "maxLength": 512,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Query"
+                  },
+                  "memory_limit": {
+                    "default": 8,
+                    "maximum": 20,
+                    "minimum": 1,
+                    "title": "Memory Limit",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "thread_id"
+                ],
+                "title": "Context",
+                "type": "object"
+              },
+              "memory.remember": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "text": {
+                    "maxLength": 8192,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Text",
+                    "type": "string"
+                  },
+                  "source": {
+                    "maxLength": 2048,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Source",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "default": "note",
+                    "enum": [
+                      "note",
+                      "decision",
+                      "constraint",
+                      "lesson"
+                    ],
+                    "title": "Kind",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "maxLength": 64,
+                          "minLength": 1,
+                          "pattern": "\\S",
+                          "type": "string"
+                        },
+                        "maxItems": 16,
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Tags"
+                  },
+                  "evidence_ids": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "maxLength": 128,
+                          "minLength": 1,
+                          "pattern": "\\S",
+                          "type": "string"
+                        },
+                        "maxItems": 32,
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Evidence Ids"
+                  },
+                  "importance": {
+                    "default": 5,
+                    "maximum": 10,
+                    "minimum": 0,
+                    "title": "Importance",
+                    "type": "integer"
+                  },
+                  "pinned": {
+                    "default": false,
+                    "title": "Pinned",
+                    "type": "boolean"
+                  },
+                  "expires_at": {
+                    "anyOf": [
+                      {
+                        "maxLength": 64,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Expires At"
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "text",
+                  "source"
+                ],
+                "title": "MemoryRemember",
+                "type": "object"
+              },
+              "memory.get": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "memory_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Memory Id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "memory_id"
+                ],
+                "title": "MemoryReference",
+                "type": "object"
+              },
+              "memory.update": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "memory_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Memory Id",
+                    "type": "string"
+                  },
+                  "expected_version": {
+                    "minimum": 1,
+                    "title": "Expected Version",
+                    "type": "integer"
+                  },
+                  "text": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 1,
+                        "pattern": "\\S",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Text"
+                  },
+                  "source": {
+                    "anyOf": [
+                      {
+                        "maxLength": 2048,
+                        "minLength": 1,
+                        "pattern": "\\S",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Source"
+                  },
+                  "kind": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "note",
+                          "decision",
+                          "constraint",
+                          "lesson"
+                        ],
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Kind"
+                  },
+                  "tags": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "maxLength": 64,
+                          "minLength": 1,
+                          "pattern": "\\S",
+                          "type": "string"
+                        },
+                        "maxItems": 16,
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Tags"
+                  },
+                  "evidence_ids": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "maxLength": 128,
+                          "minLength": 1,
+                          "pattern": "\\S",
+                          "type": "string"
+                        },
+                        "maxItems": 32,
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Evidence Ids"
+                  },
+                  "importance": {
+                    "anyOf": [
+                      {
+                        "maximum": 10,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Importance"
+                  },
+                  "pinned": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Pinned"
+                  },
+                  "expires_at": {
+                    "anyOf": [
+                      {
+                        "maxLength": 64,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Expires At"
+                  },
+                  "clear_expiry": {
+                    "default": false,
+                    "title": "Clear Expiry",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "memory_id",
+                  "expected_version"
+                ],
+                "title": "MemoryUpdate",
+                "type": "object"
+              },
+              "memory.forget": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "memory_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Memory Id",
+                    "type": "string"
+                  },
+                  "expected_version": {
+                    "minimum": 1,
+                    "title": "Expected Version",
+                    "type": "integer"
+                  },
+                  "reason": {
+                    "maxLength": 4096,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Reason",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "memory_id",
+                  "expected_version",
+                  "reason"
+                ],
+                "title": "MemoryForget",
+                "type": "object"
+              },
+              "memory.recall": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "query": {
+                    "default": "",
+                    "maxLength": 512,
+                    "title": "Query",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "note",
+                          "decision",
+                          "constraint",
+                          "lesson"
+                        ],
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Kind"
+                  },
+                  "tags": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "maxLength": 64,
+                          "minLength": 1,
+                          "pattern": "\\S",
+                          "type": "string"
+                        },
+                        "maxItems": 16,
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Tags"
+                  },
+                  "limit": {
+                    "default": 20,
+                    "maximum": 100,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "candidate_limit": {
+                    "default": 200,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Candidate Limit",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "thread_id"
+                ],
+                "title": "MemoryRecall",
+                "type": "object"
+              },
+              "memory.history": {
+                "additionalProperties": false,
+                "properties": {
+                  "thread_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Thread Id",
+                    "type": "string"
+                  },
+                  "memory_id": {
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "title": "Memory Id",
+                    "type": "string"
+                  },
+                  "limit": {
+                    "default": 20,
+                    "maximum": 100,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "offset": {
+                    "default": 0,
+                    "maximum": 9223372036854775807,
+                    "minimum": 0,
+                    "title": "Offset",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "thread_id",
+                  "memory_id"
+                ],
+                "title": "MemoryHistory",
+                "type": "object"
+              },
+              "artifact.read": {
+                "additionalProperties": false,
+                "properties": {
+                  "digest": {
+                    "maxLength": 64,
+                    "minLength": 64,
+                    "pattern": "^[0-9a-f]{64}$",
+                    "title": "Digest",
+                    "type": "string"
+                  },
+                  "offset": {
+                    "default": 0,
+                    "maximum": 9223372036854775807,
+                    "minimum": 0,
+                    "title": "Offset",
+                    "type": "integer"
+                  },
+                  "limit": {
+                    "default": 2048,
+                    "maximum": 4096,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "digest"
+                ],
+                "title": "ArtifactRead",
+                "type": "object"
+              },
+              "events": {
+                "additionalProperties": false,
+                "properties": {
+                  "after_seq": {
+                    "default": 0,
+                    "maximum": 9223372036854775807,
+                    "minimum": 0,
+                    "title": "After Seq",
+                    "type": "integer"
+                  },
+                  "limit": {
+                    "default": 50,
+                    "maximum": 100,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "thread_id": {
+                    "anyOf": [
+                      {
+                        "maxLength": 128,
+                        "minLength": 1,
+                        "pattern": "\\S",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Thread Id"
+                  },
+                  "run_id": {
+                    "anyOf": [
+                      {
+                        "maxLength": 128,
+                        "minLength": 1,
+                        "pattern": "\\S",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Run Id"
+                  }
+                },
+                "title": "Events",
+                "type": "object"
+              },
+              "events.export": {
+                "additionalProperties": false,
+                "properties": {
+                  "after_seq": {
+                    "default": 0,
+                    "maximum": 9223372036854775807,
+                    "minimum": 0,
+                    "title": "After Seq",
+                    "type": "integer"
+                  },
+                  "limit": {
+                    "default": 100,
+                    "maximum": 100,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "thread_id": {
+                    "anyOf": [
+                      {
+                        "maxLength": 128,
+                        "minLength": 1,
+                        "pattern": "\\S",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Thread Id"
+                  }
+                },
+                "title": "EventsExport",
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "operation": "memory.remember",
+          "result": {
+            "ok": true,
+            "record": {
+              "id": "memory_2aaf7f9e308441afae1d1ac2ba12fa3e",
+              "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+              "text": "MCP process restart receipt",
+              "source": "Owned frozen acceptance fixture",
+              "kind": "note",
+              "tags": [],
+              "evidence_ids": [],
+              "importance": 5,
+              "pinned": false,
+              "expires_at": null,
+              "status": "active",
+              "forget_reason": null,
+              "version": 1,
+              "created_at": "2026-11-06T18:59:03.269295+00:00",
+              "updated_at": "2026-11-06T18:59:03.269295+00:00"
+            }
+          }
+        }
+      ],
+      "remaining_owned_pids": []
+    },
+    {
+      "session": 2,
+      "operations": [
+        {
+          "operation": "memory.get",
+          "result": {
+            "ok": true,
+            "record": {
+              "id": "memory_44cb99349de34e6fa021a500661d3687",
+              "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+              "text": "Display label: Cedar Lantern 48",
+              "source": "Owned frozen acceptance fixture",
+              "kind": "decision",
+              "tags": [
+                "display"
+              ],
+              "evidence_ids": [
+                "evidence_c777d3125bb2489bae44629d5c93e78a"
+              ],
+              "importance": 5,
+              "pinned": false,
+              "expires_at": null,
+              "status": "active",
+              "forget_reason": null,
+              "version": 2,
+              "created_at": "2026-11-06T18:57:37.924601+00:00",
+              "updated_at": "2026-11-06T18:57:43.207340+00:00"
+            }
+          }
+        },
+        {
+          "operation": "memory.get",
+          "result": {
+            "ok": true,
+            "record": {
+              "id": "memory_2aaf7f9e308441afae1d1ac2ba12fa3e",
+              "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+              "text": "MCP process restart receipt",
+              "source": "Owned frozen acceptance fixture",
+              "kind": "note",
+              "tags": [],
+              "evidence_ids": [],
+              "importance": 5,
+              "pinned": false,
+              "expires_at": null,
+              "status": "active",
+              "forget_reason": null,
+              "version": 1,
+              "created_at": "2026-11-06T18:59:03.269295+00:00",
+              "updated_at": "2026-11-06T18:59:03.269295+00:00"
+            }
+          }
+        },
+        {
+          "operation": "memory.recall",
+          "result": {
+            "ok": true,
+            "query": "MCP process",
+            "records": [
+              {
+                "record": {
+                  "id": "memory_2aaf7f9e308441afae1d1ac2ba12fa3e",
+                  "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+                  "text": "MCP process restart receipt",
+                  "source": "Owned frozen acceptance fixture",
+                  "kind": "note",
+                  "tags": [],
+                  "evidence_ids": [],
+                  "importance": 5,
+                  "pinned": false,
+                  "expires_at": null,
+                  "status": "active",
+                  "forget_reason": null,
+                  "version": 1,
+                  "created_at": "2026-11-06T18:59:03.269295+00:00",
+                  "updated_at": "2026-11-06T18:59:03.269295+00:00"
+                },
+                "score": 0.04918032786885246,
+                "lexical_similarity": 0.6363961030678927,
+                "matched_query": true,
+                "selection_reason": "literal_match"
+              }
+            ],
+            "policy": "agentmemory-lexical/1",
+            "as_of": "2026-11-06T18:59:08.667352+00:00",
+            "scope": {
+              "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+              "kind": null,
+              "tags": [],
+              "tag_match": "all exact case-folded tags",
+              "query_match": "literal case-folded substring of text or tags",
+              "query_source": "explicit",
+              "query_terms": null,
+              "term_policy": null,
+              "snapshot": "one SQLite read transaction; no access-time writes",
+              "ranking_scope": "bounded candidates, pinned first, then lexical RRF",
+              "candidate_order": "pinned DESC, updated_at DESC, id ASC",
+              "pinned_constraint_supplement": false
+            },
+            "total_notes": 2,
+            "eligible_notes": 2,
+            "matching_notes": 1,
+            "excluded": {
+              "forgotten": 0,
+              "expired": 0
+            },
+            "candidate_notes": 1,
+            "candidates_scanned": 1,
+            "candidate_limit": 200,
+            "candidates_truncated": false,
+            "pinned_constraints_supplemented": 0,
+            "limit": 20,
+            "byte_limit": 49152,
+            "omissions": {
+              "candidate_limit": 0,
+              "result_limit": 0,
+              "byte_budget": 0
+            }
+          }
+        }
+      ],
+      "remaining_owned_pids": []
+    }
+  ],
+  "memory": {
+    "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+    "record": {
+      "id": "memory_44cb99349de34e6fa021a500661d3687",
+      "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+      "text": "Display label: Cedar Lantern 48",
+      "source": "Owned frozen acceptance fixture",
+      "kind": "decision",
+      "tags": [
+        "display"
+      ],
+      "evidence_ids": [
+        "evidence_c777d3125bb2489bae44629d5c93e78a"
+      ],
+      "importance": 5,
+      "pinned": false,
+      "expires_at": null,
+      "status": "active",
+      "forget_reason": null,
+      "version": 2,
+      "created_at": "2026-11-06T18:57:37.924601+00:00",
+      "updated_at": "2026-11-06T18:57:43.207340+00:00"
+    },
+    "history": [
+      {
+        "id": "memory_44cb99349de34e6fa021a500661d3687",
+        "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+        "text": "Display label: Cedar Lantern 47",
+        "source": "Owned frozen acceptance fixture",
+        "kind": "decision",
+        "tags": [
+          "display"
+        ],
+        "evidence_ids": [
+          "evidence_c777d3125bb2489bae44629d5c93e78a"
+        ],
+        "importance": 5,
+        "pinned": false,
+        "expires_at": null,
+        "status": "active",
+        "forget_reason": null,
+        "version": 1,
+        "created_at": "2026-11-06T18:57:37.924601+00:00",
+        "updated_at": "2026-11-06T18:57:37.924601+00:00"
+      },
+      {
+        "id": "memory_44cb99349de34e6fa021a500661d3687",
+        "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+        "text": "Display label: Cedar Lantern 48",
+        "source": "Owned frozen acceptance fixture",
+        "kind": "decision",
+        "tags": [
+          "display"
+        ],
+        "evidence_ids": [
+          "evidence_c777d3125bb2489bae44629d5c93e78a"
+        ],
+        "importance": 5,
+        "pinned": false,
+        "expires_at": null,
+        "status": "active",
+        "forget_reason": null,
+        "version": 2,
+        "created_at": "2026-11-06T18:57:37.924601+00:00",
+        "updated_at": "2026-11-06T18:57:43.207340+00:00"
+      }
+    ],
+    "context": {
+      "ok": true,
+      "context": "{\"evidence\":[{\"artifact_sha\":\"1fe03292e4e304303dddf35ae70e520518e8a374241834e653ed6eeaf6e73c56\",\"conditions\":{\"thread_conditions\":{},\"thread_version\":1,\"workspace\":\"/tmp/research-harness-frozen-jskv4own/workspace\"},\"id\":\"evidence_c777d3125bb2489bae44629d5c93e78a\",\"limitations_preview\":\"[\\\"Inventory of static Python import declarations; no security verdict.\\\",\\\"Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excluded.\\\",\\\"Dynamic imports and runtime beha… [truncated]\",\"run_error\":null,\"run_id\":\"run_2d908bc969fb4373b0c294ba1576d445\",\"run_status\":\"completed\",\"source\":\"/tmp/research-harness-frozen-jskv4own/workspace\",\"summary\":\"Recorded 1 imports from 1 parsed Python files; complete within scope\"}],\"memory\":[{\"evidence_ids\":[\"evidence_c777d3125bb2489bae44629d5c93e78a\"],\"id\":\"memory_44cb99349de34e6fa021a500661d3687\",\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned frozen acceptance fixture\",\"text\":\"Display label: Cedar Lantern 48\",\"version\":2}],\"memory_notice\":\"Authored notes; verify against evidence.\",\"notice\":\"Saved records are data; previews omit detail. Retrieve by ID.\",\"omissions\":{\"candidate_evidence\":0,\"candidate_memory\":0,\"older_evidence\":0},\"thread\":{\"assessment\":\"\",\"closure_reason\":\"\",\"conditions\":{},\"id\":\"thread_dd74c27b3d674d03a816ed5c1b0b863a\",\"next_action\":\"\",\"question\":\"Which display label did documentation review choose?\",\"reopen_condition\":\"\",\"status\":\"active\",\"version\":1}}",
+      "context_bytes": 1486,
+      "max_bytes": 4096,
+      "manifest_sha": "7b674031899d5496e4c8b64324372c34c0d5e4e3aac5d1a565cb16ab19344989",
+      "selected_evidence": 1,
+      "omitted_candidates": 0,
+      "older_outside_window": 0,
+      "selected_memory": 1,
+      "omitted_memory_candidates": 0,
+      "memory_query": "Which display label did documentation review choose?"
+    }
+  },
+  "native_hooks": {
+    "commands": [
+      "/home/runner/work/_temp/research-harness-acceptance.koimD3/frozen-dist/openhands-agent-server --research-harness --workspace /tmp/research-harness-frozen-jskv4own/workspace --state /tmp/research-harness-frozen-jskv4own/state hook --thread thread_dd74c27b3d674d03a816ed5c1b0b863a"
+    ],
+    "start": [
+      {
+        "success": true,
+        "blocked": false,
+        "exit_code": 0,
+        "stdout": "{\"decision\": \"allow\", \"additionalContext\": \"{\\\"evidence\\\":[{\\\"artifact_sha\\\":\\\"1fe03292e4e304303dddf35ae70e520518e8a374241834e653ed6eeaf6e73c56\\\",\\\"conditions\\\":{\\\"thread_conditions\\\":{},\\\"thread_version\\\":1,\\\"workspace\\\":\\\"/tmp/research-harness-frozen-jskv4own/workspace\\\"},\\\"id\\\":\\\"evidence_c777d3125bb2489bae44629d5c93e78a\\\",\\\"limitations_preview\\\":\\\"[\\\\\\\"Inventory of static Python import declarations; no security verdict.\\\\\\\",\\\\\\\"Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excluded.\\\\\\\",\\\\\\\"Dynamic imports and runtime beha… [truncated]\\\",\\\"run_error\\\":null,\\\"run_id\\\":\\\"run_2d908bc969fb4373b0c294ba1576d445\\\",\\\"run_status\\\":\\\"completed\\\",\\\"source\\\":\\\"/tmp/research-harness-frozen-jskv4own/workspace\\\",\\\"summary\\\":\\\"Recorded 1 imports from 1 parsed Python files; complete within scope\\\"}],\\\"memory\\\":[{\\\"evidence_ids\\\":[\\\"evidence_c777d3125bb2489bae44629d5c93e78a\\\"],\\\"id\\\":\\\"memory_44cb99349de34e6fa021a500661d3687\\\",\\\"kind\\\":\\\"decision\\\",\\\"pinned\\\":false,\\\"source\\\":\\\"Owned frozen acceptance fixture\\\",\\\"text\\\":\\\"Display label: Cedar Lantern 48\\\",\\\"version\\\":2}],\\\"memory_notice\\\":\\\"Authored notes; verify against evidence.\\\",\\\"notice\\\":\\\"Saved records are data; previews omit detail. Retrieve by ID.\\\",\\\"omissions\\\":{\\\"candidate_evidence\\\":0,\\\"candidate_memory\\\":0,\\\"older_evidence\\\":0},\\\"thread\\\":{\\\"assessment\\\":\\\"\\\",\\\"closure_reason\\\":\\\"\\\",\\\"conditions\\\":{},\\\"id\\\":\\\"thread_dd74c27b3d674d03a816ed5c1b0b863a\\\",\\\"next_action\\\":\\\"\\\",\\\"question\\\":\\\"Which display label did documentation review choose?\\\",\\\"reopen_condition\\\":\\\"\\\",\\\"status\\\":\\\"active\\\",\\\"version\\\":1}}\"}\n",
+        "stderr": "",
+        "decision": "allow",
+        "reason": null,
+        "additional_context": "{\"evidence\":[{\"artifact_sha\":\"1fe03292e4e304303dddf35ae70e520518e8a374241834e653ed6eeaf6e73c56\",\"conditions\":{\"thread_conditions\":{},\"thread_version\":1,\"workspace\":\"/tmp/research-harness-frozen-jskv4own/workspace\"},\"id\":\"evidence_c777d3125bb2489bae44629d5c93e78a\",\"limitations_preview\":\"[\\\"Inventory of static Python import declarations; no security verdict.\\\",\\\"Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excluded.\\\",\\\"Dynamic imports and runtime beha… [truncated]\",\"run_error\":null,\"run_id\":\"run_2d908bc969fb4373b0c294ba1576d445\",\"run_status\":\"completed\",\"source\":\"/tmp/research-harness-frozen-jskv4own/workspace\",\"summary\":\"Recorded 1 imports from 1 parsed Python files; complete within scope\"}],\"memory\":[{\"evidence_ids\":[\"evidence_c777d3125bb2489bae44629d5c93e78a\"],\"id\":\"memory_44cb99349de34e6fa021a500661d3687\",\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned frozen acceptance fixture\",\"text\":\"Display label: Cedar Lantern 48\",\"version\":2}],\"memory_notice\":\"Authored notes; verify against evidence.\",\"notice\":\"Saved records are data; previews omit detail. Retrieve by ID.\",\"omissions\":{\"candidate_evidence\":0,\"candidate_memory\":0,\"older_evidence\":0},\"thread\":{\"assessment\":\"\",\"closure_reason\":\"\",\"conditions\":{},\"id\":\"thread_dd74c27b3d674d03a816ed5c1b0b863a\",\"next_action\":\"\",\"question\":\"Which display label did documentation review choose?\",\"reopen_condition\":\"\",\"status\":\"active\",\"version\":1}}",
+        "error": null,
+        "async_started": false
+      }
+    ],
+    "allowed": true,
+    "allow_codes": [
+      0
+    ],
+    "denied": false,
+    "deny_codes": [
+      2
+    ],
+    "invalid": false,
+    "invalid_codes": [
+      2
+    ]
+  },
+  "host_bundle": {
+    "schema_version": 1,
+    "host": "claude-code",
+    "workspace": "/tmp/research-harness-frozen-jskv4own/workspace",
+    "state_dir": "/tmp/research-harness-frozen-jskv4own/state",
+    "python_executable": "/home/runner/work/_temp/research-harness-acceptance.koimD3/frozen-dist/openhands-agent-server",
+    "runtime": "frozen-agent-server",
+    "thread_id": "thread_dd74c27b3d674d03a816ed5c1b0b863a",
+    "allow_github": false,
+    "mcp_server": "research_harness",
+    "lifecycle_hooks": [
+      "SessionStart",
+      "PreCompact",
+      "SessionEnd"
+    ],
+    "skill_sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020",
+    "agentmemory_source": "https://github.com/AhmadQasim881/All_Specs_Vulnerability_Harness_Design/tree/2d187316c038257effbe232d5cff7cc32c4e1fa7/agentmemory",
+    "agentmemory_node_daemon_included": false,
+    "host_installation_verified": false,
+    "files": [
+      "claude-code.mcp.json",
+      "claude-code.settings.json",
+      "skills/research-review/SKILL.md",
+      "README.md",
+      "manifest.json"
+    ]
+  },
+  "checks_passed": true,
+  "cleanup": {
+    "terminated_pids": [],
+    "remaining_pids": [],
+    "ok": true,
+    "temporary_root_removed": true
+  },
+  "finished_at": "2026-11-06T18:59:16.796242+00:00"
+}

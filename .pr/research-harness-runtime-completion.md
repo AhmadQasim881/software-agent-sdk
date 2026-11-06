@@ -2,6 +2,12 @@
 
 ## Scope and provenance
 
+The published implementation is commit
+[`e88179608fd37b852a32fe193725df6f57e2f56b`](https://github.com/AhmadQasim881/software-agent-sdk/commit/e88179608fd37b852a32fe193725df6f57e2f56b).
+Both current [hosted acceptance workflows](research-harness-runtime-hosted.md)
+passed at that revision: 575 regressions plus installed-wheel and frozen runtime
+checks, and the separate eight-test container gate with actual restart recovery.
+
 This follow-up fixes bounded context retrieval, packaged subprocess launchers,
 and owned-process cleanup. It retains the existing AgentMemory integration and
 adds repeatable frozen-runtime acceptance to the branch workflow.
@@ -198,9 +204,10 @@ static import inventories, public repository metadata and an owned readiness
 fixture. It does not add autonomous vulnerability discovery or exploitation.
 
 The earlier [installed-wheel run](research-harness-hosted-acceptance.md) and
-[source-minimal container run](research-harness-container-acceptance.md) passed at
-their recorded commits. They are historical evidence; a new hosted result must
-identify the current implementation commit separately.
+[source-minimal container run](research-harness-container-acceptance.md) remain
+historical evidence at their recorded commits. The newer
+[hosted result](research-harness-runtime-hosted.md) identifies this implementation
+commit separately and verifies its installed, frozen and container paths.
 
 Live semantic skill selection, a model-driven native remote conversation, actual
 Claude client dispatch and successful native Codex inference still require their
