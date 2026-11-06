@@ -197,11 +197,11 @@ def test_workspace_binding_and_directory_separation(store: HarnessStore) -> None
 
 def test_newer_schema_is_rejected_without_downgrading(store: HarnessStore) -> None:
     with closing(sqlite3.connect(store.database_path)) as connection:
-        connection.execute("PRAGMA user_version=2")
-    with pytest.raises(HarnessError, match="schema version: 2"):
+        connection.execute("PRAGMA user_version=3")
+    with pytest.raises(HarnessError, match="schema version: 3"):
         HarnessStore(store.state_dir, store.workspace)
     with closing(sqlite3.connect(store.database_path)) as connection:
-        assert connection.execute("PRAGMA user_version").fetchone()[0] == 2
+        assert connection.execute("PRAGMA user_version").fetchone()[0] == 3
 
 
 def test_invalid_and_oversized_payloads_do_not_create_records(

@@ -5,6 +5,11 @@ The CLI, MCP stdio server, and OpenHands SDK tool share validated operations and
 state. The core and runnable demonstration make no model requests, so you can
 test them without an API key.
 
+The AgentMemory integration adds six shared memory operations, portable host
+configuration bundles, explicit operator instructions, and an opt-in skill
+selection evaluator. See [AgentMemory integration](AGENTMEMORY_INTEGRATION.md)
+for source provenance, migration details, examples, and acceptance limits.
+
 The source is [Harness Engineering for Vulnerability Research](2026-unprompted-harness-engineering.pdf),
 with a [complete Markdown transcription](Vulnerability_Harness_Engineering/Vulnerability_Harness_Engineering.md).
 The workshop describes responsibilities and examples rather than publishing one
@@ -35,7 +40,9 @@ installs the workspace and pre-commit hooks.
 The example records two inventories with equal import counts but different
 declarations, compares content, queries the saved snapshot, validates the local
 fixture, builds bounded context, updates an assessment with evidence references,
-and reopens persisted state. Assertions check actual values. Successful output
+and reopens persisted state. It also saves and recalls an authored decision with
+its evidence references, then injects that note into bounded context. Assertions
+check actual values. Successful output
 includes `"ok": true`, added/removed imports, fixture cleanup, resumed thread
 version `2`, and `EXAMPLE_COST: 0.0`.
 
@@ -65,12 +72,12 @@ skill, native hooks, and checkpointing condenser.
 | Validation, pp. 9–13 | Owned loopback fixture; verify HTTP response, instance identity, normal item response, socket closure, and cleanup. | `fixture.py`, `core.py` |
 | Integrations, pp. 14–18 | Optional bounded public GitHub metadata, source/time, raw response digest, actual outcome. | `network.py`, `_http_worker.py` |
 | Interfaces, pp. 19–25 | Shared strict schemas and service dispatch for CLI, MCP, and SDK. | `commands.py`, `service.py`, `cli.py`, `mcp_server.py`, `definition.py` |
-| Memory, pp. 26–31 | Versioned questions, conditions, assessments, next actions, evidence, outcomes, history, closure and reopening conditions. | `models.py`, `store.py`, `artifacts.py` |
-| Context, pp. 32–36 | Actual text under an exact UTF-8 budget, saved selection manifest, explicit omissions. | `context.py` |
+| Memory, pp. 26–31 | Versioned questions and evidence plus authored notes, decisions, constraints, lessons, provenance, pinning, expiry, history and bounded lexical retrieval. | `models.py`, `agentmemory.py`, `store.py`, `artifacts.py` |
+| Context, pp. 32–36 | Actual text under an exact UTF-8 budget, one read snapshot, separately labeled memory, saved selection manifest and explicit omissions. | `context.py` |
 | Telemetry, pp. 37–40 | Transactional SQLite ledger, correlated interface events, bounded retrieval, derived resumable JSONL. | `store.py`, `service.py`, `views.py` |
 | Skills, pp. 41–44 | Packaged `research-review` workflow using native SDK progressive disclosure. | `workflow.py`, `skills/research-review/SKILL.md` |
 | Deterministic tools, pp. 45–49 | Static Python import parsing, file hashes, coverage/exclusions, partial results, declaration-content comparison. | `inventory.py`, `snapshots.py` |
-| Hooks, pp. 50–53 | Six actual SDK events, operation validation, context injection, checkpoint before condenser attempts. | `hooks.py`, `condenser.py`, `session.py` |
+| Hooks, pp. 50–53 | Six actual SDK events, operation validation, context injection, condenser checkpoints, plus a separately tested Claude Code protocol adapter. | `hooks.py`, `hosts.py`, `condenser.py`, `session.py` |
 | Oracles, pp. 54–56 | Exact queries over validated saved import snapshots with provenance/completeness. | `snapshots.py` |
 
 Module paths are relative to
@@ -158,6 +165,7 @@ saved records. SDK transcripts and research threads are separate records.
 | Threads | `thread.create`, `thread.get`, `thread.list`, `thread.update`, `thread.history` |
 | Outcomes | `run.get`, `run.list` |
 | Evidence | `evidence.get`, `evidence.list` |
+| Authored memory | `memory.remember`, `memory.get`, `memory.update`, `memory.forget`, `memory.recall`, `memory.history` |
 | Observations | `inventory`, `github`, `fixture`, `compare`, `query` |
 | Context/inspection | `context`, `artifact.read`, `events`, `events.export` |
 
@@ -201,6 +209,11 @@ and provides no authentication bridge. Locate the packaged workflow with:
 ```
 
 The SDK helper loads it automatically. MCP alone does not install host skills.
+`host-config` produces a new review bundle for Codex, Claude Code, or Claude
+Desktop, with host-specific MCP settings, the packaged skill, and setup notes.
+Claude Code bundles can also include SessionStart, PreCompact and SessionEnd
+hooks for an existing thread. See the integration guide for commands and the
+distinction between protocol testing and actual host dispatch.
 
 ## 5. Complete OpenHands conversation integration
 
@@ -216,11 +229,17 @@ from openhands.tools.research_harness.session import create_research_conversatio
 
 def review_with_llm(llm: LLM, workspace: Path, state_dir: Path, thread_id: str) -> None:
     conversation = create_research_conversation(
-        llm=llm, workspace=workspace, state_dir=state_dir, thread_id=thread_id
+        llm=llm, workspace=workspace, state_dir=state_dir, thread_id=thread_id,
+        operator_instructions=(
+            "Review saved Python import declarations. Preserve source files "
+            "and cite the recorded evidence and its limitations."
+        ),
+        max_iteration_per_run=20,
+        max_budget_per_run=0.50,
     )
     try:
         conversation.send_message(
-            "Use research-review to resume the thread, inspect recorded evidence "
+            "Resume the tracked review, inspect recorded evidence "
             "and limitations, and update the next action."
         )
         conversation.run()
@@ -231,6 +250,10 @@ def review_with_llm(llm: LLM, workspace: Path, state_dir: Path, thread_id: str) 
 Construction makes no model request. `run()` and the default summarizing condenser
 use the supplied LLM. A custom `RollingCondenser` can be passed as `condenser=`;
 the checkpoint adapter wraps it. Model authentication/billing remain caller config.
+The explicit instruction text is trusted caller configuration. Ambient workspace
+instruction files remain disabled in this scoped helper. Iterations and the
+SDK-reported cost can be bounded; cost checks occur between requests, so this is
+not a hard provider billing cap.
 
 The helper checks currently discoverable user/project plugins and rejects ambient
 plugins before construction, leaving settings unchanged. This does not protect
@@ -260,6 +283,9 @@ State holds `state.sqlite3`, content-addressed artifacts, and optional SDK
 history. SQLite is authoritative; JSONL exports are derived pages. Record mutations
 and lifecycle events share a transaction. Threads are versioned, and terminal
 run transitions cannot be applied twice.
+Opening a schema-v1 store transactionally migrates it to schema v2, retaining
+existing records and adding memory tables. Older harness versions reject the new
+schema; preserve a consistent backup before migration if rollback is needed.
 
 Observations start a run before working, persist artifact/evidence, then record
 the actual terminal outcome. Failures and ordinary interruptions retain available
@@ -301,6 +327,9 @@ classify a running worker as abandoned.
 | List page | At most 100 requested records, bounded output and continuation |
 | Artifact slice | 1–4,096 bytes |
 | Context | 512–16,384 UTF-8 bytes; default 8,192; newest 1–50 candidates, default 32 |
+| Memory notes | Text 1–8,192 chars; required source 1–2,048 chars; at most 16 tags and 32 same-thread evidence references; shared argument byte limit still applies |
+| Memory retrieval | Query at most 512 chars; 1–100 results; 1–500 loaded candidates, default 200; at most 49,152 serialized bytes; explicit omissions |
+| Memory in context | At most 20 retrieved notes, default 8; previews consume at most one third of the total context budget |
 | Inventory | 500 files, 256 KiB/file, 8 MiB total input, bounded traversal/output, 5-second cooperative budget |
 | Query/comparison | At most 100 rows or change groups per side, bounded selected bytes, explicit omissions |
 | GitHub | Opt-in public endpoint, no credentials/redirects/retries, 15-second worker deadline, 256 KiB body |
@@ -318,8 +347,10 @@ Enable public metadata with `--allow-github` before the CLI subcommand, or
 arbitrary destinations or private repository authentication.
 
 Verification covers Linux, local SDK conversations, and real MCP stdio processes.
-Remote Agent Server deployment, Docker/PyInstaller packaging, and desktop-client
-installation are separate work. The fixture is an owned readiness check, not a
+The real local Agent Server also passed readiness, identity, authenticated normal
+operations, and owned-process cleanup; see [local validation](../.pr/research-harness-local-validation.md).
+Remote deployment, Docker/PyInstaller packaging, OS isolation, and native desktop
+dispatch still require their corresponding environments. The fixture is an owned readiness check, not a
 general launcher or isolation boundary. API immutability cannot protect data from
 another process with the same filesystem permissions. Queries report recorded
 facts without vulnerability classification or exploit reproduction.
@@ -341,10 +372,17 @@ OPENHANDS_SUPPRESS_BANNER=1 LITELLM_LOCAL_MODEL_COST_MAP=True \
 ```
 
 Tests exercise SQLite, CLI subprocess restart, MCP stdio/cancellation, native
-hooks, real SDK conversation events, fixture cleanup, and package assets. LLM
+hooks, real SDK conversation events, memory migration and concurrent writes,
+host adapter commands, fixture cleanup, and package assets. LLM
 transport is scripted: no paid provider was used, and live-model workflow
 selection quality is not established. The cost-map flag avoids an unrelated
 LiteLLM import-time network lookup.
+
+`evaluate-skill` runs relevant and unrelated natural requests in separate local
+SDK conversations when the operator provides a model and an explicitly named
+credential variable. It records actual skill invocation, completion, cost, and
+cleanup; missing credentials produce a blocked result with zero calls. This is
+a two-case acceptance smoke test, not a general skill-quality benchmark.
 
 The live public GitHub attempt failed at DNS resolution here and was recorded
 as failed. Controlled HTTP/worker tests verify behavior; no successful live

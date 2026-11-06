@@ -21,6 +21,7 @@ from mcp.types import CallToolRequestParams, CallToolResult
 from pydantic import JsonValue
 
 from openhands.tools.research_harness import service as service_module
+from openhands.tools.research_harness.agentmemory import MemoryRecord
 from openhands.tools.research_harness.mcp_server import create_mcp_server
 from openhands.tools.research_harness.service import HarnessService
 
@@ -138,6 +139,102 @@ async def test_stdio_schema_fixture_failure_and_restart(tmp_path: Path) -> None:
         assert isinstance(run, dict)
         assert run["status"] == "failed"
         assert isinstance(run["session_id"], str) and run["session_id"]
+
+
+async def test_stdio_memory_restart_preserves_provenance_and_lifecycle(
+    tmp_path: Path,
+) -> None:
+    workspace = tmp_path / "workspace"
+    workspace.mkdir()
+    (workspace / "sample.py").write_text("import json\n")
+    state = tmp_path / "state"
+    async with server_session(workspace, state) as session:
+        created = payload(
+            await invoke(
+                session, "thread.create", {"question": "Keep the json baseline"}
+            )
+        )["record"]
+        assert isinstance(created, dict)
+        thread_id = str(created["id"])
+        observed = payload(await invoke(session, "inventory", {"thread_id": thread_id}))
+        evidence_id = str(observed["evidence_id"])
+        remembered_result = await invoke(
+            session,
+            "memory.remember",
+            {
+                "thread_id": thread_id,
+                "text": "Use the json inventory as the baseline.",
+                "source": "Operator review over MCP",
+                "evidence_ids": [evidence_id],
+                "kind": "decision",
+            },
+        )
+        assert not remembered_result.isError
+        remembered = MemoryRecord.model_validate(payload(remembered_result)["record"])
+
+    reference: dict[str, JsonValue] = {
+        "thread_id": thread_id,
+        "memory_id": remembered.id,
+    }
+    async with server_session(workspace, state) as session:
+        fetched = await invoke(session, "memory.get", reference)
+        assert not fetched.isError
+        assert MemoryRecord.model_validate(payload(fetched)["record"]) == remembered
+        recalled = payload(
+            await invoke(
+                session, "memory.recall", {"thread_id": thread_id, "query": "json"}
+            )
+        )
+        matches = recalled["records"]
+        assert isinstance(matches, list) and len(matches) == 1
+        match = matches[0]
+        assert isinstance(match, dict)
+        restored = MemoryRecord.model_validate(match["record"])
+        assert restored.source == "Operator review over MCP"
+        assert restored.evidence_ids == [evidence_id]
+        updated_result = await invoke(
+            session,
+            "memory.update",
+            {
+                **reference,
+                "expected_version": 1,
+                "text": "Compare new json imports to this baseline.",
+            },
+        )
+        assert not updated_result.isError
+        updated = MemoryRecord.model_validate(payload(updated_result)["record"])
+        assert updated.version == 2
+        stale = await invoke(
+            session,
+            "memory.update",
+            {**reference, "expected_version": 1, "text": "Stale edit"},
+        )
+        assert stale.isError and payload(stale)["ok"] is False
+        forgotten = await invoke(
+            session,
+            "memory.forget",
+            {
+                **reference,
+                "expected_version": 2,
+                "reason": "Replaced by the next inventory",
+            },
+        )
+        assert not forgotten.isError
+        tombstone = MemoryRecord.model_validate(payload(forgotten)["record"])
+        assert tombstone.status == "forgotten" and tombstone.version == 3
+        history = payload(await invoke(session, "memory.history", reference))
+        assert history["records"] == [
+            record.model_dump(mode="json")
+            for record in (remembered, updated, tombstone)
+        ]
+        hidden = payload(
+            await invoke(session, "memory.recall", {"thread_id": thread_id})
+        )
+        assert hidden["records"] == []
+    resumed = HarnessService(workspace=workspace, state_dir=state)
+    assert resumed.execute("memory.get", reference)["record"] == tombstone.model_dump(
+        mode="json"
+    )
 
 
 class _FinishedMiddleware(Middleware):

@@ -3,8 +3,14 @@ from pathlib import Path
 from threading import Event
 
 import pytest
+from pydantic import JsonValue
 
-from openhands.tools.research_harness.models import HarnessError
+from openhands.tools.research_harness.agentmemory import MemoryRecord
+from openhands.tools.research_harness.models import (
+    ConflictError,
+    HarnessError,
+    NotFoundError,
+)
 from openhands.tools.research_harness.service import HarnessService
 
 
@@ -176,3 +182,88 @@ def test_store_rejects_cursors_outside_sqlite_range(service: HarnessService) -> 
         service.store.list_threads(offset=2**63)
     with pytest.raises(HarnessError):
         service.store.list_events(after_seq=2**63)
+
+
+def test_shared_memory_lifecycle_preserves_provenance_versions_and_tombstones(
+    service: HarnessService,
+) -> None:
+    thread = service.store.create_thread("Retain the json inventory decision")
+    observation = service.execute("inventory", {"thread_id": thread.id})
+    evidence_id = str(observation["evidence_id"])
+    remembered = MemoryRecord.model_validate(
+        service.execute(
+            "memory.remember",
+            {
+                "thread_id": thread.id,
+                "text": "Use the recorded json import as the comparison baseline.",
+                "source": "Operator assessment of the saved inventory",
+                "kind": "decision",
+                "tags": ["baseline"],
+                "evidence_ids": [evidence_id],
+                "pinned": True,
+            },
+        )["record"]
+    )
+    reference: dict[str, JsonValue] = {
+        "thread_id": thread.id,
+        "memory_id": remembered.id,
+    }
+    assert service.execute("memory.get", reference)["record"] == remembered.model_dump(
+        mode="json"
+    )
+    recalled = service.execute(
+        "memory.recall", {"thread_id": thread.id, "query": "json"}
+    )
+    matches = recalled["records"]
+    assert isinstance(matches, list) and len(matches) == 1
+    match = matches[0]
+    assert isinstance(match, dict)
+    assert MemoryRecord.model_validate(match["record"]) == remembered
+    updated = MemoryRecord.model_validate(
+        service.execute(
+            "memory.update",
+            {
+                **reference,
+                "expected_version": 1,
+                "text": "Compare the next json inventory with the saved baseline.",
+                "tags": [],
+                "pinned": False,
+            },
+        )["record"]
+    )
+    assert updated.version == 2 and updated.tags == [] and updated.pinned is False
+    assert updated.source == remembered.source and updated.evidence_ids == [evidence_id]
+    with pytest.raises(ConflictError):
+        service.execute(
+            "memory.update", {**reference, "expected_version": 1, "text": "Stale edit"}
+        )
+    first = service.execute("memory.history", {**reference, "limit": 1})
+    assert first["records"] == [remembered.model_dump(mode="json")]
+    assert first["has_more"] is True and first["next_offset"] == 1
+    second = service.execute("memory.history", {**reference, "limit": 1, "offset": 1})
+    assert second["records"] == [updated.model_dump(mode="json")]
+    assert second["has_more"] is False
+    tombstone = MemoryRecord.model_validate(
+        service.execute(
+            "memory.forget",
+            {**reference, "expected_version": 2, "reason": "The baseline was replaced"},
+        )["record"]
+    )
+    assert tombstone.version == 3 and tombstone.status == "forgotten"
+    assert tombstone.text == updated.text and tombstone.evidence_ids == [evidence_id]
+    resumed = HarnessService(
+        workspace=service.store.workspace, state_dir=service.store.state_dir
+    )
+    assert resumed.execute("memory.get", reference)["record"] == tombstone.model_dump(
+        mode="json"
+    )
+    restored = resumed.execute("memory.recall", {"thread_id": thread.id})
+    assert restored["records"] == []
+    assert restored["excluded"] == {"forgotten": 1, "expired": 0}
+    assert resumed.execute("memory.history", reference)["records"] == [
+        record.model_dump(mode="json") for record in (remembered, updated, tombstone)
+    ]
+    other = resumed.store.create_thread("A separate thread")
+    with pytest.raises(NotFoundError):
+        resumed.execute("memory.get", {**reference, "thread_id": other.id})
+    assert len(resumed.store.list_evidence(thread.id)) == 1

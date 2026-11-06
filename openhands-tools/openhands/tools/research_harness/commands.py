@@ -99,6 +99,63 @@ class Query(ThreadReference):
 class Context(ThreadReference):
     max_bytes: int = Field(default=8192, ge=512, le=16_384)
     evidence_limit: int = Field(default=32, ge=1, le=50)
+    query: Annotated[str, Field(max_length=512)] | None = None
+    memory_limit: int = Field(default=8, ge=1, le=20)
+
+
+MemoryKind = Literal["note", "decision", "constraint", "lesson"]
+MemoryText = Annotated[str, Field(min_length=1, max_length=8192, pattern=r"\S")]
+MemorySource = Annotated[str, Field(min_length=1, max_length=2048, pattern=r"\S")]
+MemoryTag = Annotated[str, Field(min_length=1, max_length=64, pattern=r"\S")]
+MemoryTags = Annotated[list[MemoryTag], Field(max_length=16)]
+EvidenceIds = Annotated[list[RecordId], Field(max_length=32)]
+Expiry = Annotated[str, Field(min_length=1, max_length=64)]
+
+
+class MemoryRemember(ThreadReference):
+    text: MemoryText
+    source: MemorySource
+    kind: MemoryKind = "note"
+    tags: MemoryTags | None = None
+    evidence_ids: EvidenceIds | None = None
+    importance: int = Field(default=5, ge=0, le=10)
+    pinned: bool = False
+    expires_at: Expiry | None = None
+
+
+class MemoryReference(ThreadReference):
+    memory_id: RecordId
+
+
+class MemoryUpdate(MemoryReference):
+    expected_version: int = Field(ge=1)
+    text: MemoryText | None = None
+    source: MemorySource | None = None
+    kind: MemoryKind | None = None
+    tags: MemoryTags | None = None
+    evidence_ids: EvidenceIds | None = None
+    importance: Annotated[int, Field(ge=0, le=10)] | None = None
+    pinned: bool | None = None
+    expires_at: Expiry | None = None
+    clear_expiry: bool = False
+
+
+class MemoryForget(MemoryReference):
+    expected_version: int = Field(ge=1)
+    reason: Annotated[str, Field(min_length=1, max_length=4096, pattern=r"\S")]
+
+
+class MemoryRecall(ThreadReference):
+    query: str = Field(default="", max_length=512)
+    kind: MemoryKind | None = None
+    tags: MemoryTags | None = None
+    limit: PageLimit = 20
+    candidate_limit: int = Field(default=200, ge=1, le=500)
+
+
+class MemoryHistory(MemoryReference):
+    limit: PageLimit = 20
+    offset: Offset = 0
 
 
 class ArtifactRead(CommandBase):
@@ -134,6 +191,12 @@ _COMMANDS: dict[str, type[CommandBase]] = {
     "compare": Compare,
     "query": Query,
     "context": Context,
+    "memory.remember": MemoryRemember,
+    "memory.get": MemoryReference,
+    "memory.update": MemoryUpdate,
+    "memory.forget": MemoryForget,
+    "memory.recall": MemoryRecall,
+    "memory.history": MemoryHistory,
     "artifact.read": ArtifactRead,
     "events": Events,
     "events.export": EventsExport,

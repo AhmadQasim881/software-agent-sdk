@@ -29,6 +29,25 @@ _EXAMPLES: dict[str, dict[str, JsonValue]] = {
     "compare": {"thread_id": "thread-1", "before_sha": _SHA, "after_sha": _SHA},
     "query": {"thread_id": "thread-1", "artifact_sha": _SHA},
     "context": {"thread_id": "thread-1"},
+    "memory.remember": {
+        "thread_id": "thread-1",
+        "text": "The fixture readiness check completed.",
+        "source": "Recorded local fixture observation",
+    },
+    "memory.get": {"thread_id": "thread-1", "memory_id": "memory-1"},
+    "memory.update": {
+        "thread_id": "thread-1",
+        "memory_id": "memory-1",
+        "expected_version": 1,
+    },
+    "memory.forget": {
+        "thread_id": "thread-1",
+        "memory_id": "memory-1",
+        "expected_version": 1,
+        "reason": "Superseded by the current readiness observation",
+    },
+    "memory.recall": {"thread_id": "thread-1"},
+    "memory.history": {"thread_id": "thread-1", "memory_id": "memory-1"},
     "artifact.read": {"digest": _SHA},
     "events": {},
     "events.export": {},
@@ -76,6 +95,24 @@ def test_numeric_arguments_are_never_coerced(value: JsonValue) -> None:
         ("context", "max_bytes", 511),
         ("context", "max_bytes", 16_385),
         ("context", "evidence_limit", 51),
+        ("context", "query", "q" * 513),
+        ("context", "memory_limit", 0),
+        ("context", "memory_limit", 21),
+        ("memory.remember", "text", "m" * 8193),
+        ("memory.remember", "source", "s" * 2049),
+        ("memory.remember", "tags", ["tag"] * 17),
+        ("memory.remember", "tags", ["t" * 65]),
+        ("memory.remember", "evidence_ids", ["evidence-1"] * 33),
+        ("memory.remember", "importance", -1),
+        ("memory.remember", "importance", 11),
+        ("memory.remember", "expires_at", "d" * 65),
+        ("memory.recall", "query", "q" * 513),
+        ("memory.recall", "candidate_limit", 0),
+        ("memory.recall", "candidate_limit", 501),
+        ("memory.recall", "limit", 101),
+        ("memory.get", "memory_id", "m" * 129),
+        ("memory.update", "expected_version", 0),
+        ("memory.forget", "reason", "r" * 4097),
         ("thread.list", "limit", 101),
         ("thread.list", "offset", -1),
         ("artifact.read", "limit", 4097),
@@ -99,6 +136,26 @@ def test_ids_and_questions_cannot_be_blank(value: str) -> None:
         validate_arguments("thread.get", {"thread_id": value})
     with pytest.raises(HarnessError, match="Invalid"):
         validate_arguments("thread.create", {"question": value})
+
+
+@pytest.mark.parametrize("field", ["text", "source"])
+def test_saved_memory_requires_nonblank_content_and_provenance(field: str) -> None:
+    with pytest.raises(HarnessError, match="Invalid"):
+        validate_arguments(
+            "memory.remember", {**_EXAMPLES["memory.remember"], field: " \t\n"}
+        )
+
+
+@pytest.mark.parametrize(
+    ("field", "value"), [("pinned", "true"), ("importance", True), ("kind", "unknown")]
+)
+def test_memory_metadata_rejects_coercion_and_unknown_kinds(
+    field: str, value: JsonValue
+) -> None:
+    with pytest.raises(HarnessError, match="Invalid"):
+        validate_arguments(
+            "memory.remember", {**_EXAMPLES["memory.remember"], field: value}
+        )
 
 
 @pytest.mark.parametrize("version", [None, 0, True])
@@ -182,13 +239,14 @@ def test_unknown_operations_and_statuses_are_rejected() -> None:
         ("thread.list", "offset"),
         ("events", "after_seq"),
         ("events.export", "after_seq"),
+        ("memory.history", "offset"),
     ],
 )
 def test_database_cursors_fit_signed_64_bit_parameters(
     operation: str, field: str
 ) -> None:
     maximum = 2**63 - 1
-    accepted = validate_arguments(operation, {field: maximum})
+    accepted = validate_arguments(operation, {**_EXAMPLES[operation], field: maximum})
     assert accepted.model_dump()[field] == maximum
     with pytest.raises(HarnessError, match="less than or equal"):
-        validate_arguments(operation, {field: maximum + 1})
+        validate_arguments(operation, {**_EXAMPLES[operation], field: maximum + 1})

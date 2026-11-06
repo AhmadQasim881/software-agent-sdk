@@ -189,6 +189,93 @@ def test_missing_thread_fails_before_creating_a_conversation(
     assert not (store.state_dir / "conversations").exists()
 
 
+def test_operator_instructions_and_run_limits_are_persisted_without_model_calls(
+    llm: LLM,
+    store: HarnessStore,
+    thread: ThreadRecord,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def unexpected_transport(**kwargs: Any) -> ModelResponse:
+        pytest.fail("Configuration must not call a model")
+
+    monkeypatch.setattr(
+        "openhands.sdk.llm.llm.litellm_completion", unexpected_transport
+    )
+    instructions = "Review the owned local Python fixture. المراجعة المحلية فقط."
+    conversation = create_research_conversation(
+        llm=llm,
+        workspace=store.workspace,
+        state_dir=store.state_dir,
+        thread_id=thread.id,
+        operator_instructions=instructions,
+        max_iteration_per_run=7,
+        max_budget_per_run=0.03,
+    )
+    try:
+        context = conversation.agent.agent_context
+        assert context is not None and context.system_message_suffix == instructions
+        assert (
+            conversation.max_iteration_per_run == conversation.state.max_iterations == 7
+        )
+        assert (
+            conversation.max_budget_per_run
+            == conversation.state.max_budget_per_run
+            == 0.03
+        )
+        persistence = conversation.state.persistence_dir
+        assert persistence is not None
+        saved = json.loads((Path(persistence) / "base_state.json").read_text())
+        assert saved["agent"]["agent_context"]["system_message_suffix"] == instructions
+        assert saved["max_iterations"] == 7 and saved["max_budget_per_run"] == 0.03
+        metrics = conversation.conversation_stats.get_combined_metrics()
+        assert metrics.response_latencies == [] and metrics.accumulated_cost == 0
+        assert store.list_runs(thread.id) == []
+    finally:
+        conversation.close()
+
+
+@pytest.mark.parametrize(
+    ("setting", "value"),
+    [
+        ("operator_instructions", " \t\n"),
+        ("operator_instructions", "ا" * 8193),
+        ("max_iteration_per_run", 0),
+        ("max_iteration_per_run", 501),
+        ("max_iteration_per_run", True),
+        ("max_budget_per_run", 0),
+        ("max_budget_per_run", float("nan")),
+        ("max_budget_per_run", float("inf")),
+        ("max_budget_per_run", True),
+    ],
+)
+def test_invalid_operator_limits_fail_before_conversation_creation(
+    setting: str,
+    value: Any,
+    llm: LLM,
+    store: HarnessStore,
+    thread: ThreadRecord,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def unexpected_transport(**kwargs: Any) -> ModelResponse:
+        pytest.fail("Rejected configuration must not call a model")
+
+    monkeypatch.setattr(
+        "openhands.sdk.llm.llm.litellm_completion", unexpected_transport
+    )
+    configuration = {setting: value}
+    before = store.list_events()
+    with pytest.raises(HarnessError):
+        create_research_conversation(
+            llm=llm,
+            workspace=store.workspace,
+            state_dir=store.state_dir,
+            thread_id=thread.id,
+            **configuration,
+        )
+    assert not (store.state_dir / "conversations").exists()
+    assert store.list_events() == before
+
+
 def test_state_must_remain_outside_the_workspace(
     llm: LLM, store: HarnessStore, thread: ThreadRecord
 ) -> None:

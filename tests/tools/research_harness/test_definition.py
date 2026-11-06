@@ -27,6 +27,7 @@ from openhands.sdk.conversation.state import ConversationExecutionStatus
 from openhands.sdk.event import ActionEvent, AgentErrorEvent, ObservationEvent
 from openhands.sdk.tool import list_registered_tools
 from openhands.tools.research_harness import fixture, service
+from openhands.tools.research_harness.agentmemory import MemoryRecord
 from openhands.tools.research_harness.definition import (
     ResearchHarnessAction,
     ResearchHarnessExecutor,
@@ -209,6 +210,70 @@ def test_schema_discovery_uses_the_actual_service_contract(
     assert len(tool.description) < 2000
     with pytest.raises(HarnessError, match="empty arguments"):
         tool(ResearchHarnessAction(operation="schema", arguments={"unexpected": True}))
+
+
+def test_sdk_executor_and_service_share_memory_and_thread_scoped_context(
+    conversation: LocalConversation, store: HarnessStore
+) -> None:
+    thread_id = _new_thread(conversation)
+    external = service.HarnessService(
+        workspace=store.workspace, state_dir=store.state_dir
+    )
+    other = external.store.create_thread("A separate json review")
+    foreign = external.store.create_memory(
+        other.id, "json FOREIGN_SCOPE_NOTE", source="Separate thread operator"
+    )
+    observation = conversation.execute_tool(
+        ResearchHarnessTool.name,
+        ResearchHarnessAction(
+            operation="memory.remember",
+            arguments={
+                "thread_id": thread_id,
+                "text": "Keep the json baseline for the next comparison.",
+                "source": "Explicit operator decision",
+                "kind": "decision",
+            },
+        ),
+    )
+    assert (
+        isinstance(observation, ResearchHarnessObservation) and not observation.is_error
+    )
+    remembered = MemoryRecord.model_validate(observation.result["record"])
+    reference: dict[str, JsonValue] = {
+        "thread_id": thread_id,
+        "memory_id": remembered.id,
+    }
+    assert external.execute("memory.get", reference)["record"] == remembered.model_dump(
+        mode="json"
+    )
+    changed = external.execute(
+        "memory.update",
+        {**reference, "expected_version": 1, "text": "Use the reviewed json baseline."},
+    )
+    fetched = conversation.execute_tool(
+        ResearchHarnessTool.name,
+        ResearchHarnessAction(operation="memory.get", arguments=reference),
+    )
+    assert isinstance(fetched, ResearchHarnessObservation) and not fetched.is_error
+    assert fetched.result["record"] == changed["record"]
+    context = conversation.execute_tool(
+        ResearchHarnessTool.name,
+        ResearchHarnessAction(
+            operation="context", arguments={"thread_id": thread_id, "query": "json"}
+        ),
+    )
+    assert isinstance(context, ResearchHarnessObservation) and not context.is_error
+    restored = json.loads(str(context.result["context"]))
+    assert [record["id"] for record in restored["memory"]] == [remembered.id]
+    assert restored["memory"][0]["version"] == 2
+    assert restored["memory"][0]["source"] == remembered.source
+    assert "Use the reviewed json baseline." in str(context.result["context"])
+    assert foreign.id not in str(context.result["context"])
+    assert "FOREIGN_SCOPE_NOTE" not in str(context.result["context"])
+    assert store.list_evidence(thread_id) == []
+    assert (
+        conversation.conversation_stats.get_combined_metrics().response_latencies == []
+    )
 
 
 @pytest.mark.parametrize(

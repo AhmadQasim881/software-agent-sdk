@@ -137,6 +137,10 @@ class HarnessService:
             "thread.update": self.store.update_thread,
             "run.get": self.store.get_run,
             "evidence.get": self.store.get_evidence,
+            "memory.remember": self.store.create_memory,
+            "memory.get": self.store.get_memory,
+            "memory.update": self.store.update_memory,
+            "memory.forget": self.store.forget_memory,
         }
         if operation in single:
             record = single[operation](**arguments)
@@ -146,6 +150,7 @@ class HarnessService:
             "thread.history": self.store.thread_history,
             "run.list": self.store.list_runs,
             "evidence.list": self.store.list_evidence,
+            "memory.history": self.store.memory_history,
         }
         if operation in pages or operation == "events":
             limit = arguments.pop("limit")
@@ -180,6 +185,8 @@ class HarnessService:
             return result
         if operation == "context":
             return {"ok": True, **assemble_context(self.store, **arguments)}
+        if operation == "memory.recall":
+            return self.store.search_memory(**arguments)
         if operation == "artifact.read":
             return artifact_slice(self.store, **arguments)
         if operation == "events.export":

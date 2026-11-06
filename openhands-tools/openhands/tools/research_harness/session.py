@@ -1,5 +1,6 @@
 """Assemble a local SDK conversation around an existing research thread."""
 
+import math
 from pathlib import Path
 from uuid import uuid4
 
@@ -26,6 +27,9 @@ def create_research_conversation(
     thread_id: str,
     allow_github: bool = False,
     condenser: RollingCondenser | None = None,
+    operator_instructions: str | None = None,
+    max_iteration_per_run: int = 500,
+    max_budget_per_run: float | None = None,
 ) -> LocalConversation:
     """Create a conversation with native skill loading, hooks, and checkpoints.
 
@@ -33,11 +37,35 @@ def create_research_conversation(
     existing research thread and makes no model request. Each conversation has
     its own persisted SDK history while sharing the selected durable thread.
 
+    ``operator_instructions`` is explicit trusted configuration, never an
+    automatically loaded workspace file. It can describe the target's runtime,
+    normal operation, boundaries, and stop conditions. Model cost enforcement
+    uses the SDK's recorded usage and can only stop between provider requests.
+
     This scoped helper requires no currently discoverable ambient plugins. Its
     preflight does not prevent concurrent configuration changes by other local
     processes. Custom SDK sessions can use ResearchHarnessTool with their own
     plugin configuration.
     """
+    if operator_instructions is not None and (
+        not isinstance(operator_instructions, str)
+        or not operator_instructions.strip()
+        or len(operator_instructions.encode("utf-8")) > 16_384
+    ):
+        raise HarnessError("Operator instructions require 1..16384 UTF-8 bytes")
+    if (
+        isinstance(max_iteration_per_run, bool)
+        or not isinstance(max_iteration_per_run, int)
+        or not 1 <= max_iteration_per_run <= 500
+    ):
+        raise HarnessError("Maximum iterations must be an integer in 1..500")
+    if max_budget_per_run is not None and (
+        isinstance(max_budget_per_run, bool)
+        or not isinstance(max_budget_per_run, int | float)
+        or not math.isfinite(max_budget_per_run)
+        or max_budget_per_run <= 0
+    ):
+        raise HarnessError("Maximum model budget must be finite and positive")
     store = HarnessStore(state_dir, workspace)
     store.get_thread(thread_id)
     plugins = load_available_plugins(
@@ -58,6 +86,7 @@ def create_research_conversation(
         load_public_skills=False,
         load_project_skills=False,
         load_memory=False,
+        system_message_suffix=operator_instructions,
     )
     delegate = condenser if condenser is not None else LLMSummarizingCondenser(llm=llm)
     agent = Agent(
@@ -85,6 +114,8 @@ def create_research_conversation(
         workspace=store.workspace,
         persistence_dir=store.state_dir / "conversations",
         conversation_id=conversation_id,
+        max_iteration_per_run=max_iteration_per_run,
+        max_budget_per_run=max_budget_per_run,
         hook_config=make_hook_config(
             workspace=store.workspace,
             state_dir=store.state_dir,

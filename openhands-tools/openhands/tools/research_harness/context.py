@@ -1,9 +1,11 @@
 """Auditable context selection with an exact UTF-8 text budget."""
 
 import hashlib
+from typing import cast
 
 from pydantic import JsonValue
 
+from .agentmemory import MemoryRecord
 from .artifacts import canonical_json
 from .models import HarnessError
 from .store import HarnessStore
@@ -28,19 +30,74 @@ def _field(
     return key, preview, truncated
 
 
+def _select_memory(
+    content: dict[str, JsonValue], memory: dict[str, JsonValue], max_bytes: int
+) -> list[JsonValue]:
+    """Spend at most one third of context on authored memory previews."""
+    selected = cast(list[JsonValue], content["memory"])
+    omissions = cast(dict[str, JsonValue], content["omissions"])
+    candidates = cast(list[dict[str, JsonValue]], memory["records"])
+    candidate_count = cast(int, memory["candidate_notes"])
+    base_size = len(canonical_json(content))
+    decisions: list[JsonValue] = []
+    for match in candidates:
+        record = MemoryRecord.model_validate(match["record"])
+        preview: dict[str, JsonValue] = {
+            "id": record.id,
+            "version": record.version,
+            "kind": record.kind,
+            "pinned": record.pinned,
+        }
+        fields: list[JsonValue] = []
+        evidence_references: list[JsonValue] = list(record.evidence_ids)
+        for name, value, limit in (
+            ("text", record.text, 256),
+            ("source", record.source, 128),
+            ("evidence_ids", evidence_references, 128),
+        ):
+            key, rendered, truncated = _field(name, value, limit)
+            preview[key] = rendered
+            fields.append({"field": name, "included_as": key, "truncated": truncated})
+        selected.append(preview)
+        omissions["candidate_memory"] = candidate_count - len(selected)
+        size = len(canonical_json(content))
+        fits = size <= max_bytes and size - base_size <= max_bytes // 3
+        if not fits:
+            selected.pop()
+            omissions["candidate_memory"] = candidate_count - len(selected)
+        decisions.append(
+            {
+                "id": record.id,
+                "version": record.version,
+                "disposition": "selected" if fits else "omitted",
+                "reason": match["selection_reason"] if fits else "memory_byte_budget",
+                "preview": preview,
+                "fields": fields,
+                "score": match["score"],
+                "lexical_similarity": match["lexical_similarity"],
+                "matched_query": match["matched_query"],
+            }
+        )
+    return decisions
+
+
 def assemble_context(
     store: HarnessStore,
     thread_id: str,
     *,
     max_bytes: int = 8192,
     evidence_limit: int = 32,
+    query: str | None = None,
+    memory_limit: int = 8,
 ) -> dict[str, JsonValue]:
     """Return selected content, not merely references to unread artifacts.
 
     The 512..16384 byte budget covers the exact returned ``context`` string,
     not model tokens or the surrounding transport envelope. The manifest
     audits every candidate in the newest 1..50 evidence window; older history
-    is explicitly outside that window. Raw events and artifacts are not read.
+    is explicitly outside that window. Authored notes share that snapshot and
+    spend at most one third of the budget. Retrieval omissions and context
+    omissions are recorded separately. Raw events and artifacts are not read.
     """
     if (
         isinstance(max_bytes, bool)
@@ -48,7 +105,11 @@ def assemble_context(
         or not 512 <= max_bytes <= 16_384
     ):
         raise HarnessError("Context max_bytes must be an integer in 512..16384")
-    thread, candidates, total = store.context_records(thread_id, limit=evidence_limit)
+    if type(memory_limit) is not int or not 1 <= memory_limit <= 20:
+        raise HarnessError("Context memory_limit must be an integer in 1..20")
+    thread, candidates, total, memory = store.context_memory_records(
+        thread_id, evidence_limit=evidence_limit, query=query, memory_limit=memory_limit
+    )
     older = total - len(candidates)
     thread_content: dict[str, JsonValue] = {
         "id": thread.id,
@@ -66,6 +127,11 @@ def assemble_context(
         "evidence": selected,
         "omissions": omissions,
     }
+    has_memory = cast(int, memory["total_notes"]) > 0
+    if has_memory:
+        content["memory"] = []
+        content["memory_notice"] = "Authored notes; verify against evidence."
+        omissions["candidate_memory"] = memory["candidate_notes"]
     thread_fields: list[JsonValue] = []
     question_limit = min(384, max_bytes // 4)
     while True:
@@ -102,6 +168,7 @@ def assemble_context(
             }
         )
 
+    memory_decisions = _select_memory(content, memory, max_bytes) if has_memory else []
     decisions: list[JsonValue] = [
         {
             "kind": "thread",
@@ -155,8 +222,8 @@ def assemble_context(
     encoded = canonical_json(content)
     text = encoded.decode("utf-8")
     manifest: dict[str, JsonValue] = {
-        "schema_version": 1,
-        "policy_version": "research-context/1",
+        "schema_version": 2 if has_memory else 1,
+        "policy_version": "research-context/2" if has_memory else "research-context/1",
         "workspace": str(store.workspace),
         "context": text,
         "context_sha256": hashlib.sha256(encoded).hexdigest(),
@@ -177,6 +244,17 @@ def assemble_context(
         },
         "records": decisions,
     }
+    if has_memory:
+        manifest["memory"] = {
+            "retrieval": {
+                key: value for key, value in memory.items() if key != "records"
+            },
+            "preview_byte_allowance": max_bytes // 3,
+            "records": memory_decisions,
+            "snapshot": (
+                "Thread, evidence, run outcomes and memory share one read snapshot"
+            ),
+        }
     digest = store.artifacts.put(canonical_json(manifest))
     result: dict[str, JsonValue] = {
         "context": text,
@@ -187,6 +265,10 @@ def assemble_context(
         "omitted_candidates": len(candidates) - len(selected),
         "older_outside_window": older,
     }
+    if has_memory:
+        result["selected_memory"] = len(cast(list[JsonValue], content["memory"]))
+        result["omitted_memory_candidates"] = omissions["candidate_memory"]
+        result["memory_query"] = memory["query"]
     store.append_event(
         "context.assembled",
         thread_id=thread.id,

@@ -113,6 +113,24 @@ with TemporaryDirectory(prefix="openhands-research-demo-") as temporary:
     assert changes["added"][0]["normalized"] == "import math"
     assert changes["removed"][0]["normalized"] == "import json"
 
+    remembered = call(
+        service,
+        "memory.remember",
+        {
+            "thread_id": thread_id,
+            "kind": "decision",
+            "text": (
+                "Compare inventory declarations, since equal counts can hide changes."
+            ),
+            "source": "Authored decision from this example's saved comparison",
+            "evidence_ids": [comparison["evidence_id"]],
+            "tags": ["inventory"],
+        },
+    )["record"]
+    assert isinstance(remembered, dict)
+    memory_id = remembered["id"]
+    assert isinstance(memory_id, str)
+
     query = call(
         service,
         "query",
@@ -169,6 +187,20 @@ with TemporaryDirectory(prefix="openhands-research-demo-") as temporary:
     evidence = call(resumed, "evidence.list", {"thread_id": thread_id})["records"]
     assert isinstance(history, list) and len(history) == 2
     assert isinstance(evidence, list) and len(evidence) == 5
+    recalled = call(
+        resumed, "memory.recall", {"thread_id": thread_id, "query": "inventory"}
+    )["records"]
+    assert isinstance(recalled, list) and len(recalled) == 1
+    assert isinstance(recalled[0], dict) and recalled[0]["record"] == remembered
+    saved_note = call(
+        resumed, "memory.get", {"thread_id": thread_id, "memory_id": memory_id}
+    )["record"]
+    assert saved_note == remembered
+    memory_context = call(
+        resumed, "context", {"thread_id": thread_id, "query": "inventory"}
+    )
+    assert memory_context["selected_memory"] == 1
+    assert json.loads(str(memory_context["context"]))["memory"][0]["id"] == memory_id
     summary = {
         "ok": True,
         "mode": "local, no model",
@@ -185,6 +217,9 @@ with TemporaryDirectory(prefix="openhands-research-demo-") as temporary:
         "context_bytes": context["context_bytes"],
         "resumed_thread_version": restored["version"],
         "retained_evidence_records": len(evidence),
+        "recalled_memory_records": len(recalled),
+        "memory_provenance_retained": saved_note == remembered,
+        "context_memory_selected": memory_context["selected_memory"],
     }
 
 assert not demo_root.exists()
