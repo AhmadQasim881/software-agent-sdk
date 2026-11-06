@@ -16,6 +16,11 @@ the same core runtime. The focused follow-up suite passed **18 tests in 36.68
 seconds**: all 16 Agent Server packaging metadata tests and two acceptance-runner
 failure checks. These are separate runs, not a claimed single 411-test run.
 
+The subsequent [hosted acceptance run](research-harness-hosted-acceptance.md)
+passed **all 411 tests in one run**, installed a fresh locked runtime and received
+HTTP 200 from the actual harness GitHub worker. Its installed-package report is
+retained unchanged as [JSON evidence](research-harness-hosted-install.json).
+
 ## Changes and observed evidence
 
 | Area | Change or observed result | Evidence |
@@ -84,9 +89,12 @@ check, per-file pre-commit and `git diff --check` passed locally. Independent
 review found no blocking defect; its example-output filename correction was
 applied so the JSON-plus-cost output is retained as `.log`.
 
-This report was prepared before publishing the workflow. A hosted success is
-not claimed here; inspect the branch's actual Actions run and uploaded evidence
-for the fresh-install and successful live-response gates.
+The published workflow subsequently passed in
+[run 42255004206](https://github.com/AhmadQasim881/software-agent-sdk/actions/runs/42255004206).
+Its [hosted report](research-harness-hosted-acceptance.md) records the complete
+411-test run, fresh dependency installation, actual HTTP 200 response and verified
+artifact digests. The earlier copied-runtime and failed-DNS observations above
+remain accurate descriptions of their local runs.
 
 ## Remaining acceptance boundaries
 
@@ -103,7 +111,6 @@ workflow was added.
 | Native remote agent-loop execution | SDK tool registration/reopening and server-side MCP reads passed. `RemoteConversation.execute_tool()` is explicitly unsupported; no model-driven server loop was run. |
 | Frozen hook/HTTP-worker parity | Binary asset retention and readiness passed; interpreter-style subprocess paths inside the frozen binary were not exercised. |
 | Docker and OS/network isolation | Docker/Podman are absent, and the harmless local namespace probe was denied. Source-context packaging does not establish container execution or isolation. |
-| Fresh dependency install and live GitHub HTTP | Both are automated by the new hosted gate. Local copied-runtime and failed-DNS results remain distinct until an actual hosted run passes. |
 
 No model completion was observed in this follow-up. Local readiness, persistence
 and packaging checks are not a claim of complete deployment or model acceptance.

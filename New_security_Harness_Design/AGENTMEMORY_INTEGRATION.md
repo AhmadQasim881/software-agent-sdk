@@ -183,6 +183,9 @@ This is a two-case acceptance check, not a general semantic quality benchmark.
 
 The repository's implementation and evidence are independently reviewable:
 
+- [Successful hosted acceptance](../.pr/research-harness-hosted-acceptance.md)
+  records 411 passing tests, a fresh locked runtime, actual installed CLI/MCP
+  memory behavior and a real HTTP 200 public GitHub observation.
 - [Completion follow-up](../.pr/research-harness-followup-verification.md) records
   the latest packaging fixes, reusable installed-package acceptance runner,
   branch CI gate and remaining deployment/model acceptance boundaries.
@@ -203,7 +206,9 @@ The repository's implementation and evidence are independently reviewable:
   accepted isolated MCP configuration and a client initialization failure before
   any model completion or tool call.
 
-Successful live GitHub HTTP remains blocked by DNS in this local environment.
+The hosted workflow closed the fresh-install and successful live GitHub gates.
+Local requests remain blocked by this workspace's DNS environment; the retained
+hosted report identifies the separate runtime and actual successful response.
 No provider API credential is present for the OpenHands live semantic check.
 The installed native Codex client failed before its model turn with a read-only
 filesystem error; its generated configuration alone does not establish recall.

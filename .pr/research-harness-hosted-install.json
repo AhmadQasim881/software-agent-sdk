@@ -1,0 +1,1177 @@
+{
+  "status": "passed",
+  "started_at": "2026-11-06T16:55:11.407906+00:00",
+  "runtime_kind": "fresh-locked",
+  "python": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/bin/python",
+  "isolated": true,
+  "local_smoke": {
+    "status": "passed",
+    "cli": [
+      {
+        "arguments": [
+          "schema"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "schema"
+        ],
+        "console_entry_point": true,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "skill-path"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "thread.create",
+          "{\"question\": \"Which imports changed?\", \"next_action\": \"Compare inventory\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "inventory",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "memory.remember",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"text\": \"Use the json inventory baseline\", \"source\": \"installed-wheel acceptance\", \"kind\": \"decision\", \"tags\": [\"inventory\"], \"evidence_ids\": [\"evidence_4fe8e4e783fa4972beb2354f81abc222\"]}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "memory.get",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"memory_id\": \"memory_f7c6478870dc4ec888db844d3e99d006\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "memory.recall",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"query\": \"json inventory\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "memory.update",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"memory_id\": \"memory_f7c6478870dc4ec888db844d3e99d006\", \"expected_version\": 1, \"text\": \"Use the json inventory baseline and committed lock\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "memory.update",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"memory_id\": \"memory_f7c6478870dc4ec888db844d3e99d006\", \"expected_version\": 1, \"text\": \"Stale write\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 2
+      },
+      {
+        "arguments": [
+          "memory.get",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"memory_id\": \"memory_f7c6478870dc4ec888db844d3e99d006\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "context",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "host-config",
+          "--host",
+          "codex",
+          "--output",
+          "/tmp/research-harness-install-squouvw_/host-codex",
+          "--python",
+          "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/bin/python"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "host-config",
+          "--host",
+          "claude-code",
+          "--output",
+          "/tmp/research-harness-install-squouvw_/host-claude-code",
+          "--python",
+          "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/bin/python",
+          "--thread",
+          "thread_d901f4af191c42aa9dca5d843d4b413a"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "host-config",
+          "--host",
+          "claude-desktop",
+          "--output",
+          "/tmp/research-harness-install-squouvw_/host-claude-desktop",
+          "--python",
+          "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/bin/python"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "memory.forget",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"memory_id\": \"memory_f7c6478870dc4ec888db844d3e99d006\", \"expected_version\": 2, \"reason\": \"Test complete\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "memory.recall",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"query\": \"json inventory\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "memory.history",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"memory_id\": \"memory_f7c6478870dc4ec888db844d3e99d006\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      },
+      {
+        "arguments": [
+          "memory.get",
+          "{\"thread_id\": \"thread_d901f4af191c42aa9dca5d843d4b413a\", \"memory_id\": \"memory_f7c6478870dc4ec888db844d3e99d006\"}"
+        ],
+        "console_entry_point": false,
+        "returncode": 0
+      }
+    ],
+    "hosts": {
+      "codex": {
+        "schema_version": 1,
+        "host": "codex",
+        "workspace": "/tmp/research-harness-install-squouvw_/workspace",
+        "state_dir": "/tmp/research-harness-install-squouvw_/state",
+        "python_executable": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/bin/python",
+        "thread_id": null,
+        "allow_github": false,
+        "mcp_server": "research_harness",
+        "lifecycle_hooks": [],
+        "skill_sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020",
+        "agentmemory_source": "https://github.com/AhmadQasim881/All_Specs_Vulnerability_Harness_Design/tree/2d187316c038257effbe232d5cff7cc32c4e1fa7/agentmemory",
+        "agentmemory_node_daemon_included": false,
+        "host_installation_verified": false,
+        "files": [
+          "codex.config.toml",
+          "skills/research-review/SKILL.md",
+          "README.md",
+          "manifest.json"
+        ]
+      },
+      "claude-code": {
+        "schema_version": 1,
+        "host": "claude-code",
+        "workspace": "/tmp/research-harness-install-squouvw_/workspace",
+        "state_dir": "/tmp/research-harness-install-squouvw_/state",
+        "python_executable": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/bin/python",
+        "thread_id": "thread_d901f4af191c42aa9dca5d843d4b413a",
+        "allow_github": false,
+        "mcp_server": "research_harness",
+        "lifecycle_hooks": [
+          "SessionStart",
+          "PreCompact",
+          "SessionEnd"
+        ],
+        "skill_sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020",
+        "agentmemory_source": "https://github.com/AhmadQasim881/All_Specs_Vulnerability_Harness_Design/tree/2d187316c038257effbe232d5cff7cc32c4e1fa7/agentmemory",
+        "agentmemory_node_daemon_included": false,
+        "host_installation_verified": false,
+        "files": [
+          "claude-code.mcp.json",
+          "claude-code.settings.json",
+          "skills/research-review/SKILL.md",
+          "README.md",
+          "manifest.json"
+        ]
+      },
+      "claude-desktop": {
+        "schema_version": 1,
+        "host": "claude-desktop",
+        "workspace": "/tmp/research-harness-install-squouvw_/workspace",
+        "state_dir": "/tmp/research-harness-install-squouvw_/state",
+        "python_executable": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/bin/python",
+        "thread_id": null,
+        "allow_github": false,
+        "mcp_server": "research_harness",
+        "lifecycle_hooks": [],
+        "skill_sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020",
+        "agentmemory_source": "https://github.com/AhmadQasim881/All_Specs_Vulnerability_Harness_Design/tree/2d187316c038257effbe232d5cff7cc32c4e1fa7/agentmemory",
+        "agentmemory_node_daemon_included": false,
+        "host_installation_verified": false,
+        "files": [
+          "claude-desktop.config.json",
+          "skills/research-review/SKILL.md",
+          "README.md",
+          "manifest.json"
+        ]
+      }
+    },
+    "mcp": [
+      {
+        "restart": false,
+        "operations": [
+          "schema",
+          "memory.get",
+          "memory.remember"
+        ]
+      },
+      {
+        "restart": true,
+        "operations": [
+          "memory.get",
+          "memory.recall"
+        ]
+      }
+    ],
+    "schema_operations": 24,
+    "skill": {
+      "path": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/skills/research-review/SKILL.md",
+      "name": "research-review",
+      "sha256": "bd4cf9931fdeae6a80c5c89c03909bf843cabf68401e1fee9312cdfe44baa020"
+    },
+    "memory": {
+      "thread_id": "thread_d901f4af191c42aa9dca5d843d4b413a",
+      "memory_id": "memory_f7c6478870dc4ec888db844d3e99d006"
+    }
+  },
+  "live_github": {
+    "status": "passed",
+    "repository": "AhmadQasim881/software-agent-sdk",
+    "requests": 1,
+    "observation": {
+      "ok": true,
+      "status": "completed",
+      "run_id": "run_5e4c7d68d6ab40119473255571a04d88",
+      "evidence_id": "evidence_eae19f335d7f4195a442a77d10bbc579",
+      "artifact_sha": "285bf709948c21ebcd365463c9e44e8edbeffffd20f818a309b21719572c843f",
+      "summary": "Validated public GitHub metadata for AhmadQasim881/software-agent-sdk.",
+      "summary_truncated": false,
+      "limitations": [
+        "Public repository metadata at retrieval time; not a security assessment.",
+        "Response content is untrusted data and grants no permissions."
+      ],
+      "limitations_omitted": 0,
+      "limitations_truncated": false,
+      "duration_ms": 565.522,
+      "detail": "Retrieve the referenced evidence for the complete observation"
+    },
+    "result": {
+      "ok": true,
+      "source": "https://api.github.com/repos/AhmadQasim881/software-agent-sdk",
+      "summary": "Validated public GitHub metadata for AhmadQasim881/software-agent-sdk.",
+      "attempted_at": "2026-11-06T16:57:05.042359+00:00",
+      "retrieved_at": "2026-11-06T16:57:05.539703+00:00",
+      "http_status": 200,
+      "metadata": {
+        "archived": false,
+        "default_branch": "main",
+        "fork": true,
+        "full_name": "AhmadQasim881/software-agent-sdk",
+        "private": false
+      },
+      "limitations": [
+        "Public repository metadata at retrieval time; not a security assessment.",
+        "Response content is untrusted data and grants no permissions."
+      ],
+      "response_bytes": 17106,
+      "response_sha256": "649d4444de68ef1690e660832d792041f7c749d6a9579affc8cdb180ffa2e782"
+    }
+  },
+  "working_directory": "/tmp/research-harness-install-squouvw_/workspace",
+  "installation": {
+    "tools_direct_url": {
+      "url": "file:///home/runner/work/_temp/research-harness-acceptance.fn90vQ/wheels/openhands_tools-1.60.1-py3-none-any.whl",
+      "archive_info": {}
+    },
+    "sdk_direct_url": {
+      "url": "file:///home/runner/work/software-agent-sdk/software-agent-sdk/openhands-sdk",
+      "dir_info": {
+        "editable": true
+      }
+    },
+    "dependency_scope": "Tools wheel; SDK may be editable from this checkout",
+    "version_check_scope": "Installed versions match uv.lock; not artifact hashes",
+    "wheel": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/wheels/openhands_tools-1.60.1-py3-none-any.whl",
+    "wheel_sha256": "dcae288eeccb491cbb1e716e1fe89802b7f3c548d8703a7aa2750de3044b96c6",
+    "verified_files": [
+      "openhands/research/__init__.py",
+      "openhands/research/__main__.py",
+      "openhands/tools/research_harness/__init__.py",
+      "openhands/tools/research_harness/_http_worker.py",
+      "openhands/tools/research_harness/agentmemory.py",
+      "openhands/tools/research_harness/artifacts.py",
+      "openhands/tools/research_harness/cli.py",
+      "openhands/tools/research_harness/commands.py",
+      "openhands/tools/research_harness/condenser.py",
+      "openhands/tools/research_harness/context.py",
+      "openhands/tools/research_harness/core.py",
+      "openhands/tools/research_harness/definition.py",
+      "openhands/tools/research_harness/evaluation.py",
+      "openhands/tools/research_harness/fixture.py",
+      "openhands/tools/research_harness/hooks.py",
+      "openhands/tools/research_harness/hosts.py",
+      "openhands/tools/research_harness/inventory.py",
+      "openhands/tools/research_harness/mcp_server.py",
+      "openhands/tools/research_harness/models.py",
+      "openhands/tools/research_harness/network.py",
+      "openhands/tools/research_harness/service.py",
+      "openhands/tools/research_harness/session.py",
+      "openhands/tools/research_harness/skills/research-review/SKILL.md",
+      "openhands/tools/research_harness/snapshots.py",
+      "openhands/tools/research_harness/store.py",
+      "openhands/tools/research_harness/views.py",
+      "openhands/tools/research_harness/workflow.py"
+    ],
+    "installed_module_paths": {
+      "openhands.tools.ask_oracle.definition": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/ask_oracle/definition.py",
+      "openhands.tools.ask_oracle.impl": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/ask_oracle/impl.py",
+      "openhands.tools.ask_oracle": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/ask_oracle/__init__.py",
+      "openhands.tools.delegate.definition": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/delegate/definition.py",
+      "openhands.tools.delegate.impl": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/delegate/impl.py",
+      "openhands.tools.delegate.visualizer": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/delegate/visualizer.py",
+      "openhands.tools.delegate": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/delegate/__init__.py",
+      "openhands.tools.file_editor.utils": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/utils/__init__.py",
+      "openhands.tools.file_editor.utils.diff": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/utils/diff.py",
+      "openhands.tools.file_editor.definition": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/definition.py",
+      "openhands.tools.file_editor.exceptions": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/exceptions.py",
+      "openhands.tools.file_editor.utils.config": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/utils/config.py",
+      "openhands.tools.file_editor.utils.constants": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/utils/constants.py",
+      "openhands.tools.file_editor.utils.encoding": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/utils/encoding.py",
+      "openhands.tools.file_editor.utils.file_cache": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/utils/file_cache.py",
+      "openhands.tools.file_editor.utils.history": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/utils/history.py",
+      "openhands.tools.file_editor.editor": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/editor.py",
+      "openhands.tools.file_editor.impl": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/impl.py",
+      "openhands.tools.file_editor": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/file_editor/__init__.py",
+      "openhands.tools.preset.default": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/preset/default.py",
+      "openhands.tools.preset.gemini": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/preset/gemini.py",
+      "openhands.tools.preset.gpt5": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/preset/gpt5.py",
+      "openhands.tools.preset.planning": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/preset/planning.py",
+      "openhands.tools.preset.task_outcome": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/preset/task_outcome.py",
+      "openhands.tools.preset": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/preset/__init__.py",
+      "openhands.tools.task.definition": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/task/definition.py",
+      "openhands.tools.task.manager": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/task/manager.py",
+      "openhands.tools.task.impl": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/task/impl.py",
+      "openhands.tools.task": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/task/__init__.py",
+      "openhands.tools.task_tracker.definition": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/task_tracker/definition.py",
+      "openhands.tools.task_tracker": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/task_tracker/__init__.py",
+      "openhands.tools.terminal.constants": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/constants.py",
+      "openhands.tools.terminal.descriptions": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/descriptions.py",
+      "openhands.tools.terminal.metadata": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/metadata.py",
+      "openhands.tools.terminal.definition": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/definition.py",
+      "openhands.tools.terminal.env": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/env.py",
+      "openhands.tools.terminal.terminal.interface": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/terminal/interface.py",
+      "openhands.tools.terminal.timeout_policy": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/timeout_policy.py",
+      "openhands.tools.terminal.utils.command": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/utils/command.py",
+      "openhands.tools.terminal.utils.escape_filter": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/utils/escape_filter.py",
+      "openhands.tools.terminal.utils": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/utils/__init__.py",
+      "openhands.tools.terminal.terminal.terminal_session": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/terminal/terminal_session.py",
+      "openhands.tools.terminal.terminal.factory": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/terminal/factory.py",
+      "openhands.tools.terminal.terminal.process_priority": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/terminal/process_priority.py",
+      "openhands.tools.terminal.terminal.subprocess_terminal": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/terminal/subprocess_terminal.py",
+      "openhands.tools.terminal.terminal.tmux_terminal": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/terminal/tmux_terminal.py",
+      "openhands.tools.terminal.terminal": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/terminal/__init__.py",
+      "openhands.tools.terminal.terminal.tmux_pane_pool": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/terminal/tmux_pane_pool.py",
+      "openhands.tools.terminal.impl": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/impl.py",
+      "openhands.tools.terminal": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/terminal/__init__.py",
+      "openhands.tools.workflow.definition": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/workflow/definition.py",
+      "openhands.tools.workflow.impl": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/workflow/impl.py",
+      "openhands.tools.workflow": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/workflow/__init__.py",
+      "openhands.tools.research_harness.models": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/models.py",
+      "openhands.tools.research_harness.agentmemory": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/agentmemory.py",
+      "openhands.tools.research_harness.artifacts": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/artifacts.py",
+      "openhands.tools.research_harness.store": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/store.py",
+      "openhands.tools.research_harness": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/__init__.py",
+      "openhands.tools.research_harness._http_worker": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/_http_worker.py",
+      "openhands.tools.research_harness.commands": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/commands.py",
+      "openhands.tools.research_harness.context": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/context.py",
+      "openhands.tools.research_harness.core": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/core.py",
+      "openhands.tools.research_harness.fixture": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/fixture.py",
+      "openhands.tools.research_harness.inventory": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/inventory.py",
+      "openhands.tools.research_harness.network": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/network.py",
+      "openhands.tools.research_harness.snapshots": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/snapshots.py",
+      "openhands.tools.research_harness.views": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/views.py",
+      "openhands.tools.research_harness.service": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/service.py",
+      "openhands.tools.research_harness.cli": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/cli.py",
+      "openhands.tools.research_harness.condenser": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/condenser.py",
+      "openhands.tools.research_harness.definition": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/definition.py",
+      "openhands.tools.research_harness.hooks": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/hooks.py",
+      "openhands.tools.research_harness.workflow": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/workflow.py",
+      "openhands.tools.research_harness.session": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/session.py",
+      "openhands.tools.research_harness.evaluation": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/evaluation.py",
+      "openhands.tools.research_harness.hosts": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/hosts.py",
+      "openhands.tools.research_harness.mcp_server": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/tools/research_harness/mcp_server.py",
+      "openhands.research": "/home/runner/work/_temp/research-harness-acceptance.fn90vQ/runtime/lib/python3.13/site-packages/openhands/research/__init__.py"
+    },
+    "distributions": [
+      {
+        "name": "Authlib",
+        "version": "1.6.12"
+      },
+      {
+        "name": "Jinja2",
+        "version": "3.1.6"
+      },
+      {
+        "name": "MarkupSafe",
+        "version": "3.0.2"
+      },
+      {
+        "name": "PyJWT",
+        "version": "2.14.0"
+      },
+      {
+        "name": "PyYAML",
+        "version": "6.0.3"
+      },
+      {
+        "name": "Pygments",
+        "version": "2.20.0"
+      },
+      {
+        "name": "SecretStorage",
+        "version": "3.5.0"
+      },
+      {
+        "name": "agent-client-protocol",
+        "version": "0.12.1"
+      },
+      {
+        "name": "aiofile",
+        "version": "3.9.0"
+      },
+      {
+        "name": "aiofiles",
+        "version": "25.1.0"
+      },
+      {
+        "name": "aiohappyeyeballs",
+        "version": "2.6.1"
+      },
+      {
+        "name": "aiohttp",
+        "version": "3.14.3"
+      },
+      {
+        "name": "aiosignal",
+        "version": "1.4.0"
+      },
+      {
+        "name": "annotated-types",
+        "version": "0.7.0"
+      },
+      {
+        "name": "anthropic",
+        "version": "0.75.0"
+      },
+      {
+        "name": "anyio",
+        "version": "4.14.2"
+      },
+      {
+        "name": "attrs",
+        "version": "25.3.0"
+      },
+      {
+        "name": "backoff",
+        "version": "2.2.1"
+      },
+      {
+        "name": "beartype",
+        "version": "0.22.9"
+      },
+      {
+        "name": "beautifulsoup4",
+        "version": "4.14.2"
+      },
+      {
+        "name": "binaryornot",
+        "version": "0.6.0"
+      },
+      {
+        "name": "blake3",
+        "version": "1.0.9"
+      },
+      {
+        "name": "boto3",
+        "version": "1.43.117"
+      },
+      {
+        "name": "botocore",
+        "version": "1.43.117"
+      },
+      {
+        "name": "browser-use",
+        "version": "0.11.9"
+      },
+      {
+        "name": "browser-use-sdk",
+        "version": "2.0.15"
+      },
+      {
+        "name": "bubus",
+        "version": "1.5.6"
+      },
+      {
+        "name": "cachetools",
+        "version": "7.1.8"
+      },
+      {
+        "name": "caio",
+        "version": "0.9.25"
+      },
+      {
+        "name": "cdp-use",
+        "version": "1.4.4"
+      },
+      {
+        "name": "certifi",
+        "version": "2026.10.19"
+      },
+      {
+        "name": "cffi",
+        "version": "2.0.0"
+      },
+      {
+        "name": "charset-normalizer",
+        "version": "3.4.3"
+      },
+      {
+        "name": "click",
+        "version": "8.1.8"
+      },
+      {
+        "name": "cloudpickle",
+        "version": "3.1.2"
+      },
+      {
+        "name": "cryptography",
+        "version": "50.0.0"
+      },
+      {
+        "name": "cyclopts",
+        "version": "4.6.0"
+      },
+      {
+        "name": "deprecation",
+        "version": "2.1.0"
+      },
+      {
+        "name": "distro",
+        "version": "1.9.0"
+      },
+      {
+        "name": "dnspython",
+        "version": "2.8.0"
+      },
+      {
+        "name": "docstring_parser",
+        "version": "0.17.0"
+      },
+      {
+        "name": "docutils",
+        "version": "0.22.2"
+      },
+      {
+        "name": "email-validator",
+        "version": "2.3.0"
+      },
+      {
+        "name": "exceptiongroup",
+        "version": "1.3.0"
+      },
+      {
+        "name": "fakeredis",
+        "version": "2.34.1"
+      },
+      {
+        "name": "fastmcp",
+        "version": "3.2.0"
+      },
+      {
+        "name": "fastuuid",
+        "version": "0.14.0"
+      },
+      {
+        "name": "filelock",
+        "version": "3.20.3"
+      },
+      {
+        "name": "frozenlist",
+        "version": "1.8.0"
+      },
+      {
+        "name": "fsspec",
+        "version": "2025.9.0"
+      },
+      {
+        "name": "func_timeout",
+        "version": "4.3.5"
+      },
+      {
+        "name": "google-api-core",
+        "version": "2.31.0"
+      },
+      {
+        "name": "google-api-python-client",
+        "version": "2.184.0"
+      },
+      {
+        "name": "google-auth",
+        "version": "2.53.0"
+      },
+      {
+        "name": "google-auth-httplib2",
+        "version": "0.2.0"
+      },
+      {
+        "name": "google-auth-oauthlib",
+        "version": "1.2.2"
+      },
+      {
+        "name": "google-genai",
+        "version": "1.75.0"
+      },
+      {
+        "name": "googleapis-common-protos",
+        "version": "1.70.0"
+      },
+      {
+        "name": "groq",
+        "version": "0.32.0"
+      },
+      {
+        "name": "grpcio",
+        "version": "1.76.0"
+      },
+      {
+        "name": "h11",
+        "version": "0.16.0"
+      },
+      {
+        "name": "h2",
+        "version": "4.4.1"
+      },
+      {
+        "name": "hf-xet",
+        "version": "1.1.10"
+      },
+      {
+        "name": "hpack",
+        "version": "4.2.0"
+      },
+      {
+        "name": "httpcore",
+        "version": "1.0.9"
+      },
+      {
+        "name": "httplib2",
+        "version": "0.32.0"
+      },
+      {
+        "name": "httpx",
+        "version": "0.28.1"
+      },
+      {
+        "name": "httpx-sse",
+        "version": "0.4.3"
+      },
+      {
+        "name": "huggingface-hub",
+        "version": "0.35.3"
+      },
+      {
+        "name": "hyperframe",
+        "version": "6.1.0"
+      },
+      {
+        "name": "idna",
+        "version": "3.15"
+      },
+      {
+        "name": "importlib_metadata",
+        "version": "8.5.0"
+      },
+      {
+        "name": "inquirerpy",
+        "version": "0.3.4"
+      },
+      {
+        "name": "jaraco.classes",
+        "version": "3.4.0"
+      },
+      {
+        "name": "jaraco.context",
+        "version": "6.1.0"
+      },
+      {
+        "name": "jaraco.functools",
+        "version": "4.4.0"
+      },
+      {
+        "name": "jeepney",
+        "version": "0.9.0"
+      },
+      {
+        "name": "jiter",
+        "version": "0.11.0"
+      },
+      {
+        "name": "jmespath",
+        "version": "1.0.1"
+      },
+      {
+        "name": "joserfc",
+        "version": "1.7.5"
+      },
+      {
+        "name": "json_repair",
+        "version": "0.60.1"
+      },
+      {
+        "name": "jsonref",
+        "version": "1.1.0"
+      },
+      {
+        "name": "jsonschema",
+        "version": "4.26.0"
+      },
+      {
+        "name": "jsonschema-path",
+        "version": "0.3.4"
+      },
+      {
+        "name": "jsonschema-specifications",
+        "version": "2025.9.1"
+      },
+      {
+        "name": "keyring",
+        "version": "25.7.0"
+      },
+      {
+        "name": "libtmux",
+        "version": "0.62.0"
+      },
+      {
+        "name": "litellm",
+        "version": "1.105.1"
+      },
+      {
+        "name": "lmnr",
+        "version": "0.7.60"
+      },
+      {
+        "name": "lmnr-claude-code-proxy",
+        "version": "0.1.23"
+      },
+      {
+        "name": "lupa",
+        "version": "2.8"
+      },
+      {
+        "name": "lxml",
+        "version": "6.1.0"
+      },
+      {
+        "name": "markdown-it-py",
+        "version": "4.0.0"
+      },
+      {
+        "name": "markdownify",
+        "version": "1.2.0"
+      },
+      {
+        "name": "mcp",
+        "version": "1.28.1"
+      },
+      {
+        "name": "mdurl",
+        "version": "0.1.2"
+      },
+      {
+        "name": "more-itertools",
+        "version": "10.8.0"
+      },
+      {
+        "name": "multidict",
+        "version": "6.7.0"
+      },
+      {
+        "name": "oauthlib",
+        "version": "3.3.1"
+      },
+      {
+        "name": "ollama",
+        "version": "0.6.0"
+      },
+      {
+        "name": "openai",
+        "version": "2.33.0"
+      },
+      {
+        "name": "openapi-pydantic",
+        "version": "0.5.1"
+      },
+      {
+        "name": "openhands-sdk",
+        "version": "1.60.1"
+      },
+      {
+        "name": "openhands-tools",
+        "version": "1.60.1"
+      },
+      {
+        "name": "opentelemetry-api",
+        "version": "1.39.1"
+      },
+      {
+        "name": "opentelemetry-exporter-otlp-proto-common",
+        "version": "1.39.1"
+      },
+      {
+        "name": "opentelemetry-exporter-otlp-proto-grpc",
+        "version": "1.39.1"
+      },
+      {
+        "name": "opentelemetry-exporter-otlp-proto-http",
+        "version": "1.39.1"
+      },
+      {
+        "name": "opentelemetry-instrumentation",
+        "version": "0.60b1"
+      },
+      {
+        "name": "opentelemetry-instrumentation-threading",
+        "version": "0.60b1"
+      },
+      {
+        "name": "opentelemetry-proto",
+        "version": "1.39.1"
+      },
+      {
+        "name": "opentelemetry-sdk",
+        "version": "1.39.1"
+      },
+      {
+        "name": "opentelemetry-semantic-conventions",
+        "version": "0.60b1"
+      },
+      {
+        "name": "opentelemetry-semantic-conventions-ai",
+        "version": "0.4.13"
+      },
+      {
+        "name": "orjson",
+        "version": "3.11.7"
+      },
+      {
+        "name": "packaging",
+        "version": "26.3"
+      },
+      {
+        "name": "pathable",
+        "version": "0.4.4"
+      },
+      {
+        "name": "pfzy",
+        "version": "0.3.4"
+      },
+      {
+        "name": "pillow",
+        "version": "12.3.0"
+      },
+      {
+        "name": "platformdirs",
+        "version": "4.4.0"
+      },
+      {
+        "name": "portalocker",
+        "version": "2.10.1"
+      },
+      {
+        "name": "posthog",
+        "version": "7.75.11"
+      },
+      {
+        "name": "prompt_toolkit",
+        "version": "3.0.52"
+      },
+      {
+        "name": "propcache",
+        "version": "0.4.1"
+      },
+      {
+        "name": "proto-plus",
+        "version": "1.26.1"
+      },
+      {
+        "name": "protobuf",
+        "version": "6.33.5"
+      },
+      {
+        "name": "psutil",
+        "version": "7.2.2"
+      },
+      {
+        "name": "py-key-value-aio",
+        "version": "0.4.4"
+      },
+      {
+        "name": "pyasn1",
+        "version": "0.6.4"
+      },
+      {
+        "name": "pyasn1_modules",
+        "version": "0.4.2"
+      },
+      {
+        "name": "pycparser",
+        "version": "2.23"
+      },
+      {
+        "name": "pydantic",
+        "version": "2.13.5"
+      },
+      {
+        "name": "pydantic-settings",
+        "version": "2.16.1"
+      },
+      {
+        "name": "pydantic_core",
+        "version": "2.46.5"
+      },
+      {
+        "name": "pyotp",
+        "version": "2.9.0"
+      },
+      {
+        "name": "pyparsing",
+        "version": "3.2.5"
+      },
+      {
+        "name": "pypdf",
+        "version": "6.14.2"
+      },
+      {
+        "name": "pyperclip",
+        "version": "1.11.0"
+      },
+      {
+        "name": "python-dateutil",
+        "version": "2.9.0.post0"
+      },
+      {
+        "name": "python-docx",
+        "version": "1.2.0"
+      },
+      {
+        "name": "python-dotenv",
+        "version": "1.2.2"
+      },
+      {
+        "name": "python-frontmatter",
+        "version": "1.3.0"
+      },
+      {
+        "name": "python-json-logger",
+        "version": "4.0.0"
+      },
+      {
+        "name": "python-multipart",
+        "version": "0.0.31"
+      },
+      {
+        "name": "redis",
+        "version": "7.2.1"
+      },
+      {
+        "name": "referencing",
+        "version": "0.36.2"
+      },
+      {
+        "name": "regex",
+        "version": "2025.9.18"
+      },
+      {
+        "name": "reportlab",
+        "version": "4.4.4"
+      },
+      {
+        "name": "requests",
+        "version": "2.33.0"
+      },
+      {
+        "name": "requests-oauthlib",
+        "version": "2.0.0"
+      },
+      {
+        "name": "rich",
+        "version": "14.3.3"
+      },
+      {
+        "name": "rich-rst",
+        "version": "1.3.2"
+      },
+      {
+        "name": "rpds-py",
+        "version": "0.27.1"
+      },
+      {
+        "name": "s3transfer",
+        "version": "0.19.3"
+      },
+      {
+        "name": "screeninfo",
+        "version": "0.8.1"
+      },
+      {
+        "name": "six",
+        "version": "1.17.0"
+      },
+      {
+        "name": "sniffio",
+        "version": "1.3.1"
+      },
+      {
+        "name": "socksio",
+        "version": "1.0.0"
+      },
+      {
+        "name": "sortedcontainers",
+        "version": "2.4.0"
+      },
+      {
+        "name": "soupsieve",
+        "version": "2.8.4"
+      },
+      {
+        "name": "sse-starlette",
+        "version": "3.0.2"
+      },
+      {
+        "name": "starlette",
+        "version": "1.3.1"
+      },
+      {
+        "name": "tenacity",
+        "version": "9.1.2"
+      },
+      {
+        "name": "tiktoken",
+        "version": "0.12.0"
+      },
+      {
+        "name": "tokenizers",
+        "version": "0.23.1"
+      },
+      {
+        "name": "tom-swe",
+        "version": "1.0.3"
+      },
+      {
+        "name": "tqdm",
+        "version": "4.67.1"
+      },
+      {
+        "name": "tree-sitter",
+        "version": "0.25.2"
+      },
+      {
+        "name": "tree-sitter-bash",
+        "version": "0.25.1"
+      },
+      {
+        "name": "typing-inspection",
+        "version": "0.4.2"
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.15.0"
+      },
+      {
+        "name": "uncalled-for",
+        "version": "0.2.0"
+      },
+      {
+        "name": "uritemplate",
+        "version": "4.2.0"
+      },
+      {
+        "name": "urllib3",
+        "version": "2.8.0"
+      },
+      {
+        "name": "uuid7",
+        "version": "0.1.0"
+      },
+      {
+        "name": "uvicorn",
+        "version": "0.54.0"
+      },
+      {
+        "name": "watchfiles",
+        "version": "1.1.1"
+      },
+      {
+        "name": "wcwidth",
+        "version": "0.2.14"
+      },
+      {
+        "name": "websockets",
+        "version": "15.0.1"
+      },
+      {
+        "name": "wrapt",
+        "version": "1.17.3"
+      },
+      {
+        "name": "yarl",
+        "version": "1.22.0"
+      },
+      {
+        "name": "zipp",
+        "version": "3.23.0"
+      }
+    ]
+  },
+  "temporary_root": "/tmp/research-harness-install-squouvw_",
+  "temporary_root_removed": true,
+  "finished_at": "2026-11-06T16:57:05.584664+00:00"
+}

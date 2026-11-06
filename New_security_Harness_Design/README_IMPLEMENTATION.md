@@ -380,7 +380,10 @@ facts without vulnerability classification or exploit reproduction.
 
 ## 8. Verification
 
-See the latest [completion follow-up](../.pr/research-harness-followup-verification.md),
+The [hosted acceptance run](../.pr/research-harness-hosted-acceptance.md) passed all
+411 tests, built and installed a standard tools wheel in a fresh locked runtime,
+and verified actual CLI/MCP memory operations plus a live GitHub response.
+See the [completion follow-up](../.pr/research-harness-followup-verification.md),
 [staged verification](../.pr/security-harness-verification.md) and
 [installed-wheel verification](../.pr/research-harness-wheel-verification.md)
 for actual commands and outcomes. From the repo root:
@@ -408,9 +411,10 @@ credential variable. It records actual skill invocation, completion, cost, and
 cleanup; missing credentials produce a blocked result with zero calls. This is
 a two-case acceptance smoke test, not a general skill-quality benchmark.
 
-The live public GitHub attempt failed at DNS resolution here and was recorded
-as failed. Controlled HTTP/worker tests verify behavior; no successful live
-external response is claimed.
+The local public GitHub attempt failed at DNS resolution and was recorded as
+failed. The hosted acceptance run later made one actual request through the
+installed harness and received HTTP 200 at 2026-11-06 16:57:05 UTC. Its report
+retains the observed metadata, response digest and installation provenance.
 
 For extensions, add strict schemas, shared dispatch, bounded observations with
 provenance, and appropriate success/failure/partial/cancellation tests. Keep
@@ -468,3 +472,24 @@ copied-runtime` when the runtime is a copy of an existing environment. The repor
 preserves successful local checks when a later live observation fails. The local
 copied-runtime result does not establish that a fresh dependency install passed;
 inspect the workflow result and its evidence for that acceptance gate.
+The [first hosted run](../.pr/research-harness-hosted-acceptance.md) passed both the
+fresh-install and live-response checks.
+
+### Container acceptance workflow
+
+The separate [container workflow](../.github/workflows/research-harness-container-acceptance.yml)
+builds the existing `source-minimal` image from an exact workspace source archive.
+It uses the normal Dockerfile, public base images, the existing non-root user and
+the supported options to omit optional ACP providers and full-image capabilities.
+The image's normal builder installs the default development group and boto3
+extra; the image is not described as a `--no-dev` environment.
+
+The verification driver compares installed package files and the skill against
+the archive, checks non-editable workspace packages and the reported build SHA,
+then exercises an authenticated server on an owned loopback port. It reads scoped
+memory through the real MCP test endpoint before and after restarting the same
+container, checks provenance and version history, and removes the owned
+container, image tag and private state. No model request is needed. See the
+[container acceptance report](../.pr/research-harness-container-acceptance.md)
+for the execution status and evidence. This is a source-container packaging and
+persistence check; it does not establish OS isolation or every Docker target.

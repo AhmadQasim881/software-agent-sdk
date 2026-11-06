@@ -1,0 +1,137 @@
+---
+name: Research harness container acceptance
+
+on:
+    push:
+        branches: [feature/security_harness]
+        paths:
+            - .github/workflows/research-harness-container-acceptance.yml
+            - .github/scripts/verify_research_harness_container.py
+            - tests/cross/test_research_harness_container.py
+            - .agents/skills/verify-agent-server/scripts/control_agent_server.py
+            - openhands-tools/**
+            - openhands-sdk/**
+            - openhands-workspace/**
+            - openhands-agent-server/**
+            - MANIFEST.in
+            - setup.py
+            - pyproject.toml
+            - uv.lock
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: research-harness-container-acceptance-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    container:
+        if: github.repository == 'AhmadQasim881/software-agent-sdk'
+        runs-on: ubuntu-24.04
+        timeout-minutes: 45
+        env:
+            OPENHANDS_SUPPRESS_BANNER: '1'
+            LITELLM_LOCAL_MODEL_COST_MAP: 'True'
+            BUILDX_METADATA_PROVENANCE: max
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7.0.1
+              with:
+                  persist-credentials: false
+
+            - name: Install uv and Python
+              uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
+              with:
+                  python-version: '3.13'
+                  enable-cache: true
+
+            - name: Prepare owned directories
+              shell: bash
+              run: |
+                  acceptance_root=$(mktemp -d "$RUNNER_TEMP/research-harness-container.XXXXXX")
+                  mkdir "$acceptance_root/reports" "$acceptance_root/sdist" "$acceptance_root/build"
+                  echo "HARNESS_CONTAINER_ROOT=$acceptance_root" >> "$GITHUB_ENV"
+                  echo "HARNESS_CONTAINER_IMAGE=research-harness-acceptance:$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" >> "$GITHUB_ENV"
+                  docker version > "$acceptance_root/reports/docker-version.log"
+                  docker buildx version >> "$acceptance_root/reports/docker-version.log"
+                  df -h "$RUNNER_TEMP" > "$acceptance_root/reports/disk-before.log"
+
+            - name: Install locked development dependencies
+              id: dependencies
+              run: uv sync --frozen --group dev
+
+            - name: Verify driver failure and cleanup behavior
+              timeout-minutes: 2
+              run: |
+                  uv run --frozen --no-sync python -I -m pytest -q \
+                    tests/cross/test_research_harness_container.py \
+                    --junitxml="$HARNESS_CONTAINER_ROOT/reports/pytest.xml"
+
+            - name: Build exact source distribution and normal Docker context
+              id: context
+              timeout-minutes: 5
+              shell: bash
+              run: |
+                  uv build --sdist --python 3.13 --out-dir "$HARNESS_CONTAINER_ROOT/sdist" \
+                    > "$HARNESS_CONTAINER_ROOT/reports/sdist-build.log" 2>&1
+                  archives=("$HARNESS_CONTAINER_ROOT"/sdist/*.tar.gz)
+                  test "${#archives[@]}" -eq 1
+                  echo "HARNESS_CONTAINER_SDIST=${archives[0]}" >> "$GITHUB_ENV"
+                  TMPDIR="$HARNESS_CONTAINER_ROOT/build" \
+                    uv run --frozen --no-sync python -I \
+                    openhands-agent-server/openhands/agent_server/docker/build.py \
+                    --build-ctx-only --prebuilt-sdist "${archives[0]}" \
+                    --sdk-project-root "$GITHUB_WORKSPACE" \
+                    --target source-minimal --arch amd64 --platforms linux/amd64 \
+                    --base-image python-node-runtime \
+                    --install-acp-providers '' --install-capabilities '' \
+                    > "$HARNESS_CONTAINER_ROOT/reports/build-context.log" 2>&1
+
+            - name: Build and load one source-minimal image
+              timeout-minutes: 30
+              shell: bash
+              env:
+                  BUILD_CONTEXT: ${{ steps.context.outputs.build_context }}
+                  BUILD_DOCKERFILE: ${{ steps.context.outputs.dockerfile }}
+              run: |
+                  # Use the runner's existing Docker builder; no registry push or login.
+                  docker buildx build --builder default --load --platform linux/amd64 \
+                    --target source-minimal --progress plain \
+                    --file "$BUILD_DOCKERFILE" --tag "$HARNESS_CONTAINER_IMAGE" \
+                    --build-arg BASE_IMAGE=python-node-runtime \
+                    --build-arg INSTALL_ACP_PROVIDERS= \
+                    --build-arg INSTALL_CAPABILITIES= \
+                    --build-arg ENABLE_VSCODE=false \
+                    --build-arg OPENHANDS_BUILD_GIT_SHA="$GITHUB_SHA" \
+                    --build-arg OPENHANDS_BUILD_GIT_REF="$GITHUB_REF" \
+                    --metadata-file "$HARNESS_CONTAINER_ROOT/reports/build-metadata.json" \
+                    "$BUILD_CONTEXT" 2>&1 | tee "$HARNESS_CONTAINER_ROOT/reports/docker-build.log"
+
+            - name: Verify installed image and real server memory reads
+              timeout-minutes: 6
+              run: |
+                  .venv/bin/python -I .github/scripts/verify_research_harness_container.py \
+                    --checkout "$GITHUB_WORKSPACE" --root "$HARNESS_CONTAINER_ROOT" \
+                    --sdist "$HARNESS_CONTAINER_SDIST" --image "$HARNESS_CONTAINER_IMAGE"
+
+            - name: Clean up owned resources
+              if: always() && env.HARNESS_CONTAINER_ROOT != ''
+              shell: bash
+              run: |
+                  trap 'rm -rf "$HARNESS_CONTAINER_ROOT/build" "$HARNESS_CONTAINER_ROOT/sdist"' EXIT
+                  if [[ '${{ steps.dependencies.outcome }}' == 'success' ]]; then
+                    .venv/bin/python -I .github/scripts/verify_research_harness_container.py \
+                      --checkout "$GITHUB_WORKSPACE" --root "$HARNESS_CONTAINER_ROOT" \
+                      --image "$HARNESS_CONTAINER_IMAGE" --cleanup
+                  fi
+
+            - name: Upload container evidence
+              if: always() && env.HARNESS_CONTAINER_ROOT != ''
+              uses: actions/upload-artifact@v7
+              with:
+                  name: research-harness-container-${{ github.run_id }}-${{ github.run_attempt }}
+                  path: ${{ env.HARNESS_CONTAINER_ROOT }}/reports/
+                  if-no-files-found: warn
+                  retention-days: 7
