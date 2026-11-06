@@ -77,6 +77,27 @@ def default_query_terms(query: str) -> list[str]:
     return list(terms)[:32]
 
 
+def default_context_query(question: str, next_action: str) -> tuple[str, list[str]]:
+    """Share bounded query space and term selection between both thread fields."""
+    question, next_action = question.strip(), next_action.strip()
+    available = 512 - (1 if question and next_action else 0)
+    half = available // 2
+    # Reserve half for each field and share any unused character allowance.
+    question = question[: available - min(len(next_action), half)]
+    next_action = next_action[: available - min(len(question), available - half)]
+    question_terms = default_query_terms(question)
+    action_terms = default_query_terms(next_action)
+    terms = dict.fromkeys(
+        [
+            *question_terms[:16],
+            *action_terms[:16],
+            *question_terms[16:],
+            *action_terms[16:],
+        ]
+    )
+    return " ".join(part for part in (question, next_action) if part), list(terms)[:32]
+
+
 def normalized_expiry(value: str | None) -> str | None:
     """Normalize an explicit, timezone-aware expiry for ordered SQLite storage."""
     if value is None:

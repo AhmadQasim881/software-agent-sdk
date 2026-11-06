@@ -1,6 +1,7 @@
 import base64
 import hashlib
 import json
+import os
 import subprocess
 import time
 from collections.abc import Iterator
@@ -9,6 +10,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from threading import Event, Thread
 
+import psutil
 import pytest
 
 from openhands.tools.research_harness import _http_worker, network
@@ -246,3 +248,58 @@ def test_worker_cancelled_before_start() -> None:
     assert result["ok"] is False
     assert result["cancelled"] is True
     assert result["http_status"] is None
+
+
+@pytest.mark.skipif(os.name != "posix", reason="POSIX owned process groups")
+@pytest.mark.parametrize("leader_exits", [False, True])
+def test_worker_cleanup_terminates_descendant_holding_stdout(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, leader_exits: bool
+) -> None:
+    pid_file = tmp_path / "child.pid"
+    _worker(
+        tmp_path,
+        monkeypatch,
+        "import json, subprocess, sys, time\n"
+        "child = subprocess.Popen([sys.executable, '-I', '-S', '-c', "
+        "'import time; time.sleep(10)'])\n"
+        f"open({str(pid_file)!r}, 'w').write(str(child.pid))\n"
+        "print(json.dumps({'ok': True, 'summary': 'Owned worker fixture.', "
+        "'source': 'https://api.github.com/repos/example/project', "
+        "'limitations': []}), flush=True)\n"
+        + ("" if leader_exits else "time.sleep(10)\n"),
+    )
+    monkeypatch.setattr(network, "REQUEST_SECONDS", 2.0 if leader_exits else 0.2)
+    done = Event()
+    rescued: list[bool] = []
+
+    def rescue() -> None:
+        for _ in range(100):
+            if pid_file.exists() or done.wait(0.01):
+                break
+        if not done.wait(1.0) and pid_file.exists():
+            rescued.append(True)
+            try:
+                psutil.Process(int(pid_file.read_text())).kill()
+            except psutil.NoSuchProcess:
+                pass
+
+    guardian = Thread(target=rescue)
+    guardian.start()
+    try:
+        result = network.github_metadata("example/project")
+    finally:
+        done.set()
+        guardian.join()
+        if pid_file.exists():
+            try:
+                child = psutil.Process(int(pid_file.read_text()))
+                alive = child.status() != psutil.STATUS_ZOMBIE
+                if alive:
+                    child.kill()
+            except psutil.NoSuchProcess:
+                alive = False
+        else:
+            alive = False
+    assert not rescued, "Worker cleanup needed the test's independent rescue"
+    assert not alive, "Worker cleanup returned with a live descendant"
+    assert result["ok"] is leader_exits

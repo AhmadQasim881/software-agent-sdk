@@ -1,6 +1,7 @@
 """Public GitHub metadata with a process-owned total deadline and cancellation."""
 
 import os
+import signal
 import subprocess
 import sys
 import time
@@ -10,6 +11,7 @@ from typing import BinaryIO
 
 from pydantic import JsonValue, TypeAdapter, ValidationError
 
+from openhands.research.runtime import http_worker_command
 from openhands.tools.research_harness._http_worker import (
     MAX_WORKER_BYTES,
     REQUEST_SECONDS,
@@ -28,11 +30,13 @@ def _capture_output(stream: BinaryIO, output: bytearray, oversized: Event) -> No
 
 
 def _stop_worker(worker: subprocess.Popen[bytes]) -> None:
-    if worker.poll() is None:
-        try:
+    try:
+        if os.name == "posix":
+            os.killpg(worker.pid, signal.SIGKILL)
+        elif worker.poll() is None:
             worker.kill()
-        except ProcessLookupError:
-            pass
+    except ProcessLookupError:
+        pass
     worker.wait()
 
 
@@ -79,11 +83,12 @@ def github_metadata(
         environment["SystemRoot"] = os.environ["SystemRoot"]
     try:
         with subprocess.Popen(
-            [sys.executable, "-I", "-S", str(_WORKER_PATH), repository],
+            http_worker_command(_WORKER_PATH, repository),
             stdin=subprocess.DEVNULL,
             stdout=subprocess.PIPE,
             stderr=subprocess.DEVNULL,
             env=environment,
+            start_new_session=os.name == "posix",
         ) as worker:
             assert worker.stdout is not None
             output = bytearray()

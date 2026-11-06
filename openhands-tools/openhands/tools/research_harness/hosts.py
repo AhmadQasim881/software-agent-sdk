@@ -10,6 +10,8 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, JsonValue, ValidationError
 
+from openhands.research.runtime import harness_command, is_frozen
+
 from .context import assemble_context
 from .models import HarnessError
 from .store import HarnessStore
@@ -72,9 +74,6 @@ def _paths(
 
 def _arguments(workspace: Path, state_dir: Path, allow_github: bool) -> list[str]:
     arguments = [
-        "-I",
-        "-m",
-        "openhands.research",
         "--workspace",
         str(workspace),
         "--state",
@@ -85,7 +84,7 @@ def _arguments(workspace: Path, state_dir: Path, allow_github: bool) -> list[str
     return arguments
 
 
-def _instructions(host: HostName, has_hooks: bool) -> str:
+def _instructions(host: HostName, has_hooks: bool, bundled: bool) -> str:
     if host == "codex":
         setup = (
             "Merge the `mcp_servers.research_harness` table from `codex.config.toml` "
@@ -130,13 +129,20 @@ def _instructions(host: HostName, has_hooks: bool) -> str:
             "this bundle does not install Desktop skills or lifecycle hooks. "
             "Invoke `context` for the selected thread when resuming work."
         )
+    runtime = (
+        "This bundle uses the frozen Agent Server's built-in research entrypoint; "
+        "keep the executable available at the recorded path. It does not need "
+        "a separately installed Python environment."
+        if bundled
+        else "The Python environment must have `openhands-sdk` and "
+        "`openhands-tools` installed; `-I` deliberately ignores `PYTHONPATH`."
+    )
     return (
         f"# Research harness for {host}\n\n"
         "This directory is a configuration review bundle. Generating it does "
         "not edit a host profile, install a skill, start a daemon, or enable "
-        "a server. Review the absolute Python, workspace, and state paths before "
-        "merging settings. The Python environment must have `openhands-sdk` and "
-        "`openhands-tools` installed; `-I` deliberately ignores `PYTHONPATH`.\n\n"
+        "a server. Review the absolute executable, workspace, and state paths "
+        f"before merging settings. {runtime}\n\n"
         f"## Setup\n\n{setup}\n\n"
         "## Shared operations\n\n"
         "The MCP server exposes `research_harness`; call its `schema` operation "
@@ -174,7 +180,9 @@ def render_host_bundle(
         raise HarnessError(f"Unsupported host: {host}")
     _thread(thread_id)
     workspace, state_dir, python = _paths(workspace, state_dir, python_executable)
-    arguments = _arguments(workspace, state_dir, allow_github)
+    launcher = harness_command(python if python_executable is not None else None)
+    arguments = [*launcher[1:], *_arguments(workspace, state_dir, allow_github)]
+    bundled = python_executable is None and is_frozen()
     server: dict[str, JsonValue] = {
         "command": str(python),
         "args": [*arguments, "mcp"],
@@ -227,7 +235,7 @@ def render_host_bundle(
 
     skill = workflow_path().read_text(encoding="utf-8")
     files["skills/research-review/SKILL.md"] = skill
-    files["README.md"] = _instructions(host, has_hooks)
+    files["README.md"] = _instructions(host, has_hooks, bundled)
     files["manifest.json"] = _json(
         {
             "schema_version": 1,
@@ -235,6 +243,7 @@ def render_host_bundle(
             "workspace": str(workspace),
             "state_dir": str(state_dir),
             "python_executable": str(python),
+            "runtime": "frozen-agent-server" if bundled else "python",
             "thread_id": thread_id,
             "allow_github": allow_github,
             "mcp_server": "research_harness",

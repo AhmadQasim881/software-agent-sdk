@@ -69,8 +69,8 @@ PATHEX = [
     project_root / "openhands-workspace",
 ]
 
-# Entry script for the agent server package (namespace: openhands/agent_server/__main__.py)
-ENTRY = str(project_root / "openhands-agent-server" / "openhands" / "agent_server" / "__main__.py")
+# The bootstrap handles fixed subprocess modes before importing the server.
+ENTRY = str(project_root / "openhands-agent-server" / "openhands" / "agent_server" / "frozen_entrypoint.py")
 
 # Find fakeredis package location to get commands.json with correct path
 def get_fakeredis_data():
@@ -137,6 +137,7 @@ a = Analysis(
 
         # Research workflow skill, loaded from disk beside the harness module
         *collect_data_files("openhands.tools.research_harness", includes=["skills/*/SKILL.md"]),
+        *collect_data_files("openhands.tools.research_harness", includes=["_http_worker.py"], include_py_files=True),
 
         # OpenHands Tools browser recording JS files
         *collect_data_files("openhands.tools.browser_use", includes=["js/*.js"]),

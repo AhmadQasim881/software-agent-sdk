@@ -16,7 +16,7 @@ from .agentmemory import (
     MEMORY_SEARCH_POLICY,
     MemoryKind,
     MemoryRecord,
-    default_query_terms,
+    default_context_query,
     normalized_tags,
     rank_memory,
     search_text,
@@ -278,7 +278,10 @@ def _memory_search(
             "term_policy": (
                 None
                 if query_terms is None
-                else "first 32 unique words >=3 characters, common words excluded"
+                else (
+                    "up to 32 unique words >=3 characters; first 16 per field "
+                    "before remaining terms; common words excluded"
+                )
             ),
             "snapshot": "one SQLite read transaction; no access-time writes",
             "ranking_scope": "bounded candidates, pinned first, then lexical RRF",
@@ -925,11 +928,12 @@ class HarnessStore:
             thread, evidence, total = self._context_records(
                 connection, thread_id, evidence_limit
             )
-            effective_query = (
-                (thread.question + " " + thread.next_action).strip()[:512]
-                if query is None
-                else query
-            )
+            if query is None:
+                effective_query, query_terms = default_context_query(
+                    thread.question, thread.next_action
+                )
+            else:
+                effective_query, query_terms = query, None
             memory = _memory_search(
                 connection,
                 thread_id,
@@ -939,9 +943,7 @@ class HarnessStore:
                 limit=memory_limit,
                 candidate_limit=200,
                 include_pinned_constraints=True,
-                query_terms=(
-                    default_query_terms(effective_query) if query is None else None
-                ),
+                query_terms=query_terms,
             )
         return thread, evidence, total, memory
 

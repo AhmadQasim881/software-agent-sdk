@@ -190,7 +190,15 @@ def test_agent_server_binary_preserves_research_workflow() -> None:
     """The frozen package must keep the skill at the loader's relative path."""
     bundled = _spec_collected_datas("openhands.tools.research_harness")
     destination = "openhands/tools/research_harness/skills/research-review"
-    assert bundled == {("SKILL.md", destination): RESEARCH_WORKFLOW.read_bytes()}
+    assert bundled[("SKILL.md", destination)] == RESEARCH_WORKFLOW.read_bytes()
+
+
+def test_agent_server_binary_preserves_standalone_research_http_worker() -> None:
+    """The subprocess bootstrap executes source without importing SDK packages."""
+    bundled = _spec_collected_datas("openhands.tools.research_harness")
+    source = RESEARCH_WORKFLOW.parents[2] / "_http_worker.py"
+    destination = "openhands/tools/research_harness"
+    assert bundled[("_http_worker.py", destination)] == source.read_bytes()
 
 
 def _spec_collected_datas(package: str) -> dict[tuple[str, str], bytes]:

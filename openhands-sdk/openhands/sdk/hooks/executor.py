@@ -72,6 +72,48 @@ class HookResult(BaseModel):
 logger = logging.getLogger(__name__)
 
 
+def _run_sync_command(
+    command: str,
+    *,
+    working_dir: str,
+    environment: dict[str, str],
+    event_json: str,
+    timeout: int,
+) -> subprocess.CompletedProcess[str]:
+    if os.name == "nt":
+        return subprocess.run(
+            command,
+            shell=True,
+            cwd=working_dir,
+            env=environment,
+            input=event_json,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+
+    with subprocess.Popen(
+        command,
+        shell=True,
+        cwd=working_dir,
+        env=environment,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        start_new_session=True,
+    ) as process:
+        try:
+            stdout, stderr = process.communicate(event_json, timeout=timeout)
+        except BaseException:
+            # The owned group can outlive its shell leader and retain the pipes.
+            with contextlib.suppress(ProcessLookupError):
+                os.killpg(process.pid, signal.SIGKILL)
+            process.wait()
+            raise
+        return subprocess.CompletedProcess(command, process.wait(), stdout, stderr)
+
+
 class AsyncProcessManager:
     """Manages background hook processes for cleanup.
 
@@ -549,14 +591,11 @@ class HookExecutor:
 
         try:
             # Execute the hook command synchronously
-            result = subprocess.run(
+            result = _run_sync_command(
                 command,
-                shell=True,
-                cwd=self.working_dir,
-                env=hook_env,
-                input=event_json,
-                capture_output=True,
-                text=True,
+                working_dir=self.working_dir,
+                environment=hook_env,
+                event_json=event_json,
                 timeout=hook.timeout,
             )
 

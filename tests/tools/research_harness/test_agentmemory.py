@@ -434,6 +434,58 @@ def test_default_context_uses_terms_and_explicit_empty_query_browses(
     )
 
 
+@pytest.mark.parametrize("action_details", ["", " Routine details" * 40])
+def test_default_context_query_preserves_both_long_fields(
+    store: HarnessStore, action_details: str
+) -> None:
+    thread = store.create_thread(
+        "Background context " * 40,
+        next_action="Compare the json inventory" + action_details,
+    )
+    question_note = store.create_memory(
+        thread.id, "Background context reference", source="operator"
+    )
+    action_note = store.create_memory(
+        thread.id, "Use the json inventory baseline", source="operator"
+    )
+
+    result = store.context_memory_records(thread.id)[3]
+
+    assert {record.id for record in recalled(result)} == {
+        question_note.id,
+        action_note.id,
+    }
+    assert isinstance(result["query"], str)
+    assert len(result["query"]) <= 512
+    assert "Background context" in result["query"]
+    assert "Compare the json inventory" in result["query"]
+
+
+def test_default_context_terms_reserve_capacity_for_next_action(
+    store: HarnessStore,
+) -> None:
+    thread = store.create_thread(
+        " ".join(f"q{index:02}" for index in range(40)), next_action="json"
+    )
+    question_note = store.create_memory(thread.id, "q30 decision", source="operator")
+    action_note = store.create_memory(thread.id, "json decision", source="operator")
+
+    result = store.context_memory_records(thread.id)[3]
+
+    assert {record.id for record in recalled(result)} == {
+        question_note.id,
+        action_note.id,
+    }
+    scope = result["scope"]
+    assert isinstance(scope, dict)
+    terms = scope["query_terms"]
+    assert isinstance(terms, list)
+    assert len(terms) == 32
+    assert "json" in terms
+    assert "q30" in terms
+    assert "q31" not in terms
+
+
 def test_recall_is_read_only_and_rankings_are_deterministic(
     store: HarnessStore,
 ) -> None:

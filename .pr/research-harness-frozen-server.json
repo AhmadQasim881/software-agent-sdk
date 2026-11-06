@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "scope": "Actual final Linux frozen Agent Server normal entry point; readiness, authentication, catalog and cleanup; no model request",
+  "binary_sha256": "9532bf6998ad3091d87d53420fe3cf52e6e2e75b77e96cff77bcf270ccdfc16a",
+  "binary_bytes": 138015872,
+  "driver_sha256": "d72eb76c63a6e6be92dc6e0708049ba72b91f6ad1cbbd365b7e5f2a2602680c2",
+  "doctor": {
+    "ok": true,
+    "checks": [
+      {
+        "name": "/alive",
+        "ok": true,
+        "required": true,
+        "detail": {
+          "status": 200
+        }
+      },
+      {
+        "name": "/health",
+        "ok": true,
+        "required": true,
+        "detail": {
+          "status": 200
+        }
+      },
+      {
+        "name": "/ready",
+        "ok": true,
+        "required": true,
+        "detail": {
+          "status": 200
+        }
+      },
+      {
+        "name": "server-info",
+        "ok": true,
+        "required": true,
+        "detail": {
+          "version": "1.60.1",
+          "sdk_version": "1.60.1",
+          "build_git_sha": "bd5c238716c7b188647f7a3fa299ec3e0d9e9863",
+          "expected_sha": "bd5c238716c7b188647f7a3fa299ec3e0d9e9863",
+          "usable_tools": [
+            "ClassifyAndSwitchLLMTool",
+            "ask_oracle",
+            "file_editor",
+            "task_tool_set",
+            "task",
+            "task_tracker",
+            "terminal",
+            "workflow_tool_set",
+            "workflow",
+            "research_harness",
+            "start_child_conversation",
+            "browser_tool_set",
+            "edit",
+            "list_directory",
+            "read_file",
+            "write_file",
+            "glob",
+            "grep",
+            "planning_file_editor"
+          ]
+        }
+      },
+      {
+        "name": "auth-rejects-missing-key",
+        "ok": true,
+        "required": true,
+        "detail": 401
+      },
+      {
+        "name": "auth-accepts-key",
+        "ok": true,
+        "required": true,
+        "detail": {
+          "status": 200,
+          "dormant": false
+        }
+      },
+      {
+        "name": "openapi",
+        "ok": true,
+        "required": true,
+        "detail": {
+          "operations": 179
+        }
+      },
+      {
+        "name": "ws-rejects-bad-key",
+        "ok": true,
+        "required": true,
+        "detail": {
+          "path": "/sockets/bash-events",
+          "auth": "bad",
+          "open": false,
+          "close_code": 4001
+        }
+      },
+      {
+        "name": "ws-accepts-first-frame-auth",
+        "ok": true,
+        "required": true,
+        "detail": {
+          "path": "/sockets/bash-events",
+          "auth": "first-frame",
+          "open": true
+        }
+      },
+      {
+        "name": "log-tracebacks",
+        "ok": true,
+        "required": false,
+        "detail": {
+          "count": 0
+        }
+      }
+    ]
+  },
+  "tools": {
+    "status": 200,
+    "contains_research_harness": true
+  },
+  "catalog": {
+    "status": 200,
+    "contains_research_harness": true
+  },
+  "server_info": {
+    "uptime": 6.0,
+    "idle_time": 6.0,
+    "title": "OpenHands Agent Server",
+    "version": "1.60.1",
+    "sdk_version": "1.60.1",
+    "tools_version": "1.60.1",
+    "workspace_version": "1.60.1",
+    "build_git_sha": "bd5c238716c7b188647f7a3fa299ec3e0d9e9863",
+    "build_git_ref": "work/security-harness-completion",
+    "python_version": "3.13.5 (main, Aug 10 2026, 12:06:59) [GCC 14.2.0]",
+    "usable_tools": [
+      "ClassifyAndSwitchLLMTool",
+      "ask_oracle",
+      "file_editor",
+      "task_tool_set",
+      "task",
+      "task_tracker",
+      "terminal",
+      "workflow_tool_set",
+      "workflow",
+      "research_harness",
+      "start_child_conversation",
+      "browser_tool_set",
+      "edit",
+      "list_directory",
+      "read_file",
+      "write_file",
+      "glob",
+      "grep",
+      "planning_file_editor"
+    ],
+    "runtime_idle_timeout_seconds": null,
+    "conversation_runtime": "local",
+    "available_conversation_runtimes": [],
+    "capabilities": [
+      "conversation_runtime_routes_v1",
+      "profile_secret_scope_v1",
+      "profile_persona_v1",
+      "credential_binding_v1",
+      "credential_binding_readiness_probe_v1",
+      "credential_binding_activation_guard_v1",
+      "idempotent_conversation_create_v1",
+      "tool_catalog_v1",
+      "agent_profile_draft_materialize_v1",
+      "agent_launch_pipeline_v1",
+      "profile_public_skills_v1",
+      "skill_catalog_v1",
+      "canvas_app_backend_secret_grants_v1",
+      "canvas_app_backend_enable_lifecycle_v1"
+    ],
+    "app_backend_ingress_url": null,
+    "max_foreground_terminal_timeout_seconds": null,
+    "docs": "/docs",
+    "redoc": "/redoc"
+  },
+  "cleanup": {
+    "port_closed": true,
+    "private_state_purged": true,
+    "owned_children_remaining": 0,
+    "stop_ok": true
+  },
+  "startup_ok": true,
+  "model_requests": 0,
+  "provenance_note": "Built from the changed local checkout before committing. The reported build_git_sha is the existing local checkout identity, not the later implementation commit; binary SHA-256 identifies this artifact."
+}

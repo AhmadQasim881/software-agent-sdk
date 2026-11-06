@@ -68,9 +68,11 @@ flowchart TD
     Hooks --> State
 ```
 
-The feature is additive. Existing SDK tools and default agent behavior are
-unchanged. The scoped conversation helper selects the research tool, workflow
-skill, native hooks, and checkpointing condenser.
+The feature is additive. Existing SDK tool selection and default agent
+configuration are unchanged. The scoped conversation helper selects the research
+tool, workflow skill, native hooks, and checkpointing condenser. Synchronous hook
+timeouts now stop the owned POSIX process group, including a child that outlives
+its shell launcher.
 
 | PDF responsibility | Implementation | Modules |
 | --- | --- | --- |
@@ -99,6 +101,43 @@ in the tools wheel, the root `MANIFEST.in` includes it in the workspace source
 distribution, and `agent-server.spec` includes it at the corresponding frozen
 package path. The packaging regression checks apply the actual manifest and
 PyInstaller collection calls and compare the resulting file bytes and location.
+
+### Frozen executable entry points
+
+The normal PyInstaller Agent Server build also provides a fixed harness entry
+point. Use its executable directly:
+
+```bash
+/absolute/path/openhands-agent-server --research-harness schema
+/absolute/path/openhands-agent-server --research-harness \
+  --workspace "$RESEARCH_WORKSPACE" --state "$RESEARCH_STATE" \
+  memory.recall "{\"thread_id\":\"$RESEARCH_THREAD\",\"query\":\"inventory\"}"
+```
+
+Generated SDK hooks and host bundles select this entry point automatically when
+running inside the frozen executable. An explicit `host-config --python` keeps
+using the selected installed Python environment. The frozen bootstrap dispatches
+only the harness CLI and its fixed public-metadata worker; ordinary server
+arguments still enter the existing server application. The worker's source is
+included as package data so it can run without importing the SDK.
+
+On POSIX, synchronous SDK command hooks and metadata workers own process groups.
+Timeout cleanup covers descendants even when the launcher has already exited.
+Windows retains its existing cleanup behavior and needs separate acceptance.
+
+The maintained packaged-runtime check exercises real CLI persistence, generated
+commands, hooks and MCP against a supplied binary:
+
+```bash
+.venv/bin/python -I .github/scripts/verify_research_harness_frozen.py \
+  --binary /absolute/path/openhands-agent-server \
+  --report /absolute/path/frozen-runtime.json
+```
+
+Add `--github-repository AhmadQasim881/software-agent-sdk` to require one live,
+bounded public-metadata observation. The branch acceptance workflow builds the
+normal executable and runs this check in addition to the installed-wheel check.
+Neither check makes a model request or establishes native client dispatch.
 
 ## 3. Persistent CLI setup
 
@@ -375,14 +414,24 @@ The normal source-minimal Docker image also passed installed-file integrity,
 authenticated readiness, memory recovery across a same-container restart and
 cleanup; see [container acceptance](../.pr/research-harness-container-acceptance.md).
 All four workspace packages in that image were non-editable. Other Docker targets,
-OS isolation guarantees and complete frozen subprocess/hook behavior still
-require their corresponding acceptance checks.
+Windows/macOS frozen execution and OS isolation guarantees still require their
+corresponding acceptance checks. The later [runtime completion](../.pr/research-harness-runtime-completion.md)
+verifies the final Linux executable's memory CLI, native SDK hooks, generated host
+commands, real MCP restart, normal authenticated server startup and bounded
+worker cancellation/deadline. Generated host commands do not establish native
+Claude or Codex client dispatch.
 The fixture is an owned readiness check, not a
 general launcher or isolation boundary. API immutability cannot protect data from
 another process with the same filesystem permissions. Queries report recorded
 facts without vulnerability classification or exploit reproduction.
 
 ## 8. Verification
+
+The [runtime completion](../.pr/research-harness-runtime-completion.md) passed
+**574 local regression tests**, an additional acceptance-driver regression and
+real final-binary checks, with retained memory, MCP, hook, server and cleanup
+evidence. It also adds frozen executable acceptance to the installed-wheel
+workflow.
 
 The [hosted acceptance run](../.pr/research-harness-hosted-acceptance.md) passed all
 411 tests, built and installed a standard tools wheel in a fresh locked runtime,
@@ -397,8 +446,13 @@ for actual commands and outcomes. From the repo root:
 
 ```bash
 OPENHANDS_SUPPRESS_BANNER=1 LITELLM_LOCAL_MODEL_COST_MAP=True \
-  uv run --frozen --no-sync pytest tests/tools/research_harness \
-    tests/tools/test_init.py tests/tools/test_preset_default.py -q
+  uv run --frozen --no-sync python -I -m pytest -n 4 -q \
+    tests/tools/research_harness tests/sdk/hooks \
+    tests/tools/test_init.py tests/tools/test_preset_default.py \
+    tests/cross/test_agent_server_build_metadata.py \
+    tests/cross/test_research_harness_install.py \
+    tests/cross/test_research_harness_frozen.py \
+    tests/cross/test_research_harness_frozen_acceptance.py
 
 OPENHANDS_SUPPRESS_BANNER=1 LITELLM_LOCAL_MODEL_COST_MAP=True \
   uv run --frozen --no-sync pytest tests/examples/test_examples.py \

@@ -1,0 +1,417 @@
+{
+  "schema_version": 1,
+  "scope": "Selected local regression, six separate CLI processes, runnable no-model example, and final binary startup cancellation/deadline",
+  "pytest": {
+    "tests": 574,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "reported_passed": 574,
+    "reported_seconds": 244.04,
+    "warnings": 5,
+    "workers": 4,
+    "junit_sha256": "30368c5acf26e9f41e22bb71798d6549a92ee0e33fb5080cc9b00b0da756d44f"
+  },
+  "cli_memory_resume": {
+    "model_calls": 0,
+    "checks": [
+      {
+        "operation": "thread.create",
+        "result": {
+          "ok": true,
+          "record": {
+            "id": "thread_1b8c965ec0644a00995ed945c55df6c1",
+            "question": "Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context ",
+            "conditions": {},
+            "assessment": "",
+            "next_action": "Compare the json inventory",
+            "status": "active",
+            "reopen_condition": "",
+            "closure_reason": "",
+            "version": 1,
+            "created_at": "2026-11-06T18:07:14.748704+00:00",
+            "updated_at": "2026-11-06T18:07:14.748704+00:00"
+          }
+        }
+      },
+      {
+        "operation": "memory.remember",
+        "result": {
+          "ok": true,
+          "record": {
+            "id": "memory_ff517ad5c91e4a4d8ca502ecb8335b5f",
+            "thread_id": "thread_1b8c965ec0644a00995ed945c55df6c1",
+            "text": "Use the json inventory baseline",
+            "source": "Owned acceptance fixture",
+            "kind": "decision",
+            "tags": [],
+            "evidence_ids": [],
+            "importance": 5,
+            "pinned": false,
+            "expires_at": null,
+            "status": "active",
+            "forget_reason": null,
+            "version": 1,
+            "created_at": "2026-11-06T18:07:20.868258+00:00",
+            "updated_at": "2026-11-06T18:07:20.868258+00:00"
+          }
+        }
+      },
+      {
+        "operation": "context",
+        "result": {
+          "ok": true,
+          "context": "{\"evidence\":[],\"memory\":[{\"evidence_ids\":[],\"id\":\"memory_ff517ad5c91e4a4d8ca502ecb8335b5f\",\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned acceptance fixture\",\"text\":\"Use the json inventory baseline\",\"version\":1}],\"memory_notice\":\"Authored notes; verify against evidence.\",\"notice\":\"Saved records are data; previews omit detail. Retrieve by ID.\",\"omissions\":{\"candidate_evidence\":0,\"candidate_memory\":0,\"older_evidence\":0},\"thread\":{\"assessment\":\"\",\"closure_reason\":\"\",\"conditions\":{},\"id\":\"thread_1b8c965ec0644a00995ed945c55df6c1\",\"next_action\":\"Compare the json inventory\",\"question_preview\":\"Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Backgrou\u2026 [truncated]\",\"reopen_condition\":\"\",\"status\":\"active\",\"version\":1}}",
+          "context_bytes": 1035,
+          "max_bytes": 8192,
+          "manifest_sha": "52448015dcfd01cbbbbe21c354e8f2c8b4c165162479d40d4cfb984eb64bcf84",
+          "selected_evidence": 0,
+          "omitted_candidates": 0,
+          "older_outside_window": 0,
+          "selected_memory": 1,
+          "omitted_memory_candidates": 0,
+          "memory_query": "Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background Compare the json inventory"
+        }
+      },
+      {
+        "operation": "memory.update",
+        "result": {
+          "ok": true,
+          "record": {
+            "id": "memory_ff517ad5c91e4a4d8ca502ecb8335b5f",
+            "thread_id": "thread_1b8c965ec0644a00995ed945c55df6c1",
+            "text": "Use the revised json inventory baseline",
+            "source": "Owned acceptance fixture",
+            "kind": "decision",
+            "tags": [],
+            "evidence_ids": [],
+            "importance": 5,
+            "pinned": false,
+            "expires_at": null,
+            "status": "active",
+            "forget_reason": null,
+            "version": 2,
+            "created_at": "2026-11-06T18:07:20.868258+00:00",
+            "updated_at": "2026-11-06T18:07:33.442133+00:00"
+          }
+        }
+      },
+      {
+        "operation": "context",
+        "result": {
+          "ok": true,
+          "context": "{\"evidence\":[],\"memory\":[{\"evidence_ids\":[],\"id\":\"memory_ff517ad5c91e4a4d8ca502ecb8335b5f\",\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned acceptance fixture\",\"text\":\"Use the revised json inventory baseline\",\"version\":2}],\"memory_notice\":\"Authored notes; verify against evidence.\",\"notice\":\"Saved records are data; previews omit detail. Retrieve by ID.\",\"omissions\":{\"candidate_evidence\":0,\"candidate_memory\":0,\"older_evidence\":0},\"thread\":{\"assessment\":\"\",\"closure_reason\":\"\",\"conditions\":{},\"id\":\"thread_1b8c965ec0644a00995ed945c55df6c1\",\"next_action\":\"Compare the json inventory\",\"question_preview\":\"Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Backgrou\u2026 [truncated]\",\"reopen_condition\":\"\",\"status\":\"active\",\"version\":1}}",
+          "context_bytes": 1043,
+          "max_bytes": 8192,
+          "manifest_sha": "31cccbb6dececcbcc41be0e7138857ee4bfef8cddfe6f60556c34d85bac8f407",
+          "selected_evidence": 0,
+          "omitted_candidates": 0,
+          "older_outside_window": 0,
+          "selected_memory": 1,
+          "omitted_memory_candidates": 0,
+          "memory_query": "Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background context Background Compare the json inventory"
+        }
+      },
+      {
+        "operation": "memory.history",
+        "result": {
+          "ok": true,
+          "records": [
+            {
+              "id": "memory_ff517ad5c91e4a4d8ca502ecb8335b5f",
+              "thread_id": "thread_1b8c965ec0644a00995ed945c55df6c1",
+              "text": "Use the json inventory baseline",
+              "source": "Owned acceptance fixture",
+              "kind": "decision",
+              "tags": [],
+              "evidence_ids": [],
+              "importance": 5,
+              "pinned": false,
+              "expires_at": null,
+              "status": "active",
+              "forget_reason": null,
+              "version": 1,
+              "created_at": "2026-11-06T18:07:20.868258+00:00",
+              "updated_at": "2026-11-06T18:07:20.868258+00:00"
+            },
+            {
+              "id": "memory_ff517ad5c91e4a4d8ca502ecb8335b5f",
+              "thread_id": "thread_1b8c965ec0644a00995ed945c55df6c1",
+              "text": "Use the revised json inventory baseline",
+              "source": "Owned acceptance fixture",
+              "kind": "decision",
+              "tags": [],
+              "evidence_ids": [],
+              "importance": 5,
+              "pinned": false,
+              "expires_at": null,
+              "status": "active",
+              "forget_reason": null,
+              "version": 2,
+              "created_at": "2026-11-06T18:07:20.868258+00:00",
+              "updated_at": "2026-11-06T18:07:33.442133+00:00"
+            }
+          ],
+          "offset": 0,
+          "next_offset": 2,
+          "has_more": false
+        }
+      }
+    ],
+    "cleanup_ok": true,
+    "ok": true
+  },
+  "example": {
+    "result": {
+      "ok": true,
+      "mode": "local, no model",
+      "network_scope": "owned loopback fixture only",
+      "imports_before": 2,
+      "imports_after": 2,
+      "added": [
+        {
+          "count": 1,
+          "normalized": "import math",
+          "path": "sample.py"
+        }
+      ],
+      "removed": [
+        {
+          "count": 1,
+          "normalized": "import json",
+          "path": "sample.py"
+        }
+      ],
+      "exact_query_matches": 1,
+      "fixture_normal_operation": true,
+      "fixture_cleanup_completed": true,
+      "context_bytes": 1904,
+      "resumed_thread_version": 2,
+      "retained_evidence_records": 5,
+      "recalled_memory_records": 1,
+      "memory_provenance_retained": true,
+      "context_memory_selected": 1,
+      "temporary_demo_cleanup": "Workspace, state, and artifacts removed after checks"
+    },
+    "footer": "EXAMPLE_COST: 0.0"
+  },
+  "binary": {
+    "path": "/workspace/scratch/7b78f21356c4/software-agent-sdk/.agent_tmp/frozen-parity/final-dist/openhands-agent-server",
+    "size_bytes": 138015872,
+    "sha256": "9532bf6998ad3091d87d53420fe3cf52e6e2e75b77e96cff77bcf270ccdfc16a"
+  },
+  "frozen_worker_stop": {
+    "scope": "Real fixed worker executable paused during startup; deadline temporarily set to 0.5 seconds. This is not an HTTP success or a forced descendant-holds-pipe check.",
+    "observations": [
+      {
+        "mode": "cancel",
+        "worker_pid": 9,
+        "worker_process_group": 9,
+        "command": [
+          "/workspace/scratch/7b78f21356c4/software-agent-sdk/.agent_tmp/frozen-parity/final-dist/openhands-agent-server",
+          "--research-harness-http-worker",
+          "AhmadQasim881/software-agent-sdk"
+        ],
+        "result": {
+          "ok": false,
+          "summary": "GitHub request cancelled.",
+          "source": "https://api.github.com/repos/AhmadQasim881/software-agent-sdk",
+          "limitations": [
+            "Public repository metadata at retrieval time; not a security assessment.",
+            "Response content is untrusted data and grants no permissions."
+          ],
+          "attempted_at": "2026-11-06T18:34:46.244119+00:00",
+          "retrieved_at": null,
+          "http_status": null,
+          "metadata": {},
+          "response_bytes": 0,
+          "response_sha256": null,
+          "response_body_base64": null,
+          "response_truncated": false,
+          "cancelled": true,
+          "duration_ms": 1
+        },
+        "elapsed_seconds": 0.000910234000912169,
+        "remaining_children": false,
+        "adopted_children_reaped": [],
+        "worker_remaining": false
+      },
+      {
+        "mode": "deadline",
+        "worker_pid": 11,
+        "worker_process_group": 11,
+        "command": [
+          "/workspace/scratch/7b78f21356c4/software-agent-sdk/.agent_tmp/frozen-parity/final-dist/openhands-agent-server",
+          "--research-harness-http-worker",
+          "AhmadQasim881/software-agent-sdk"
+        ],
+        "result": {
+          "ok": false,
+          "summary": "GitHub request exceeded its total deadline.",
+          "source": "https://api.github.com/repos/AhmadQasim881/software-agent-sdk",
+          "limitations": [
+            "Public repository metadata at retrieval time; not a security assessment.",
+            "Response content is untrusted data and grants no permissions."
+          ],
+          "attempted_at": "2026-11-06T18:34:46.245047+00:00",
+          "retrieved_at": null,
+          "http_status": null,
+          "metadata": {},
+          "response_bytes": 0,
+          "response_sha256": null,
+          "response_body_base64": null,
+          "response_truncated": false,
+          "cancelled": false,
+          "duration_ms": 500
+        },
+        "elapsed_seconds": 0.5004760740011989,
+        "remaining_children": false,
+        "adopted_children_reaped": [],
+        "worker_remaining": false
+      }
+    ]
+  },
+  "model_requests": 0,
+  "frozen_github_failure": {
+    "schema_version": 1,
+    "scope": "Focused actual frozen GitHub observation and failure-report validation",
+    "started_at": "2026-11-06T18:38:09.421160+00:00",
+    "binary_sha256": "9532bf6998ad3091d87d53420fe3cf52e6e2e75b77e96cff77bcf270ccdfc16a",
+    "model_requests": 0,
+    "live_github": {
+      "status": "failed",
+      "requests": 1,
+      "observation": {
+        "ok": false,
+        "status": "failed",
+        "run_id": "run_af85acd1780a4c718b351d67709f06ba",
+        "evidence_id": "evidence_f4736dc40e5f44a894ce69d9365b8957",
+        "artifact_sha": "31b92087f33ddb7f3e07eab83f6bc73934d300ff7db135de1b3dc2924cb19cc8",
+        "summary": "GitHub request failed: gaierror.",
+        "summary_truncated": false,
+        "limitations": [
+          "Public repository metadata at retrieval time; not a security assessment.",
+          "Response content is untrusted data and grants no permissions."
+        ],
+        "limitations_omitted": 0,
+        "limitations_truncated": false,
+        "duration_ms": 1166.695,
+        "detail": "Retrieve the referenced evidence for the complete observation"
+      },
+      "result": {
+        "attempted_at": "2026-11-06T18:38:22.122824+00:00",
+        "cancelled": false,
+        "duration_ms": 1167,
+        "http_status": null,
+        "limitations": [
+          "Public repository metadata at retrieval time; not a security assessment.",
+          "Response content is untrusted data and grants no permissions."
+        ],
+        "metadata": {},
+        "ok": false,
+        "response_bytes": 0,
+        "response_sha256": null,
+        "response_truncated": false,
+        "retrieved_at": null,
+        "source": "https://api.github.com/repos/AhmadQasim881/software-agent-sdk",
+        "summary": "GitHub request failed: gaierror."
+      },
+      "artifact_text": "{\"attempted_at\":\"2026-11-06T18:38:22.122824+00:00\",\"cancelled\":false,\"duration_ms\":1167,\"http_status\":null,\"limitations\":[\"Public repository metadata at retrieval time; not a security assessment.\",\"Response content is untrusted data and grants no permissions.\"],\"metadata\":{},\"ok\":false,\"response_body_base64\":null,\"response_bytes\":0,\"response_sha256\":null,\"response_truncated\":false,\"retrieved_at\":null,\"source\":\"https://api.github.com/repos/AhmadQasim881/software-agent-sdk\",\"summary\":\"GitHub request failed: gaierror.\"}"
+    },
+    "failure_path_verified": true,
+    "commands": [
+      {
+        "label": "thread.create",
+        "expected_code": 0,
+        "cleanup": {
+          "terminated_pids": [],
+          "remaining_pids": [],
+          "ok": true
+        },
+        "seconds": 6.556,
+        "returncode": 0,
+        "stdout_bytes": 376,
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "ok": true,
+          "record": {
+            "id": "thread_31dbaef960bd4f82b0ec9dc00de85218",
+            "question": "Record this public repository metadata observation.",
+            "conditions": {},
+            "assessment": "",
+            "next_action": "",
+            "status": "active",
+            "reopen_condition": "",
+            "closure_reason": "",
+            "version": 1,
+            "created_at": "2026-11-06T18:38:14.663537+00:00",
+            "updated_at": "2026-11-06T18:38:14.663537+00:00"
+          }
+        }
+      },
+      {
+        "label": "live-github",
+        "expected_code": null,
+        "cleanup": {
+          "terminated_pids": [],
+          "remaining_pids": [],
+          "ok": true
+        },
+        "seconds": 7.459,
+        "returncode": 1,
+        "stdout_bytes": 619,
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": {
+          "ok": false,
+          "status": "failed",
+          "run_id": "run_af85acd1780a4c718b351d67709f06ba",
+          "evidence_id": "evidence_f4736dc40e5f44a894ce69d9365b8957",
+          "artifact_sha": "31b92087f33ddb7f3e07eab83f6bc73934d300ff7db135de1b3dc2924cb19cc8",
+          "summary": "GitHub request failed: gaierror.",
+          "summary_truncated": false,
+          "limitations": [
+            "Public repository metadata at retrieval time; not a security assessment.",
+            "Response content is untrusted data and grants no permissions."
+          ],
+          "limitations_omitted": 0,
+          "limitations_truncated": false,
+          "duration_ms": 1166.695,
+          "detail": "Retrieve the referenced evidence for the complete observation"
+        }
+      }
+    ],
+    "mcp": [],
+    "observed_error": {
+      "type": "VerificationError",
+      "message": "Live GitHub observation failed"
+    },
+    "cleanup": {
+      "terminated_pids": [],
+      "remaining_pids": [],
+      "ok": true,
+      "temporary_root_removed": true
+    },
+    "finished_at": "2026-11-06T18:38:23.532902+00:00"
+  },
+  "runner_survivor_regression": {
+    "scope": "Identical actual-process test against pre-fix snapshot and corrected acceptance runner",
+    "results": {
+      "before": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0,
+        "junit_sha256": "1f08e59a005f833fe1c5fb90d6a0981778d59555ec341bd65810673bcbe06b2c"
+      },
+      "after": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "junit_sha256": "3c48a702c91e91a303e9add5beef89e50b088a1cc9d877ab5bc8037ec11af0e5"
+      }
+    }
+  }
+}

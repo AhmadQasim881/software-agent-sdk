@@ -55,13 +55,39 @@ reverse migration or import an existing source project's memory database.
 | `memory.recall` | Filter active unexpired notes by literal query, optional kind, and exact tags; rank a bounded window and report omissions. |
 | `memory.history` | Return a bounded page of immutable record versions, with the shared pagination contract. |
 
-Forgetting and expiry are retrieval policies. They do not erase retained text,
-history, arguments, or existing context artifacts.
-
 Text is limited to 8,192 characters, source to 2,048, tags to 16 of at most 64
 characters, and evidence references to 32. Importance is an integer from 0 to 10.
 The shared 16,384-byte argument limit also applies, including Unicode text and
 metadata. Expiry must be an explicit timezone-aware ISO timestamp.
+
+## Retention, access, and removal
+
+The persistent store has no automatic retention period or purge job. Records,
+the event ledger, artifacts, and saved SDK history remain until the operator
+removes them. `expires_at` and `memory.forget` exclude notes from recall and new
+context selection; `memory.get` and `memory.history` still expose retained text.
+Earlier versions, recorded arguments, and existing context artifacts remain.
+
+Notes, submitted arguments, artifacts, and SDK transcripts can contain sensitive
+data. Choose the intended audience and retention duration for state, exports,
+and backups. Filesystem ownership, permissions, and storage controls determine
+access. Existing directory permissions are not tightened when opening state.
+Processes with the same filesystem access can read or modify these files despite
+thread scoping and artifact digest checks.
+
+Before backing up or removing state, stop its CLI, MCP, SDK, and server writers
+and wait for owned workers and hooks to exit. For a consistent resumable backup,
+copy the complete state directory together: `state.sqlite3`, any SQLite sidecar
+files, `artifacts/`, and the scoped helper's `conversations/` when present. Keep
+the original workspace at its recorded absolute path and use a compatible
+harness version. The store checks that workspace binding; a database alone does
+not preserve its referenced artifacts or SDK conversation history.
+
+Removal is an explicit operator action. Decide whether resume or rollback still
+requires a consistent backup, then remove only the confirmed owned state and
+separately selected copies. There is no per-note erasure operation or secure
+erasure guarantee. Exports, backups, and external host histories retain their own
+copies and require separate retention decisions.
 
 ## Retrieval and context behavior
 
@@ -83,8 +109,12 @@ policy. A bounded ranking is not a globally exhaustive similarity search.
 
 `context` reads the current thread, evidence, run outcomes, and memory in one
 SQLite snapshot. Without an explicit query it derives up to 32 distinct literal
-terms from the question and next action, using a small documented common-word
-exclusion and a minimum three-character term length. An explicit query retains
+terms from the question and next action. The 512-character query allowance is
+shared between those fields, reserving half for each and transferring unused
+space. The first 16 eligible terms from each field are considered before their
+remaining terms, so a long question cannot crowd the next action out of recall.
+A small documented common-word exclusion and a minimum three-character term
+length still apply. An explicit query retains
 substring semantics; an explicit empty query browses. Active pinned constraints
 supplement the context candidates even when their wording differs.
 
@@ -183,6 +213,11 @@ This is a two-case acceptance check, not a general semantic quality benchmark.
 
 The repository's implementation and evidence are independently reviewable:
 
+- [Memory and runtime completion](../.pr/research-harness-runtime-completion.md)
+  records 574 local regression tests plus the acceptance-driver regression, the
+  corrected default context query, POSIX process-group cleanup, and actual final
+  Linux binary CLI, native SDK hooks, generated host commands, MCP restart and
+  authenticated server checks.
 - [Successful hosted acceptance](../.pr/research-harness-hosted-acceptance.md)
   records 411 passing tests, a fresh locked runtime, actual installed CLI/MCP
   memory behavior and a real HTTP 200 public GitHub observation.
@@ -217,9 +252,11 @@ hosted report identifies the separate runtime and actual successful response.
 No provider API credential is present for the OpenHands live semantic check.
 The installed native Codex client failed before its model turn with a read-only
 filesystem error; its generated configuration alone does not establish recall.
-Claude native dispatch, other Docker targets, OS/network isolation claims and
-full frozen hook/worker execution remain unverified. The source-minimal Docker
-path passed on the hosted runner; the local namespace probe was denied.
+Claude native dispatch, other Docker targets, Windows/macOS frozen execution and
+OS/network isolation claims remain unverified. Linux frozen CLI, native SDK hooks,
+generated host protocols, MCP restart and worker cancellation/deadline passed in
+the runtime completion. The source-minimal Docker path passed on the hosted
+runner; the local namespace probe was denied.
 Direct `RemoteConversation.execute_tool()` is
 unsupported; the native model-driven server loop remains separate from the
 verified MCP read path. These gates must pass in an appropriate runtime before

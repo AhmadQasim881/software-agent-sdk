@@ -9,6 +9,7 @@ from pathlib import Path
 
 from pydantic import JsonValue, TypeAdapter, ValidationError
 
+from openhands.research.runtime import harness_command
 from openhands.sdk.hooks.config import HookConfig, HookDefinition, HookMatcher
 from openhands.sdk.hooks.types import HookEvent, HookEventType
 
@@ -34,10 +35,7 @@ def make_hook_config(*, workspace: Path, state_dir: Path, thread_id: str) -> Hoo
         raise HarnessError("A hook requires a nonblank thread ID of at most 128 chars")
     command = shlex.join(
         [
-            sys.executable,
-            "-I",
-            "-m",
-            "openhands.research",
+            *harness_command(),
             "--workspace",
             str(workspace.resolve(strict=True)),
             "--state",

@@ -10,20 +10,24 @@ on:
             - openhands-workspace/**
             - openhands-agent-server/**
             - tests/tools/research_harness/**
+            - tests/sdk/hooks/**
             - tests/tools/test_init.py
             - tests/tools/test_preset_default.py
             - tests/cross/test_agent_server_build_metadata.py
             - tests/cross/test_research_harness_install.py
+            - tests/cross/test_research_harness_frozen.py
+            - tests/cross/test_research_harness_frozen_acceptance.py
             - examples/01_standalone_sdk/60_research_harness/**
             - MANIFEST.in
             - pyproject.toml
             - uv.lock
             - .github/scripts/verify_research_harness_install.py
+            - .github/scripts/verify_research_harness_frozen.py
             - .github/workflows/research-harness-acceptance.yml
     workflow_dispatch:
         inputs:
             live_github:
-                description: Read this fork's public GitHub metadata once, without credentials
+                description: Read public GitHub metadata once per installed runtime, without credentials
                 type: boolean
                 default: true
 
@@ -66,12 +70,15 @@ jobs:
 
             - name: Run harness, baseline, and packaging regressions
               run: |
-                  uv run --frozen --no-sync python -I -m pytest -q \
+                  uv run --frozen --no-sync python -I -m pytest -n 4 -q \
                     tests/tools/research_harness \
+                    tests/sdk/hooks \
                     tests/tools/test_init.py \
                     tests/tools/test_preset_default.py \
                     tests/cross/test_agent_server_build_metadata.py \
                     tests/cross/test_research_harness_install.py \
+                    tests/cross/test_research_harness_frozen.py \
+                    tests/cross/test_research_harness_frozen_acceptance.py \
                     --junitxml="$HARNESS_ACCEPTANCE_ROOT/reports/pytest.xml"
 
             - name: Run local example without a model
@@ -118,6 +125,32 @@ jobs:
                   cd "$HARNESS_ACCEPTANCE_ROOT"
                   "$GITHUB_WORKSPACE/.venv/bin/python" \
                     "$GITHUB_WORKSPACE/.github/scripts/verify_research_harness_install.py" \
+                    "${arguments[@]}"
+
+            - name: Build normal frozen Agent Server
+              timeout-minutes: 12
+              run: |
+                  uv run --frozen --no-sync pyinstaller --noconfirm \
+                    --workpath "$HARNESS_ACCEPTANCE_ROOT/frozen-work" \
+                    --distpath "$HARNESS_ACCEPTANCE_ROOT/frozen-dist" \
+                    openhands-agent-server/openhands/agent_server/agent-server.spec \
+                    > "$HARNESS_ACCEPTANCE_ROOT/reports/frozen-build.log" 2>&1
+
+            - name: Verify frozen memory, hooks, MCP, and worker
+              timeout-minutes: 8
+              shell: bash
+              env:
+                  CHECK_LIVE_GITHUB: ${{ github.event_name == 'push' || inputs.live_github }}
+                  PUBLIC_REPOSITORY: ${{ github.repository }}
+              run: |
+                  arguments=(
+                    --binary "$HARNESS_ACCEPTANCE_ROOT/frozen-dist/openhands-agent-server"
+                    --report "$HARNESS_ACCEPTANCE_ROOT/reports/frozen-runtime.json"
+                  )
+                  if [[ "$CHECK_LIVE_GITHUB" == 'true' ]]; then
+                    arguments+=(--github-repository "$PUBLIC_REPOSITORY")
+                  fi
+                  .venv/bin/python -I .github/scripts/verify_research_harness_frozen.py \
                     "${arguments[@]}"
 
             - name: Upload acceptance evidence
