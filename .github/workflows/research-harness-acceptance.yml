@@ -1,0 +1,130 @@
+---
+name: Research harness acceptance
+
+on:
+    push:
+        branches: [feature/security_harness]
+        paths:
+            - openhands-tools/**
+            - openhands-sdk/**
+            - openhands-workspace/**
+            - openhands-agent-server/**
+            - tests/tools/research_harness/**
+            - tests/tools/test_init.py
+            - tests/tools/test_preset_default.py
+            - tests/cross/test_agent_server_build_metadata.py
+            - tests/cross/test_research_harness_install.py
+            - examples/01_standalone_sdk/60_research_harness/**
+            - MANIFEST.in
+            - pyproject.toml
+            - uv.lock
+            - .github/scripts/verify_research_harness_install.py
+            - .github/workflows/research-harness-acceptance.yml
+    workflow_dispatch:
+        inputs:
+            live_github:
+                description: Read this fork's public GitHub metadata once, without credentials
+                type: boolean
+                default: true
+
+permissions:
+    contents: read
+
+concurrency:
+    group: research-harness-acceptance-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    acceptance:
+        if: github.repository == 'AhmadQasim881/software-agent-sdk'
+        runs-on: ubuntu-24.04
+        timeout-minutes: 45
+        env:
+            OPENHANDS_SUPPRESS_BANNER: '1'
+            LITELLM_LOCAL_MODEL_COST_MAP: 'True'
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7.0.1
+              with:
+                  persist-credentials: false
+
+            - name: Install uv and Python
+              uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7
+              with:
+                  python-version: '3.13'
+                  enable-cache: true
+
+            - name: Prepare owned acceptance directory
+              shell: bash
+              run: |
+                  acceptance_root=$(mktemp -d "$RUNNER_TEMP/research-harness-acceptance.XXXXXX")
+                  mkdir "$acceptance_root/reports" "$acceptance_root/wheels"
+                  echo "HARNESS_ACCEPTANCE_ROOT=$acceptance_root" >> "$GITHUB_ENV"
+
+            - name: Install locked development dependencies
+              run: uv sync --frozen --group dev
+
+            - name: Run harness, baseline, and packaging regressions
+              run: |
+                  uv run --frozen --no-sync python -I -m pytest -q \
+                    tests/tools/research_harness \
+                    tests/tools/test_init.py \
+                    tests/tools/test_preset_default.py \
+                    tests/cross/test_agent_server_build_metadata.py \
+                    tests/cross/test_research_harness_install.py \
+                    --junitxml="$HARNESS_ACCEPTANCE_ROOT/reports/pytest.xml"
+
+            - name: Run local example without a model
+              run: |
+                  uv run --frozen --no-sync python -I \
+                    examples/01_standalone_sdk/60_research_harness/main.py \
+                    > "$HARNESS_ACCEPTANCE_ROOT/reports/local-example.log"
+
+            - name: Build standard tools wheel
+              run: |
+                  uv build --package openhands-tools --wheel \
+                    --out-dir "$HARNESS_ACCEPTANCE_ROOT/wheels" --python 3.13
+
+            - name: Install wheel in fresh locked runtime
+              shell: bash
+              run: |
+                  test ! -e "$HARNESS_ACCEPTANCE_ROOT/runtime"
+                  # Workspace SDK remains editable; tools must come from the built wheel.
+                  UV_PROJECT_ENVIRONMENT="$HARNESS_ACCEPTANCE_ROOT/runtime" \
+                    uv sync --frozen --no-dev --package openhands-tools \
+                    --no-install-package openhands-tools --python 3.13
+                  wheels=("$HARNESS_ACCEPTANCE_ROOT"/wheels/openhands_tools-*.whl)
+                  test "${#wheels[@]}" -eq 1
+                  uv pip install --python "$HARNESS_ACCEPTANCE_ROOT/runtime/bin/python" \
+                    --no-deps "${wheels[0]}"
+
+            - name: Verify installed CLI, MCP, skill, and public metadata
+              shell: bash
+              env:
+                  CHECK_LIVE_GITHUB: ${{ github.event_name == 'push' || inputs.live_github }}
+                  PUBLIC_REPOSITORY: ${{ github.repository }}
+              run: |
+                  wheels=("$HARNESS_ACCEPTANCE_ROOT"/wheels/openhands_tools-*.whl)
+                  arguments=(
+                    --python "$HARNESS_ACCEPTANCE_ROOT/runtime/bin/python"
+                    --checkout "$GITHUB_WORKSPACE"
+                    --wheel "${wheels[0]}"
+                    --report "$HARNESS_ACCEPTANCE_ROOT/reports/installed-wheel.json"
+                    --runtime-kind fresh-locked
+                  )
+                  if [[ "$CHECK_LIVE_GITHUB" == 'true' ]]; then
+                    arguments+=(--github-repository "$PUBLIC_REPOSITORY")
+                  fi
+                  cd "$HARNESS_ACCEPTANCE_ROOT"
+                  "$GITHUB_WORKSPACE/.venv/bin/python" \
+                    "$GITHUB_WORKSPACE/.github/scripts/verify_research_harness_install.py" \
+                    "${arguments[@]}"
+
+            - name: Upload acceptance evidence
+              if: always() && env.HARNESS_ACCEPTANCE_ROOT != ''
+              uses: actions/upload-artifact@v7
+              with:
+                  name: research-harness-acceptance-${{ github.run_id }}
+                  path: ${{ env.HARNESS_ACCEPTANCE_ROOT }}/reports/
+                  if-no-files-found: warn
+                  retention-days: 7

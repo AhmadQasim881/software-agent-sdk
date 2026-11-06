@@ -1,5 +1,11 @@
 # Research harness memory and host integration verification
 
+This report records the original memory integration run. See the
+[completion follow-up](research-harness-followup-verification.md) for subsequent
+packaging fixes, real server-memory checks, native Codex observations and the
+new branch acceptance workflow. Remaining gates below describe the original
+run and should be read alongside that later evidence.
+
 ## Scope and provenance
 
 Validation ran on Linux with Python 3.13.5 on 2026-11-06, using the existing

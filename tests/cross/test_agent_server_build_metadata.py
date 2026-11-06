@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from PyInstaller.utils.hooks import collect_data_files
+from setuptools._distutils.filelist import FileList
 
 from openhands.sdk.settings.acp_install_catalog import (
     ACP_INSTALL_CATALOG,
@@ -32,6 +33,16 @@ AGENT_SERVER_SPEC = (
 MANIFEST_IN = REPO_ROOT / "MANIFEST.in"
 PLUGIN_FORMAT_SCHEMAS_DIR = (
     REPO_ROOT / "openhands-sdk" / "openhands" / "sdk" / "plugin" / "format" / "schemas"
+)
+RESEARCH_WORKFLOW = (
+    REPO_ROOT
+    / "openhands-tools"
+    / "openhands"
+    / "tools"
+    / "research_harness"
+    / "skills"
+    / "research-review"
+    / "SKILL.md"
 )
 ACP_INSTALL_CATALOG_PY = (
     REPO_ROOT
@@ -153,11 +164,40 @@ def test_agent_server_binary_collects_plugin_format_schemas() -> None:
         assert (name, dest) in bundled
 
 
-def _spec_collected_datas(package: str) -> set[tuple[str, str]]:
+def test_workspace_build_context_preserves_research_workflow() -> None:
+    """Apply the actual sdist manifest to the available workspace source files."""
+    selected = FileList()
+    selected.allfiles = [
+        str(path.relative_to(REPO_ROOT))
+        for directory in REPO_ROOT.glob("openhands-*")
+        if directory.is_dir()
+        for path in directory.rglob("*")
+        if path.is_file()
+    ] + ["pyproject.toml", "uv.lock"]
+    for line in MANIFEST_IN.read_text(encoding="utf-8").splitlines():
+        if line.strip() and not line.lstrip().startswith("#"):
+            selected.process_template_line(line)
+    relative = str(RESEARCH_WORKFLOW.relative_to(REPO_ROOT))
+    preserved = {
+        path: (REPO_ROOT / path).read_bytes()
+        for path in selected.files
+        if path == relative
+    }
+    assert preserved == {relative: RESEARCH_WORKFLOW.read_bytes()}
+
+
+def test_agent_server_binary_preserves_research_workflow() -> None:
+    """The frozen package must keep the skill at the loader's relative path."""
+    bundled = _spec_collected_datas("openhands.tools.research_harness")
+    destination = "openhands/tools/research_harness/skills/research-review"
+    assert bundled == {("SKILL.md", destination): RESEARCH_WORKFLOW.read_bytes()}
+
+
+def _spec_collected_datas(package: str) -> dict[tuple[str, str], bytes]:
     """Resolve the spec's ``collect_data_files(package, ...)`` calls as
-    PyInstaller would, returning ``(file name, bundle dir)`` pairs."""
+    PyInstaller would, returning file bytes keyed by name and bundle directory."""
     tree = ast.parse(AGENT_SERVER_SPEC.read_text(encoding="utf-8"))
-    bundled: set[tuple[str, str]] = set()
+    bundled: dict[tuple[str, str], bytes] = {}
     for node in ast.walk(tree):
         if not (
             isinstance(node, ast.Call)
@@ -173,7 +213,7 @@ def _spec_collected_datas(package: str) -> set[tuple[str, str]]:
             assert kw.arg is not None
             kwargs[kw.arg] = ast.literal_eval(kw.value)
         for src, dst in collect_data_files(package, **kwargs):
-            bundled.add((Path(src).name, dst))
+            bundled[(Path(src).name, Path(dst).as_posix())] = Path(src).read_bytes()
     return bundled
 
 

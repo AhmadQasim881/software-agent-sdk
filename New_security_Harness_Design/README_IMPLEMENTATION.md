@@ -10,6 +10,11 @@ configuration bundles, explicit operator instructions, and an opt-in skill
 selection evaluator. See [AgentMemory integration](AGENTMEMORY_INTEGRATION.md)
 for source provenance, migration details, examples, and acceptance limits.
 
+The packaging follow-up also includes the workflow skill in the workspace source
+bundle used for Docker builds and in the frozen Agent Server's data files. These
+are separate packaging paths from the tools wheel; see
+[packaging follow-up verification](../.pr/research-harness-packaging-followup.md).
+
 The source is [Harness Engineering for Vulnerability Research](2026-unprompted-harness-engineering.pdf),
 with a [complete Markdown transcription](Vulnerability_Harness_Engineering/Vulnerability_Harness_Engineering.md).
 The workshop describes responsibilities and examples rather than publishing one
@@ -85,6 +90,15 @@ Module paths are relative to
 The oracle is an import-snapshot oracle, not the PDF's Kubernetes RBAC corpus.
 It reports facts without inferring exploitability. Fixture readiness applies
 only to the built-in application.
+
+### Packaging the workflow asset
+
+`research-review/SKILL.md` is loaded from disk beside `workflow.py`. Its bytes
+must survive each packaging layer: `openhands-tools/pyproject.toml` includes it
+in the tools wheel, the root `MANIFEST.in` includes it in the workspace source
+distribution, and `agent-server.spec` includes it at the corresponding frozen
+package path. The packaging regression checks apply the actual manifest and
+PyInstaller collection calls and compare the resulting file bytes and location.
 
 ## 3. Persistent CLI setup
 
@@ -349,15 +363,25 @@ arbitrary destinations or private repository authentication.
 Verification covers Linux, local SDK conversations, and real MCP stdio processes.
 The real local Agent Server also passed readiness, identity, authenticated normal
 operations, and owned-process cleanup; see [local validation](../.pr/research-harness-local-validation.md).
-Remote deployment, Docker/PyInstaller packaging, OS isolation, and native desktop
-dispatch still require their corresponding environments. The fixture is an owned readiness check, not a
+The follow-up also verified real server-side MCP memory reads and native SDK
+conversation configuration across a server restart; see
+[server memory verification](../.pr/research-harness-remote-memory-verification.md).
+Direct `RemoteConversation.execute_tool()` remains unsupported. Native execution
+through the model-driven server loop is a distinct acceptance gate.
+
+An actual source archive and frozen server binary now preserve the skill asset,
+and the frozen server passed readiness, authentication and tool-catalog checks.
+Docker execution, OS isolation, deployment to another host, and complete frozen
+subprocess/hook behavior still require their corresponding acceptance checks.
+The fixture is an owned readiness check, not a
 general launcher or isolation boundary. API immutability cannot protect data from
 another process with the same filesystem permissions. Queries report recorded
 facts without vulnerability classification or exploit reproduction.
 
 ## 8. Verification
 
-See [staged verification](../.pr/security-harness-verification.md) and
+See the latest [completion follow-up](../.pr/research-harness-followup-verification.md),
+[staged verification](../.pr/security-harness-verification.md) and
 [installed-wheel verification](../.pr/research-harness-wheel-verification.md)
 for actual commands and outcomes. From the repo root:
 
@@ -392,3 +416,55 @@ For extensions, add strict schemas, shared dispatch, bounded observations with
 provenance, and appropriate success/failure/partial/cancellation tests. Keep
 context selection separate from artifacts, and host lifecycle wiring separate
 from shared operations.
+
+### Reproduce the server-side memory check
+
+The development recipe uses the maintained Agent Server verification CLI to
+launch an authenticated owned server, read scoped memory through MCP, restart
+the server, reopen the native SDK configuration, and clean up its private state:
+
+```bash
+.venv/bin/python -I .pr/research-harness-remote-memory-check.py
+```
+
+It requires the installed development dependencies but makes no model request.
+Its result distinguishes server-side MCP reads from native model-driven tool
+execution. The committed evidence report contains the actual exchanges and
+cleanup observations from the successful run.
+
+### Branch acceptance workflow
+
+The [Research harness acceptance workflow](../.github/workflows/research-harness-acceptance.yml)
+runs on relevant changes pushed to this fork's `feature/security_harness` branch
+and supports manual dispatch. It runs the complete harness suite, baseline tool
+checks, packaging regressions and the no-model example. It then builds a standard
+tools wheel and installs it in a fresh runtime using the committed dependency
+lock. The SDK dependency remains editable from the same checkout; the tools
+package must be installed from the wheel.
+
+The [installed-package runner](../.github/scripts/verify_research_harness_install.py)
+checks source/wheel/installed file equality, module origins, locked dependency
+versions, all six memory operations, conflict handling, context bounds, CLI/MCP
+persistence and generated host bundles outside the checkout. It also makes one
+bounded, unauthenticated metadata observation of this public fork on ordinary
+pushes. Manual dispatch can disable that live check. The workflow uses read-only
+repository permissions and uploads its test and installation reports even when
+an acceptance step fails.
+
+To reproduce the installed-package check after preparing a runtime and wheel:
+
+```bash
+python .github/scripts/verify_research_harness_install.py \
+  --python /absolute/runtime/bin/python \
+  --checkout /absolute/software-agent-sdk \
+  --wheel /absolute/wheels/openhands_tools-1.60.1-py3-none-any.whl \
+  --report /absolute/reports/installed-wheel.json \
+  --runtime-kind fresh-locked \
+  --github-repository AhmadQasim881/software-agent-sdk
+```
+
+Omit `--github-repository` for local-only checks. Use `--runtime-kind
+copied-runtime` when the runtime is a copy of an existing environment. The report
+preserves successful local checks when a later live observation fails. The local
+copied-runtime result does not establish that a fresh dependency install passed;
+inspect the workflow result and its evidence for that acceptance gate.

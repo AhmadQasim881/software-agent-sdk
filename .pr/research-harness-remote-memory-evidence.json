@@ -1,0 +1,1382 @@
+{
+  "scope": "Local Agent Server MCP memory reads and native SDK registration/reopen; no model inference",
+  "run": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory",
+  "runtime_tree": "c2bcb08d967f1f3e4d0bffa49bceec46f1d273c4",
+  "recipe_sha256": "070e904b3990503499eb611bd60dd9ad06ed3399ac5d50ee93c1debf1cc9a031",
+  "exchanges_and_transcripts": {
+    "get-before": {
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "research-memory-acceptance",
+          "server": {
+            "transport": "stdio",
+            "command": "/workspace/scratch/7b78f21356c4/software-agent-sdk/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+              "--state",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/state",
+              "mcp"
+            ],
+            "cwd": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "timeout": 30,
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.get",
+              "arguments": {
+                "thread_id": "thread_785e17baa3904f9598d70065f7554c43",
+                "memory_id": "memory_e659708480ad486fa7fdc0fd267149f7"
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "654",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"ok\":true,\"record\":{\"created_at\":\"2026-11-06T16:25:08.185267+00:00\",\"evidence_ids\":[\"evidence_11ce92aefeba49a6968689bd6d3a8162\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_e659708480ad486fa7fdc0fd267149f7\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned acceptance operator\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Read the saved inventory before changing the sample.\",\"thread_id\":\"thread_785e17baa3904f9598d70065f7554c43\",\"updated_at\":\"2026-11-06T16:25:08.185267+00:00\",\"version\":1}}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 5518
+    },
+    "recall-before": {
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "research-memory-acceptance",
+          "server": {
+            "transport": "stdio",
+            "command": "/workspace/scratch/7b78f21356c4/software-agent-sdk/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+              "--state",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/state",
+              "mcp"
+            ],
+            "cwd": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "timeout": 30,
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.recall",
+              "arguments": {
+                "thread_id": "thread_785e17baa3904f9598d70065f7554c43",
+                "query": "inventory",
+                "limit": 5
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1785",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"as_of\":\"2026-11-06T16:25:17.435197+00:00\",\"byte_limit\":49152,\"candidate_limit\":200,\"candidate_notes\":1,\"candidates_scanned\":1,\"candidates_truncated\":false,\"eligible_notes\":1,\"excluded\":{\"expired\":0,\"forgotten\":0},\"limit\":5,\"matching_notes\":1,\"ok\":true,\"omissions\":{\"byte_budget\":0,\"candidate_limit\":0,\"result_limit\":0},\"pinned_constraints_supplemented\":0,\"policy\":\"agentmemory-lexical/1\",\"query\":\"inventory\",\"records\":[{\"lexical_similarity\":0.7071067811865475,\"matched_query\":true,\"record\":{\"created_at\":\"2026-11-06T16:25:08.185267+00:00\",\"evidence_ids\":[\"evidence_11ce92aefeba49a6968689bd6d3a8162\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_e659708480ad486fa7fdc0fd267149f7\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned acceptance operator\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Read the saved inventory before changing the sample.\",\"thread_id\":\"thread_785e17baa3904f9598d70065f7554c43\",\"updated_at\":\"2026-11-06T16:25:08.185267+00:00\",\"version\":1},\"score\":0.04918032786885246,\"selection_reason\":\"literal_match\"}],\"scope\":{\"candidate_order\":\"pinned DESC, updated_at DESC, id ASC\",\"kind\":null,\"pinned_constraint_supplement\":false,\"query_match\":\"literal case-folded substring of text or tags\",\"query_source\":\"explicit\",\"query_terms\":null,\"ranking_scope\":\"bounded candidates, pinned first, then lexical RRF\",\"snapshot\":\"one SQLite read transaction; no access-time writes\",\"tag_match\":\"all exact case-folded tags\",\"tags\":[],\"term_policy\":null,\"thread_id\":\"thread_785e17baa3904f9598d70065f7554c43\"},\"total_notes\":1}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 4999
+    },
+    "get-after": {
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "research-memory-acceptance",
+          "server": {
+            "transport": "stdio",
+            "command": "/workspace/scratch/7b78f21356c4/software-agent-sdk/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+              "--state",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/state",
+              "mcp"
+            ],
+            "cwd": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "timeout": 30,
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.get",
+              "arguments": {
+                "thread_id": "thread_785e17baa3904f9598d70065f7554c43",
+                "memory_id": "memory_e659708480ad486fa7fdc0fd267149f7"
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "660",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"ok\":true,\"record\":{\"created_at\":\"2026-11-06T16:25:08.185267+00:00\",\"evidence_ids\":[\"evidence_11ce92aefeba49a6968689bd6d3a8162\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_e659708480ad486fa7fdc0fd267149f7\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned acceptance operator\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Keep the saved inventory and its source evidence together.\",\"thread_id\":\"thread_785e17baa3904f9598d70065f7554c43\",\"updated_at\":\"2026-11-06T16:25:29.012588+00:00\",\"version\":2}}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 5226
+    },
+    "recall-after": {
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "research-memory-acceptance",
+          "server": {
+            "transport": "stdio",
+            "command": "/workspace/scratch/7b78f21356c4/software-agent-sdk/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+              "--state",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/state",
+              "mcp"
+            ],
+            "cwd": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "timeout": 30,
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.recall",
+              "arguments": {
+                "thread_id": "thread_785e17baa3904f9598d70065f7554c43",
+                "query": "inventory",
+                "limit": 5
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1791",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"as_of\":\"2026-11-06T16:25:46.768171+00:00\",\"byte_limit\":49152,\"candidate_limit\":200,\"candidate_notes\":1,\"candidates_scanned\":1,\"candidates_truncated\":false,\"eligible_notes\":1,\"excluded\":{\"expired\":0,\"forgotten\":0},\"limit\":5,\"matching_notes\":1,\"ok\":true,\"omissions\":{\"byte_budget\":0,\"candidate_limit\":0,\"result_limit\":0},\"pinned_constraints_supplemented\":0,\"policy\":\"agentmemory-lexical/1\",\"query\":\"inventory\",\"records\":[{\"lexical_similarity\":0.6531972647421806,\"matched_query\":true,\"record\":{\"created_at\":\"2026-11-06T16:25:08.185267+00:00\",\"evidence_ids\":[\"evidence_11ce92aefeba49a6968689bd6d3a8162\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_e659708480ad486fa7fdc0fd267149f7\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned acceptance operator\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Keep the saved inventory and its source evidence together.\",\"thread_id\":\"thread_785e17baa3904f9598d70065f7554c43\",\"updated_at\":\"2026-11-06T16:25:29.012588+00:00\",\"version\":2},\"score\":0.04918032786885246,\"selection_reason\":\"literal_match\"}],\"scope\":{\"candidate_order\":\"pinned DESC, updated_at DESC, id ASC\",\"kind\":null,\"pinned_constraint_supplement\":false,\"query_match\":\"literal case-folded substring of text or tags\",\"query_source\":\"explicit\",\"query_terms\":null,\"ranking_scope\":\"bounded candidates, pinned first, then lexical RRF\",\"snapshot\":\"one SQLite read transaction; no access-time writes\",\"tag_match\":\"all exact case-folded tags\",\"tags\":[],\"term_policy\":null,\"thread_id\":\"thread_785e17baa3904f9598d70065f7554c43\"},\"total_notes\":1}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 5160
+    },
+    "history-after": {
+      "request": {
+        "method": "POST",
+        "path": "/api/mcp/test",
+        "query": [],
+        "auth": "header",
+        "body": {
+          "name": "research-memory-acceptance",
+          "server": {
+            "transport": "stdio",
+            "command": "/workspace/scratch/7b78f21356c4/software-agent-sdk/.venv/bin/python",
+            "args": [
+              "-I",
+              "-m",
+              "openhands.research",
+              "--workspace",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+              "--state",
+              "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/state",
+              "mcp"
+            ],
+            "cwd": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+            "env": {
+              "OPENHANDS_SUPPRESS_BANNER": "1",
+              "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+            }
+          },
+          "timeout": 30,
+          "tool_call": {
+            "name": "research_harness",
+            "arguments": {
+              "operation": "memory.history",
+              "arguments": {
+                "thread_id": "thread_785e17baa3904f9598d70065f7554c43",
+                "memory_id": "memory_e659708480ad486fa7fdc0fd267149f7"
+              }
+            }
+          }
+        },
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1260",
+          "content-type": "application/json"
+        },
+        "body": {
+          "ok": true,
+          "tools": [
+            "research_harness"
+          ],
+          "tool_result": {
+            "is_error": false,
+            "text": "{\"has_more\":false,\"next_offset\":2,\"offset\":0,\"ok\":true,\"records\":[{\"created_at\":\"2026-11-06T16:25:08.185267+00:00\",\"evidence_ids\":[\"evidence_11ce92aefeba49a6968689bd6d3a8162\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_e659708480ad486fa7fdc0fd267149f7\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned acceptance operator\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Read the saved inventory before changing the sample.\",\"thread_id\":\"thread_785e17baa3904f9598d70065f7554c43\",\"updated_at\":\"2026-11-06T16:25:08.185267+00:00\",\"version\":1},{\"created_at\":\"2026-11-06T16:25:08.185267+00:00\",\"evidence_ids\":[\"evidence_11ce92aefeba49a6968689bd6d3a8162\"],\"expires_at\":null,\"forget_reason\":null,\"id\":\"memory_e659708480ad486fa7fdc0fd267149f7\",\"importance\":5,\"kind\":\"decision\",\"pinned\":false,\"source\":\"Owned acceptance operator\",\"status\":\"active\",\"tags\":[\"inventory\"],\"text\":\"Keep the saved inventory and its source evidence together.\",\"thread_id\":\"thread_785e17baa3904f9598d70065f7554c43\",\"updated_at\":\"2026-11-06T16:25:29.012588+00:00\",\"version\":2}]}"
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 4957
+    },
+    "server-info-before": {
+      "request": {
+        "method": "GET",
+        "path": "/server_info",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1280",
+          "content-type": "application/json"
+        },
+        "body": {
+          "uptime": 4.0,
+          "idle_time": 4.0,
+          "title": "OpenHands Agent Server",
+          "version": "1.60.1",
+          "sdk_version": "1.60.1",
+          "tools_version": "1.60.1",
+          "workspace_version": "1.60.1",
+          "build_git_sha": "5f3cef92207b0fa1c4ef44b167b0aad93bae1881",
+          "build_git_ref": "work/security-harness-completion",
+          "python_version": "3.13.5 (main, Aug 10 2026, 12:06:59) [GCC 14.2.0]",
+          "usable_tools": [
+            "ClassifyAndSwitchLLMTool",
+            "ask_oracle",
+            "file_editor",
+            "task_tool_set",
+            "task",
+            "task_tracker",
+            "terminal",
+            "workflow_tool_set",
+            "workflow",
+            "start_child_conversation",
+            "browser_tool_set",
+            "edit",
+            "list_directory",
+            "read_file",
+            "write_file",
+            "glob",
+            "grep",
+            "planning_file_editor"
+          ],
+          "runtime_idle_timeout_seconds": null,
+          "conversation_runtime": "local",
+          "available_conversation_runtimes": [],
+          "capabilities": [
+            "conversation_runtime_routes_v1",
+            "profile_secret_scope_v1",
+            "profile_persona_v1",
+            "credential_binding_v1",
+            "credential_binding_readiness_probe_v1",
+            "credential_binding_activation_guard_v1",
+            "idempotent_conversation_create_v1",
+            "tool_catalog_v1",
+            "agent_profile_draft_materialize_v1",
+            "agent_launch_pipeline_v1",
+            "profile_public_skills_v1",
+            "skill_catalog_v1",
+            "canvas_app_backend_secret_grants_v1",
+            "canvas_app_backend_enable_lifecycle_v1"
+          ],
+          "app_backend_ingress_url": null,
+          "max_foreground_terminal_timeout_seconds": null,
+          "docs": "/docs",
+          "redoc": "/redoc"
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 13
+    },
+    "server-info-after": {
+      "request": {
+        "method": "GET",
+        "path": "/server_info",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1280",
+          "content-type": "application/json"
+        },
+        "body": {
+          "uptime": 4.0,
+          "idle_time": 4.0,
+          "title": "OpenHands Agent Server",
+          "version": "1.60.1",
+          "sdk_version": "1.60.1",
+          "tools_version": "1.60.1",
+          "workspace_version": "1.60.1",
+          "build_git_sha": "5f3cef92207b0fa1c4ef44b167b0aad93bae1881",
+          "build_git_ref": "work/security-harness-completion",
+          "python_version": "3.13.5 (main, Aug 10 2026, 12:06:59) [GCC 14.2.0]",
+          "usable_tools": [
+            "ClassifyAndSwitchLLMTool",
+            "ask_oracle",
+            "file_editor",
+            "task_tool_set",
+            "task",
+            "task_tracker",
+            "terminal",
+            "workflow_tool_set",
+            "workflow",
+            "start_child_conversation",
+            "browser_tool_set",
+            "edit",
+            "list_directory",
+            "read_file",
+            "write_file",
+            "glob",
+            "grep",
+            "planning_file_editor"
+          ],
+          "runtime_idle_timeout_seconds": null,
+          "conversation_runtime": "local",
+          "available_conversation_runtimes": [],
+          "capabilities": [
+            "conversation_runtime_routes_v1",
+            "profile_secret_scope_v1",
+            "profile_persona_v1",
+            "credential_binding_v1",
+            "credential_binding_readiness_probe_v1",
+            "credential_binding_activation_guard_v1",
+            "idempotent_conversation_create_v1",
+            "tool_catalog_v1",
+            "agent_profile_draft_materialize_v1",
+            "agent_launch_pipeline_v1",
+            "profile_public_skills_v1",
+            "skill_catalog_v1",
+            "canvas_app_backend_secret_grants_v1",
+            "canvas_app_backend_enable_lifecycle_v1"
+          ],
+          "app_backend_ingress_url": null,
+          "max_foreground_terminal_timeout_seconds": null,
+          "docs": "/docs",
+          "redoc": "/redoc"
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 9
+    },
+    "sdk-create": {
+      "command": [
+        "/workspace/scratch/7b78f21356c4/software-agent-sdk/.venv/bin/python",
+        "-I",
+        "/workspace/scratch/7b78f21356c4/software-agent-sdk/.pr/research-harness-remote-memory-check.py",
+        "--sdk-phase",
+        "create",
+        "--fixture",
+        "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/fixture.json",
+        "--output",
+        "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/sdk-create-result.json"
+      ],
+      "cwd": "/workspace/scratch/7b78f21356c4/software-agent-sdk",
+      "exit_code": 0,
+      "elapsed_ms": 10225,
+      "stdout": "{\"phase\": \"create\", \"conversation_id\": \"15e62467-6b12-49db-bc1c-82af8248dcd6\", \"execution_status\": \"idle\", \"tools\": [{\"name\": \"research_harness\", \"params\": {\"state_dir\": \"/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/state\"}}], \"event_kinds\": {\"ConversationStateUpdateEvent\": 1}, \"metrics\": {\"model_name\": \"default\", \"accumulated_cost\": 0.0, \"max_budget_per_task\": null, \"accumulated_token_usage\": {\"model\": \"default\", \"prompt_tokens\": 0, \"completion_tokens\": 0, \"cache_read_tokens\": 0, \"cache_write_tokens\": 0, \"reasoning_tokens\": 0, \"context_window\": 0, \"per_turn_token\": 0, \"response_id\": \"\"}, \"costs\": [], \"response_latencies\": [], \"token_usages\": []}, \"messages_sent\": 0, \"agent_runs_requested\": 0}\n",
+      "stderr": ""
+    },
+    "sdk-attach": {
+      "command": [
+        "/workspace/scratch/7b78f21356c4/software-agent-sdk/.venv/bin/python",
+        "-I",
+        "/workspace/scratch/7b78f21356c4/software-agent-sdk/.pr/research-harness-remote-memory-check.py",
+        "--sdk-phase",
+        "attach",
+        "--fixture",
+        "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/fixture.json",
+        "--output",
+        "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/sdk-attach-result.json"
+      ],
+      "cwd": "/workspace/scratch/7b78f21356c4/software-agent-sdk",
+      "exit_code": 0,
+      "elapsed_ms": 10288,
+      "stdout": "{\"phase\": \"attach\", \"conversation_id\": \"15e62467-6b12-49db-bc1c-82af8248dcd6\", \"execution_status\": \"idle\", \"tools\": [{\"name\": \"research_harness\", \"params\": {\"state_dir\": \"/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/state\"}}], \"event_kinds\": {\"ConversationStateUpdateEvent\": 1}, \"metrics\": {\"model_name\": \"default\", \"accumulated_cost\": 0.0, \"max_budget_per_task\": null, \"accumulated_token_usage\": {\"model\": \"default\", \"prompt_tokens\": 0, \"completion_tokens\": 0, \"cache_read_tokens\": 0, \"cache_write_tokens\": 0, \"reasoning_tokens\": 0, \"context_window\": 0, \"per_turn_token\": 0, \"response_id\": \"\"}, \"costs\": [], \"response_latencies\": [], \"token_usages\": []}, \"messages_sent\": 0, \"agent_runs_requested\": 0}\n",
+      "stderr": ""
+    },
+    "seed": {
+      "thread": {
+        "id": "thread_785e17baa3904f9598d70065f7554c43",
+        "question": "Which static import is present in the owned sample?",
+        "conditions": {},
+        "assessment": "",
+        "next_action": "",
+        "status": "active",
+        "reopen_condition": "",
+        "closure_reason": "",
+        "version": 1,
+        "created_at": "2026-11-06T16:25:08.180748+00:00",
+        "updated_at": "2026-11-06T16:25:08.180748+00:00"
+      },
+      "inventory": {
+        "ok": true,
+        "status": "completed",
+        "run_id": "run_2cfabb901363442bbb347db29e20d5a7",
+        "evidence_id": "evidence_11ce92aefeba49a6968689bd6d3a8162",
+        "artifact_sha": "70856001191bef7e034241a634d5de7765d0e0f2e8efa31ae6af0411cf087bb6",
+        "summary": "Recorded 1 imports from 1 parsed Python files; complete within scope",
+        "summary_truncated": false,
+        "limitations": [
+          "Inventory of static Python import declarations; no security verdict.",
+          "Completeness covers regular .py files; hidden paths, symlinks, special files, .git, .venv, node_modules and __pycache__ are excl",
+          "Dynamic imports and runtime behavior are not evaluated; source is never executed. Tests directories are included.",
+          "Each file is observed separately; this is not an atomic repository snapshot. The time/cancellation budget is cooperative between"
+        ],
+        "limitations_omitted": 0,
+        "limitations_truncated": true,
+        "duration_ms": 0.268,
+        "detail": "Retrieve the referenced evidence for the complete observation"
+      },
+      "original": {
+        "id": "memory_e659708480ad486fa7fdc0fd267149f7",
+        "thread_id": "thread_785e17baa3904f9598d70065f7554c43",
+        "text": "Read the saved inventory before changing the sample.",
+        "source": "Owned acceptance operator",
+        "kind": "decision",
+        "tags": [
+          "inventory"
+        ],
+        "evidence_ids": [
+          "evidence_11ce92aefeba49a6968689bd6d3a8162"
+        ],
+        "importance": 5,
+        "pinned": false,
+        "expires_at": null,
+        "status": "active",
+        "forget_reason": null,
+        "version": 1,
+        "created_at": "2026-11-06T16:25:08.185267+00:00",
+        "updated_at": "2026-11-06T16:25:08.185267+00:00"
+      },
+      "other_thread_record": {
+        "id": "memory_24a24ad48d90423ca5177b933276a0a6",
+        "thread_id": "thread_16b8bc8c94074f5494591a5010d6e24f",
+        "text": "Inventory note in the other thread",
+        "source": "Owned operator",
+        "kind": "note",
+        "tags": [],
+        "evidence_ids": [],
+        "importance": 5,
+        "pinned": false,
+        "expires_at": null,
+        "status": "active",
+        "forget_reason": null,
+        "version": 1,
+        "created_at": "2026-11-06T16:25:08.188637+00:00",
+        "updated_at": "2026-11-06T16:25:08.188637+00:00"
+      }
+    },
+    "operator-update": {
+      "id": "memory_e659708480ad486fa7fdc0fd267149f7",
+      "thread_id": "thread_785e17baa3904f9598d70065f7554c43",
+      "text": "Keep the saved inventory and its source evidence together.",
+      "source": "Owned acceptance operator",
+      "kind": "decision",
+      "tags": [
+        "inventory"
+      ],
+      "evidence_ids": [
+        "evidence_11ce92aefeba49a6968689bd6d3a8162"
+      ],
+      "importance": 5,
+      "pinned": false,
+      "expires_at": null,
+      "status": "active",
+      "forget_reason": null,
+      "version": 2,
+      "created_at": "2026-11-06T16:25:08.185267+00:00",
+      "updated_at": "2026-11-06T16:25:29.012588+00:00"
+    },
+    "count-before": {
+      "request": {
+        "method": "GET",
+        "path": "/api/conversations/count",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1",
+          "content-type": "application/json"
+        },
+        "body": 0,
+        "truncated": false
+      },
+      "elapsed_ms": 9
+    },
+    "count-created": {
+      "request": {
+        "method": "GET",
+        "path": "/api/conversations/count",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1",
+          "content-type": "application/json"
+        },
+        "body": 1,
+        "truncated": false
+      },
+      "elapsed_ms": 9
+    },
+    "count-attached": {
+      "request": {
+        "method": "GET",
+        "path": "/api/conversations/count",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1",
+          "content-type": "application/json"
+        },
+        "body": 1,
+        "truncated": false
+      },
+      "elapsed_ms": 10
+    },
+    "delete-conversation": {
+      "request": {
+        "method": "DELETE",
+        "path": "/api/conversations/15e62467-6b12-49db-bc1c-82af8248dcd6",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "16",
+          "content-type": "application/json"
+        },
+        "body": {
+          "success": true
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 15
+    },
+    "count-deleted": {
+      "request": {
+        "method": "GET",
+        "path": "/api/conversations/count",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "1",
+          "content-type": "application/json"
+        },
+        "body": 0,
+        "truncated": false
+      },
+      "elapsed_ms": 8
+    },
+    "conversation-before": {
+      "request": {
+        "method": "GET",
+        "path": "/api/conversations/15e62467-6b12-49db-bc1c-82af8248dcd6",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "4158",
+          "content-type": "application/json"
+        },
+        "body": {
+          "id": "15e62467-6b12-49db-bc1c-82af8248dcd6",
+          "workspace": {
+            "working_dir": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+            "kind": "LocalWorkspace"
+          },
+          "persistence_dir": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/server/workspace/conversations/15e624676b1249dbbc1c82af8248dcd6",
+          "max_iterations": 1,
+          "max_budget_per_run": null,
+          "stuck_detection": true,
+          "execution_status": "idle",
+          "confirmation_policy": {
+            "kind": "NeverConfirm"
+          },
+          "security_analyzer": null,
+          "activated_knowledge_skills": [],
+          "invoked_skills": [],
+          "blocked_actions": {},
+          "blocked_messages": {},
+          "last_user_message_id": null,
+          "leaf_event_id": null,
+          "stats": {
+            "usage_to_metrics": {}
+          },
+          "secret_registry": {
+            "secret_sources": {}
+          },
+          "agent_state": {},
+          "hook_config": null,
+          "title": null,
+          "metrics": null,
+          "created_at": "2026-11-06T16:25:22.622163Z",
+          "updated_at": "2026-11-06T16:25:22.622165Z",
+          "forked_from_conversation_id": null,
+          "forked_from_event_id": null,
+          "parent_conversation_id": null,
+          "sub_conversation_ids": [],
+          "tags": {
+            "acceptance": "memory-registration-no-inference"
+          },
+          "current_model_id": null,
+          "available_models": [],
+          "supports_runtime_model_switch": false,
+          "launched_agent_profile": null,
+          "agent": {
+            "llm": {
+              "model": "openai/gpt-4o-mini",
+              "api_key": null,
+              "provider_connection_id": null,
+              "auth_type": "api_key",
+              "subscription_vendor": null,
+              "base_url": null,
+              "api_version": null,
+              "aws_access_key_id": null,
+              "aws_secret_access_key": null,
+              "aws_session_token": null,
+              "aws_region_name": null,
+              "aws_profile_name": null,
+              "aws_role_name": null,
+              "aws_session_name": null,
+              "aws_bedrock_runtime_endpoint": null,
+              "openrouter_site_url": "https://docs.all-hands.dev/",
+              "openrouter_app_name": "OpenHands",
+              "num_retries": 5,
+              "retry_multiplier": 8.0,
+              "retry_min_wait": 8,
+              "retry_max_wait": 64,
+              "timeout": 300,
+              "stream_idle_timeout": 300.0,
+              "max_message_chars": 30000,
+              "temperature": null,
+              "top_p": null,
+              "top_k": null,
+              "max_input_tokens": null,
+              "max_output_tokens": null,
+              "model_canonical_name": null,
+              "api_mode": "auto",
+              "capability_overrides": {},
+              "extra_headers": null,
+              "input_cost_per_token": null,
+              "output_cost_per_token": null,
+              "ollama_base_url": null,
+              "stream": false,
+              "drop_params": true,
+              "disable_vision": null,
+              "disable_stop_word": false,
+              "caching_prompt": true,
+              "log_completions": false,
+              "log_completions_folder": "logs/completions",
+              "custom_tokenizer": null,
+              "native_tool_calling": true,
+              "force_string_serializer": null,
+              "inline_image_urls": null,
+              "reasoning_effort": "high",
+              "reasoning_summary": null,
+              "enable_encrypted_reasoning": true,
+              "prompt_cache_retention": "24h",
+              "extended_thinking_budget": 200000,
+              "seed": null,
+              "usage_id": "memory-no-inference",
+              "litellm_extra_body": {},
+              "is_subscription": false
+            },
+            "tools": [
+              {
+                "name": "research_harness",
+                "params": {
+                  "state_dir": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/state"
+                }
+              }
+            ],
+            "mcp_config": {},
+            "filter_tools_regex": null,
+            "include_default_tools": [
+              "FinishTool"
+            ],
+            "agent_context": {
+              "skills": [],
+              "system_message_suffix": null,
+              "user_message_suffix": null,
+              "load_user_skills": false,
+              "load_public_skills": false,
+              "marketplace_path": "marketplaces/default.json",
+              "registered_marketplaces": [],
+              "load_project_skills": false,
+              "load_memory": false,
+              "disabled_skills": [],
+              "secrets": null,
+              "current_datetime": "2026-11-06T18:25:22.621547+02:00"
+            },
+            "system_prompt": null,
+            "system_prompt_filename": "system_prompt.j2",
+            "security_policy_filename": "security_policy.j2",
+            "system_prompt_kwargs": {
+              "llm_security_analyzer": true
+            },
+            "condenser": null,
+            "critic": null,
+            "tool_concurrency_limit": 1,
+            "persona": null,
+            "kind": "Agent"
+          },
+          "client_tools": [],
+          "tool_module_qualnames": {
+            "ClassifyAndSwitchLLMTool": "openhands.sdk.tool.builtins.classify_and_switch_llm",
+            "ask_oracle": "openhands.tools.ask_oracle.definition",
+            "file_editor": "openhands.tools.file_editor.definition",
+            "task_tool_set": "openhands.tools.task.definition",
+            "task": "openhands.tools.task.definition",
+            "task_tracker": "openhands.tools.task_tracker.definition",
+            "terminal": "openhands.tools.terminal.definition",
+            "workflow_tool_set": "openhands.tools.workflow.definition",
+            "workflow": "openhands.tools.workflow.definition",
+            "research_harness": "openhands.tools.research_harness.definition"
+          },
+          "runtime_info": {
+            "runtime_status": "available",
+            "can_resume": true,
+            "runtime_error": null
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 16
+    },
+    "conversation-after": {
+      "request": {
+        "method": "GET",
+        "path": "/api/conversations/15e62467-6b12-49db-bc1c-82af8248dcd6",
+        "query": [],
+        "auth": "header",
+        "body": null,
+        "files": []
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-length": "4158",
+          "content-type": "application/json"
+        },
+        "body": {
+          "id": "15e62467-6b12-49db-bc1c-82af8248dcd6",
+          "workspace": {
+            "working_dir": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/workspace",
+            "kind": "LocalWorkspace"
+          },
+          "persistence_dir": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/server/workspace/conversations/15e624676b1249dbbc1c82af8248dcd6",
+          "max_iterations": 1,
+          "max_budget_per_run": null,
+          "stuck_detection": true,
+          "execution_status": "idle",
+          "confirmation_policy": {
+            "kind": "NeverConfirm"
+          },
+          "security_analyzer": null,
+          "activated_knowledge_skills": [],
+          "invoked_skills": [],
+          "blocked_actions": {},
+          "blocked_messages": {},
+          "last_user_message_id": null,
+          "leaf_event_id": null,
+          "stats": {
+            "usage_to_metrics": {}
+          },
+          "secret_registry": {
+            "secret_sources": {}
+          },
+          "agent_state": {},
+          "hook_config": null,
+          "title": null,
+          "metrics": null,
+          "created_at": "2026-11-06T16:25:22.622163Z",
+          "updated_at": "2026-11-06T16:25:22.622165Z",
+          "forked_from_conversation_id": null,
+          "forked_from_event_id": null,
+          "parent_conversation_id": null,
+          "sub_conversation_ids": [],
+          "tags": {
+            "acceptance": "memory-registration-no-inference"
+          },
+          "current_model_id": null,
+          "available_models": [],
+          "supports_runtime_model_switch": false,
+          "launched_agent_profile": null,
+          "agent": {
+            "llm": {
+              "model": "openai/gpt-4o-mini",
+              "api_key": null,
+              "provider_connection_id": null,
+              "auth_type": "api_key",
+              "subscription_vendor": null,
+              "base_url": null,
+              "api_version": null,
+              "aws_access_key_id": null,
+              "aws_secret_access_key": null,
+              "aws_session_token": null,
+              "aws_region_name": null,
+              "aws_profile_name": null,
+              "aws_role_name": null,
+              "aws_session_name": null,
+              "aws_bedrock_runtime_endpoint": null,
+              "openrouter_site_url": "https://docs.all-hands.dev/",
+              "openrouter_app_name": "OpenHands",
+              "num_retries": 5,
+              "retry_multiplier": 8.0,
+              "retry_min_wait": 8,
+              "retry_max_wait": 64,
+              "timeout": 300,
+              "stream_idle_timeout": 300.0,
+              "max_message_chars": 30000,
+              "temperature": null,
+              "top_p": null,
+              "top_k": null,
+              "max_input_tokens": null,
+              "max_output_tokens": null,
+              "model_canonical_name": null,
+              "api_mode": "auto",
+              "capability_overrides": {},
+              "extra_headers": null,
+              "input_cost_per_token": null,
+              "output_cost_per_token": null,
+              "ollama_base_url": null,
+              "stream": false,
+              "drop_params": true,
+              "disable_vision": null,
+              "disable_stop_word": false,
+              "caching_prompt": true,
+              "log_completions": false,
+              "log_completions_folder": "logs/completions",
+              "custom_tokenizer": null,
+              "native_tool_calling": true,
+              "force_string_serializer": null,
+              "inline_image_urls": null,
+              "reasoning_effort": "high",
+              "reasoning_summary": null,
+              "enable_encrypted_reasoning": true,
+              "prompt_cache_retention": "24h",
+              "extended_thinking_budget": 200000,
+              "seed": null,
+              "usage_id": "memory-no-inference",
+              "litellm_extra_body": {},
+              "is_subscription": false
+            },
+            "tools": [
+              {
+                "name": "research_harness",
+                "params": {
+                  "state_dir": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/fixtures/research-memory/state"
+                }
+              }
+            ],
+            "mcp_config": {},
+            "filter_tools_regex": null,
+            "include_default_tools": [
+              "FinishTool"
+            ],
+            "agent_context": {
+              "skills": [],
+              "system_message_suffix": null,
+              "user_message_suffix": null,
+              "load_user_skills": false,
+              "load_public_skills": false,
+              "marketplace_path": "marketplaces/default.json",
+              "registered_marketplaces": [],
+              "load_project_skills": false,
+              "load_memory": false,
+              "disabled_skills": [],
+              "secrets": null,
+              "current_datetime": "2026-11-06T18:25:22.621547+02:00"
+            },
+            "system_prompt": null,
+            "system_prompt_filename": "system_prompt.j2",
+            "security_policy_filename": "security_policy.j2",
+            "system_prompt_kwargs": {
+              "llm_security_analyzer": true
+            },
+            "condenser": null,
+            "critic": null,
+            "tool_concurrency_limit": 1,
+            "persona": null,
+            "kind": "Agent"
+          },
+          "client_tools": [],
+          "tool_module_qualnames": {
+            "ClassifyAndSwitchLLMTool": "openhands.sdk.tool.builtins.classify_and_switch_llm",
+            "ask_oracle": "openhands.tools.ask_oracle.definition",
+            "file_editor": "openhands.tools.file_editor.definition",
+            "task_tool_set": "openhands.tools.task.definition",
+            "task": "openhands.tools.task.definition",
+            "task_tracker": "openhands.tools.task_tracker.definition",
+            "terminal": "openhands.tools.terminal.definition",
+            "workflow_tool_set": "openhands.tools.workflow.definition",
+            "workflow": "openhands.tools.workflow.definition",
+            "research_harness": "openhands.tools.research_harness.definition"
+          },
+          "runtime_info": {
+            "runtime_status": "available",
+            "can_resume": true,
+            "runtime_error": null
+          }
+        },
+        "truncated": false
+      },
+      "elapsed_ms": 15
+    }
+  },
+  "lifecycle": {
+    "launch": {
+      "ok": true,
+      "run": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory",
+      "url": "http://127.0.0.1:44343",
+      "port": 44343,
+      "pgid": 45,
+      "checkout": "/workspace/scratch/7b78f21356c4/software-agent-sdk",
+      "checkout_sha": "5f3cef92207b0fa1c4ef44b167b0aad93bae1881",
+      "auth": true,
+      "ready_ms": 6322,
+      "ready_path": "/ready",
+      "next": [
+        "export AGENT_SERVER_VERIFY_RUN=/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory",
+        "control-agent-server doctor"
+      ]
+    },
+    "doctor-before": {
+      "ok": true,
+      "run": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory",
+      "url": "http://127.0.0.1:44343",
+      "checks": [
+        {
+          "name": "process-group",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "pgid": 45
+          }
+        },
+        {
+          "name": "port-owner",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "port": 44343,
+            "listening_pids": [
+              45
+            ]
+          }
+        },
+        {
+          "name": "/alive",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "/health",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "/ready",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "server-info",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "version": "1.60.1",
+            "sdk_version": "1.60.1",
+            "build_git_sha": "5f3cef92207b0fa1c4ef44b167b0aad93bae1881",
+            "expected_sha": "5f3cef92207b0fa1c4ef44b167b0aad93bae1881",
+            "usable_tools": [
+              "ClassifyAndSwitchLLMTool",
+              "ask_oracle",
+              "file_editor",
+              "task_tool_set",
+              "task",
+              "task_tracker",
+              "terminal",
+              "workflow_tool_set",
+              "workflow",
+              "start_child_conversation",
+              "browser_tool_set",
+              "edit",
+              "list_directory",
+              "read_file",
+              "write_file",
+              "glob",
+              "grep",
+              "planning_file_editor"
+            ]
+          }
+        },
+        {
+          "name": "auth-rejects-missing-key",
+          "ok": true,
+          "required": true,
+          "detail": 401
+        },
+        {
+          "name": "auth-accepts-key",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200,
+            "dormant": false
+          }
+        },
+        {
+          "name": "openapi",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "operations": 179
+          }
+        },
+        {
+          "name": "ws-rejects-bad-key",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "path": "/sockets/bash-events",
+            "auth": "bad",
+            "open": false,
+            "close_code": 4001
+          }
+        },
+        {
+          "name": "ws-accepts-first-frame-auth",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "path": "/sockets/bash-events",
+            "auth": "first-frame",
+            "open": true
+          }
+        },
+        {
+          "name": "log-tracebacks",
+          "ok": true,
+          "required": false,
+          "detail": {
+            "count": 0
+          }
+        }
+      ]
+    },
+    "restart": {
+      "ok": true,
+      "run": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory",
+      "url": "http://127.0.0.1:44343",
+      "rotated_key": false,
+      "hard": false,
+      "rotated_secret_key": false,
+      "kept_previous_secret_key": false,
+      "ready_ms": 6029,
+      "ready_path": "/ready"
+    },
+    "doctor-after": {
+      "ok": true,
+      "run": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory",
+      "url": "http://127.0.0.1:44343",
+      "checks": [
+        {
+          "name": "process-group",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "pgid": 77
+          }
+        },
+        {
+          "name": "port-owner",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "port": 44343,
+            "listening_pids": [
+              77
+            ]
+          }
+        },
+        {
+          "name": "/alive",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "/health",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "/ready",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200
+          }
+        },
+        {
+          "name": "server-info",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "version": "1.60.1",
+            "sdk_version": "1.60.1",
+            "build_git_sha": "5f3cef92207b0fa1c4ef44b167b0aad93bae1881",
+            "expected_sha": "5f3cef92207b0fa1c4ef44b167b0aad93bae1881",
+            "usable_tools": [
+              "ClassifyAndSwitchLLMTool",
+              "ask_oracle",
+              "file_editor",
+              "task_tool_set",
+              "task",
+              "task_tracker",
+              "terminal",
+              "workflow_tool_set",
+              "workflow",
+              "start_child_conversation",
+              "browser_tool_set",
+              "edit",
+              "list_directory",
+              "read_file",
+              "write_file",
+              "glob",
+              "grep",
+              "planning_file_editor"
+            ]
+          }
+        },
+        {
+          "name": "auth-rejects-missing-key",
+          "ok": true,
+          "required": true,
+          "detail": 401
+        },
+        {
+          "name": "auth-accepts-key",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "status": 200,
+            "dormant": false
+          }
+        },
+        {
+          "name": "openapi",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "operations": 179
+          }
+        },
+        {
+          "name": "ws-rejects-bad-key",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "path": "/sockets/bash-events",
+            "auth": "bad",
+            "open": false,
+            "close_code": 4001
+          }
+        },
+        {
+          "name": "ws-accepts-first-frame-auth",
+          "ok": true,
+          "required": true,
+          "detail": {
+            "path": "/sockets/bash-events",
+            "auth": "first-frame",
+            "open": true
+          }
+        },
+        {
+          "name": "log-tracebacks",
+          "ok": true,
+          "required": false,
+          "detail": {
+            "count": 0
+          }
+        }
+      ]
+    },
+    "stop": {
+      "ok": true,
+      "run": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory",
+      "helpers": [],
+      "server": "terminated",
+      "port_closed": true,
+      "orphans_reaped": [],
+      "purged": true,
+      "evidence": "/tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence",
+      "evidence_files": 22
+    },
+    "acceptance_passed": true,
+    "cleanup_verified": true
+  },
+  "remaining_mcp_children_after_each_response": {
+    "get-before": [],
+    "recall-before": [],
+    "get-after": [],
+    "recall-after": [],
+    "history-after": []
+  },
+  "generated_ledger_report": "| Feature | Run | Checkout | Result | Entry point | Expected | Actual | Evidence |\n|---|---|---|---|---|---|---|---|\n| F19.test-stdio | 20261106-162459-f1ce-research-memory | 5f3cef92207b0fa1c4ef44b167b0aad93bae1881 | pass | POST /api/mcp/test | Read scoped memory through the real server before and after restart | Five successful MCP reads; exact records, provenance, recall scope and two-version history | /tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/get-before.json, /tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/recall-before.json, /tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/get-after.json, /tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/recall-after.json, /tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/history-after.json |\n| research-memory.sdk-registration | 20261106-162459-f1ce-research-memory | 5f3cef92207b0fa1c4ef44b167b0aad93bae1881 | pass | RemoteConversation / RemoteConversation.attach | Create and reopen an idle native memory-tool conversation across server restart | Same id, tool params and persisted module mapping; zero model usage; closed client preserved conversation | /tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/sdk-create.json, /tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/sdk-attach.json, /tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/conversation-before.json, /tmp/research-harness-remote-memory-0cx63qcy/20261106-162459-f1ce-research-memory/evidence/research-memory/conversation-after.json |\n",
+  "earlier_recipe_attempts": [
+    {
+      "run": "/tmp/research-harness-remote-memory-o5177ztf/20261106-162337-ed99-research-memory",
+      "recipe_assertion_corrected": "The endpoint returns tool names as strings, not tool objects.",
+      "cleanup_verified": true
+    },
+    {
+      "run": "/tmp/research-harness-remote-memory-5qeu40aw/20261106-162404-793f-research-memory",
+      "recipe_assertion_corrected": "tool_module_qualnames includes the client registry, not only the selected agent tool.",
+      "cleanup_verified": true
+    }
+  ]
+}

@@ -183,6 +183,9 @@ This is a two-case acceptance check, not a general semantic quality benchmark.
 
 The repository's implementation and evidence are independently reviewable:
 
+- [Completion follow-up](../.pr/research-harness-followup-verification.md) records
+  the latest packaging fixes, reusable installed-package acceptance runner,
+  branch CI gate and remaining deployment/model acceptance boundaries.
 - [Local real-application validation](../.pr/research-harness-local-validation.md)
   records actual Agent Server readiness, identity, authenticated empty-catalog
   behavior, 12 doctor checks, and owned-process cleanup at the original revision.
@@ -190,12 +193,26 @@ The repository's implementation and evidence are independently reviewable:
   identifies the new wheel and the exact installation scope and limitations.
 - [Completion verification](../.pr/research-harness-completion-verification.md)
   records the final test suite, example, shared interfaces, and remaining gates.
+- [Packaging follow-up](../.pr/research-harness-packaging-followup.md) fixes and
+  verifies the skill asset in the actual workspace source archive and frozen
+  server binary, including frozen startup and authenticated tool discovery.
+- [Server memory verification](../.pr/research-harness-remote-memory-verification.md)
+  records real server-side MCP reads, memory recovery across server restart, and
+  native SDK conversation registration/reopening without model inference.
+- [Native Codex attempt](../.pr/research-harness-codex-verification.md) records the
+  accepted isolated MCP configuration and a client initialization failure before
+  any model completion or tool call.
 
-Successful live GitHub HTTP remains blocked by DNS in this environment. No model
-credential is present for the live semantic check. Claude native dispatch,
-Docker/PyInstaller deployments, and OS/network isolation remain unverified here;
-Docker/Podman are absent and the local namespace probe is denied. These gates
-must pass in an appropriate runtime before claiming full workshop acceptance.
+Successful live GitHub HTTP remains blocked by DNS in this local environment.
+No provider API credential is present for the OpenHands live semantic check.
+The installed native Codex client failed before its model turn with a read-only
+filesystem error; its generated configuration alone does not establish recall.
+Claude native dispatch, Docker execution, OS/network isolation and full frozen
+hook/worker execution remain unverified here; Docker/Podman are absent and the
+local namespace probe is denied. Direct `RemoteConversation.execute_tool()` is
+unsupported; the native model-driven server loop remains separate from the
+verified MCP read path. These gates must pass in an appropriate runtime before
+claiming full workshop acceptance.
 The implemented observations remain import inventories, public metadata, and
 owned application readiness checks; this change adds no autonomous vulnerability
 discovery or exploitation workflow.
