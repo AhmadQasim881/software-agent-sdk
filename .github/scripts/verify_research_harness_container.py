@@ -452,6 +452,72 @@ class ContainerCheck:
             time.sleep(0.5)
         raise VerificationError(f"{label} did not become ready within 90 seconds")
 
+    def attach_endpoint(self, info: dict[str, Any], label: str) -> None:
+        """Use the current owned loopback binding, retaining the private key."""
+        require_owned_container(info, self.owner)
+        require(info["state"]["Running"], "Owned container is not running")
+        bindings = info["ports"].get("8000/tcp")
+        require(
+            isinstance(bindings, list)
+            and len(bindings) == 1
+            and bindings[0]["HostIp"] == "127.0.0.1",
+            "Server must publish only on loopback",
+        )
+        port = int(bindings[0]["HostPort"])
+        require(0 < port < 65536, "Invalid published server port")
+        previous_port = self.owner.get("port")
+        self.owner["port"] = port
+        self.save_owner()
+        if self.owner.get("run") and previous_port == port:
+            return
+
+        session_key = (self.private / "session_key").read_text().strip()
+        require(bool(session_key), "Private session key is missing")
+        self.cli.REDACT.add(session_key, "session_key")
+        environment = {
+            "AGENT_SERVER_VERIFY_HOME": str(self.root / "verify"),
+            "HARNESS_CONTAINER_SESSION_KEY": session_key,
+        }
+        previous_environment = {key: os.environ.get(key) for key in environment}
+        try:
+            os.environ.update(environment)
+            attached = self.invoke(
+                label,
+                [
+                    "attach",
+                    "--url",
+                    f"http://127.0.0.1:{port}",
+                    "--key-env",
+                    "HARNESS_CONTAINER_SESSION_KEY",
+                    "--name",
+                    "research-container",
+                ],
+            )
+        finally:
+            for key, value in previous_environment.items():
+                if value is None:
+                    os.environ.pop(key, None)
+                else:
+                    os.environ[key] = value
+        self.owner["run"] = attached["run"]
+        self.save_owner()
+
+    def restart_and_wait(self, before: dict[str, Any]) -> None:
+        """Inspect and refresh a dynamic host binding before any restart probe."""
+        self.report["container_before_restart"] = before
+        self.docker(["restart", "--time", "15", self.owner["name"]], timeout=45)
+        after = self.inspect_container()
+        self.report["container_after_restart"] = after
+        require(
+            after is not None
+            and after["id"] == before["id"]
+            and after["state"]["StartedAt"] != before["state"]["StartedAt"],
+            "Container restart was not observed",
+        )
+        assert after is not None
+        self.attach_endpoint(after, "attach-after")
+        self.api("ready-after", "GET", "/ready", readiness=True)
+
     def worker(
         self, phase: str, manifest: dict[str, Any] | None = None
     ) -> dict[str, Any]:
@@ -632,38 +698,15 @@ class ContainerCheck:
         )
         self.docker(["start", self.owner["name"]])
         before = self.inspect_container()
+        self.report["container_before_restart"] = before
         require(
             before is not None and before["state"]["Running"],
             "Owned container did not start",
         )
         assert before is not None
-        bindings = before["ports"]["8000/tcp"]
-        require(
-            len(bindings) == 1 and bindings[0]["HostIp"] == "127.0.0.1",
-            "Server must publish only on loopback",
-        )
-        self.owner["port"] = int(bindings[0]["HostPort"])
-        self.save_owner()
-        os.environ["AGENT_SERVER_VERIFY_HOME"] = str(self.root / "verify")
-        os.environ["HARNESS_CONTAINER_SESSION_KEY"] = environment[
-            "OH_SESSION_API_KEYS_0"
-        ]
-        attached = self.invoke(
-            "attach",
-            [
-                "attach",
-                "--url",
-                f"http://127.0.0.1:{self.owner['port']}",
-                "--key-env",
-                "HARNESS_CONTAINER_SESSION_KEY",
-                "--name",
-                "research-container",
-            ],
-        )
-        self.owner["run"] = attached["run"]
-        self.save_owner()
+        self.attach_endpoint(before, "attach-before")
         self.api("ready-before", "GET", "/ready", readiness=True)
-        self.invoke("doctor-before", ["doctor", "--run", attached["run"]])
+        self.invoke("doctor-before", ["doctor", "--run", self.owner["run"]])
         info = self.api("server-info-before", "GET", "/server_info")
         require(
             info["build_git_sha"] == manifest["checkout_sha"],
@@ -693,18 +736,8 @@ class ContainerCheck:
             "Recall scope differs",
         )
         updated = self.worker("update")["updated"]
-        self.docker(["restart", "--time", "15", self.owner["name"]], timeout=45)
-        self.api("ready-after", "GET", "/ready", readiness=True)
-        after = self.inspect_container()
-        require(
-            after is not None
-            and after["id"] == before["id"]
-            and after["state"]["StartedAt"] != before["state"]["StartedAt"],
-            "Container restart was not observed",
-        )
-        self.report["container_before_restart"] = before
-        self.report["container_after_restart"] = after
-        self.invoke("doctor-after", ["doctor", "--run", attached["run"]])
+        self.restart_and_wait(before)
+        self.invoke("doctor-after", ["doctor", "--run", self.owner["run"]])
         require(
             self.api("server-info-after", "GET", "/server_info")["build_git_sha"]
             == manifest["checkout_sha"],
@@ -794,21 +827,26 @@ class ContainerCheck:
         except Exception as error:
             result["errors"].append(self.cli.REDACT.text(str(error)))
         try:
-            for run_json in (self.root / "verify").glob("*/run.json"):
+            profiles = []
+            for run_json in sorted((self.root / "verify").glob("*/run.json")):
                 require(
                     json.loads(run_json.read_text())["mode"] == "attach",
                     "Unexpected non-attach verification run",
                 )
                 self.invoke(
-                    "stop-verification",
+                    f"stop-verification-{run_json.parent.name}",
                     ["stop", "--run", str(run_json.parent), "--purge-private"],
                 )
                 evidence = run_json.parent / "evidence"
                 if evidence.exists():
                     shutil.copytree(
-                        evidence, self.reports / "server-evidence", dirs_exist_ok=True
+                        evidence,
+                        self.reports / "server-evidence" / run_json.parent.name,
+                        dirs_exist_ok=True,
                     )
+                profiles.append(run_json.parent.name)
             shutil.rmtree(self.root / "verify", ignore_errors=True)
+            result["verification_profiles_removed"] = profiles
         except Exception as error:
             result["errors"].append(self.cli.REDACT.text(str(error)))
         # Keep the private redaction keys for an always-run cleanup retry if

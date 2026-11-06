@@ -6,6 +6,10 @@ import json
 import subprocess
 import sys
 import tarfile
+import threading
+from collections.abc import Iterator
+from contextlib import ExitStack, contextmanager
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from types import ModuleType, SimpleNamespace
 from typing import Any
@@ -190,3 +194,157 @@ def test_changed_image_is_never_claimed_or_deleted(
     assert not check.owner
     assert not (check.root / "owner.json").exists()
     assert len(calls) == 1 and calls[0][:2] == ["image", "inspect"]
+
+
+@contextmanager
+def authenticated_ready_server(
+    session_key: str, requests: list[int]
+) -> Iterator[ThreadingHTTPServer]:
+    """Own a real HTTP endpoint that rejects requests without the private key."""
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self) -> None:
+            authorized = self.headers.get("X-Session-API-Key") == session_key
+            status = 200 if authorized and self.path == "/ready" else 401
+            if authorized:
+                requests.append(server.server_port)
+            body = json.dumps(
+                {"ready": status == 200, "port": server.server_port}
+            ).encode()
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def log_message(self, format: str, *args: object) -> None:
+            pass
+
+    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = threading.Thread(
+        target=server.serve_forever, kwargs={"poll_interval": 0.01}, daemon=True
+    )
+    thread.start()
+    try:
+        yield server
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=2)
+        assert not thread.is_alive()
+
+
+@pytest.mark.timeout(10)
+@pytest.mark.parametrize("changed_port", [True, False])
+def test_restart_uses_current_binding_and_keeps_all_authenticated_evidence(
+    checker: ModuleType,
+    check: Any,
+    monkeypatch: pytest.MonkeyPatch,
+    changed_port: bool,
+) -> None:
+    """Use real attach/API profiles and HTTP; only the Docker boundary is faked."""
+    session_key = "container-acceptance-test-key"
+    check.private.mkdir(mode=0o700)
+    key_file = check.private / "session_key"
+    key_file.write_text(session_key)
+    key_file.chmod(0o600)
+    check.owner = {
+        "token": "b" * 32,
+        "name": "research-memory-" + "b" * 32,
+        "image_id": "sha256:expected",
+        "image_tag": "research-harness-acceptance:test",
+    }
+    requests: list[int] = []
+    with ExitStack() as stack:
+        first = stack.enter_context(authenticated_ready_server(session_key, requests))
+        current_server = (
+            stack.enter_context(authenticated_ready_server(session_key, requests))
+            if changed_port
+            else first
+        )
+
+        def inspection(port: int, started: str) -> dict[str, Any]:
+            return {
+                "id": "same-owned-container",
+                "image": check.owner["image_id"],
+                "labels": {checker.OWNER_LABEL: check.owner["token"]},
+                "state": {"Running": True, "StartedAt": started},
+                "ports": {"8000/tcp": [{"HostIp": "127.0.0.1", "HostPort": str(port)}]},
+            }
+
+        before = inspection(first.server_port, "2026-11-06T00:00:00Z")
+        after = inspection(current_server.server_port, "2026-11-06T00:01:00Z")
+        current: dict[str, Any] | None = before
+
+        def docker(
+            arguments: list[str], **kwargs: Any
+        ) -> subprocess.CompletedProcess[str]:
+            nonlocal current
+            if arguments[0] == "restart":
+                if changed_port:
+                    # Stale-profile requests now fail against the closed old port.
+                    first.shutdown()
+                    first.server_close()
+                current = after
+            elif arguments[0] == "inspect":
+                if current is None:
+                    return subprocess.CompletedProcess(
+                        arguments, 1, "", "No such container"
+                    )
+                return subprocess.CompletedProcess(
+                    arguments, 0, json.dumps(current), ""
+                )
+            elif arguments[0] == "stop":
+                current_server.shutdown()
+                current_server.server_close()
+            elif arguments[0] == "rm":
+                current = None
+            elif arguments[:2] == ["image", "inspect"]:
+                return subprocess.CompletedProcess(arguments, 1, "", "No such image")
+            else:
+                assert arguments[0] == "logs"
+            return subprocess.CompletedProcess(arguments, 0, "", "")
+
+        monkeypatch.setattr(check, "docker", docker)
+        check.attach_endpoint(before, "attach-before")
+        first_profile = Path(check.owner["run"])
+        assert check.api("endpoint", "GET", "/ready")["port"] == first.server_port
+
+        check.restart_and_wait(before)
+        last_profile = Path(check.owner["run"])
+        assert check.owner["port"] == current_server.server_port
+        assert (last_profile != first_profile) is changed_port
+        assert check.report["container_before_restart"] == before
+        assert check.report["container_after_restart"] == after
+        assert check.api("endpoint", "GET", "/ready")["port"] == (
+            current_server.server_port
+        )
+        assert requests == [
+            first.server_port,
+            current_server.server_port,
+            current_server.server_port,
+        ]
+
+        profiles = {first_profile, last_profile}
+        for profile in profiles:
+            assert json.loads((profile / "run.json").read_text())["auth"] is True
+            assert (profile / "private/session_api_key").read_text() == session_key
+        result = check.cleanup()
+        assert result["ok"] is True and result["port_closed"] is True
+        assert set(result["verification_profiles_removed"]) == {
+            profile.name for profile in profiles
+        }
+        assert not check.private.exists()
+        assert not (check.root / "verify").exists()
+        for profile, expected_port in (
+            (first_profile, first.server_port),
+            (last_profile, current_server.server_port),
+        ):
+            evidence = (
+                check.reports
+                / "server-evidence"
+                / profile.name
+                / "container/endpoint.json"
+            ).read_text()
+            assert json.loads(evidence)["response"]["body"]["port"] == expected_port
+            assert session_key not in evidence
