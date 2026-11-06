@@ -21,6 +21,14 @@ passed **all 411 tests in one run**, installed a fresh locked runtime and receiv
 HTTP 200 from the actual harness GitHub worker. Its installed-package report is
 retained unchanged as [JSON evidence](research-harness-hosted-install.json).
 
+The independent [container acceptance](research-harness-container-acceptance.md)
+subsequently passed eight focused tests and the real `source-minimal` Docker
+build/runtime gate. All four workspace packages were non-editable, 30 selected
+files matched, and all nine doctor checks plus memory reads passed before and
+after restarting the same container. The verifier's dynamic-port refresh was
+corrected and tested; no harness runtime code changed. The complete successful
+[container JSON](research-harness-container-runtime.json) is retained.
+
 ## Changes and observed evidence
 
 | Area | Change or observed result | Evidence |
@@ -32,6 +40,7 @@ retained unchanged as [JSON evidence](research-harness-hosted-install.json).
 | Installed tools wheel | The reusable acceptance runner passed against the existing disposable copied runtime, outside the source checkout. | Installed-package check below |
 | Native Codex | One-server configuration and feature preflight passed. The actual client exited before a model turn with a read-only filesystem error. | [Codex report](research-harness-codex-verification.md) and [sanitized observations](research-harness-codex-evidence.json) |
 | Branch CI | A new push/manual workflow runs tests, builds the wheel, installs fresh locked dependencies and exercises actual installed CLI/MCP memory plus one public metadata request. | [Workflow](../.github/workflows/research-harness-acceptance.yml) |
+| Docker source image | The independent source-minimal image gate passed installed-file integrity, non-editable packages, authenticated MCP memory recovery across restart and cleanup. | [Container report](research-harness-container-acceptance.md) |
 
 The source-archive and frozen-archive skill members both matched the 6,010-byte
 source file, SHA-256
@@ -110,7 +119,7 @@ workflow was added.
 | Claude Code/Desktop | Generated bundles and Python hook subprocesses are verified; native client dispatch remains unverified because the client is absent. |
 | Native remote agent-loop execution | SDK tool registration/reopening and server-side MCP reads passed. `RemoteConversation.execute_tool()` is explicitly unsupported; no model-driven server loop was run. |
 | Frozen hook/HTTP-worker parity | Binary asset retention and readiness passed; interpreter-style subprocess paths inside the frozen binary were not exercised. |
-| Docker and OS/network isolation | Docker/Podman are absent, and the harmless local namespace probe was denied. Source-context packaging does not establish container execution or isolation. |
+| Other Docker targets and OS/network isolation | The Linux source-minimal image passed actual container execution and memory persistence. Other targets, container replacement with an external volume, and formal OS/network isolation remain unverified; the local namespace probe was denied. |
 
 No model completion was observed in this follow-up. Local readiness, persistence
 and packaging checks are not a claim of complete deployment or model acceptance.

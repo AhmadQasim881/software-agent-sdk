@@ -186,6 +186,11 @@ The repository's implementation and evidence are independently reviewable:
 - [Successful hosted acceptance](../.pr/research-harness-hosted-acceptance.md)
   records 411 passing tests, a fresh locked runtime, actual installed CLI/MCP
   memory behavior and a real HTTP 200 public GitHub observation.
+- [Successful container acceptance](../.pr/research-harness-container-acceptance.md)
+  records eight passing driver tests, a normal source-minimal image, four
+  non-editable workspace packages, and real MCP memory/history recovery after
+  restarting the same container. Both sets of nine doctor checks and cleanup
+  passed; the runtime evidence is retained in the repository.
 - [Completion follow-up](../.pr/research-harness-followup-verification.md) records
   the latest packaging fixes, reusable installed-package acceptance runner,
   branch CI gate and remaining deployment/model acceptance boundaries.
@@ -212,9 +217,10 @@ hosted report identifies the separate runtime and actual successful response.
 No provider API credential is present for the OpenHands live semantic check.
 The installed native Codex client failed before its model turn with a read-only
 filesystem error; its generated configuration alone does not establish recall.
-Claude native dispatch, Docker execution, OS/network isolation and full frozen
-hook/worker execution remain unverified here; Docker/Podman are absent and the
-local namespace probe is denied. Direct `RemoteConversation.execute_tool()` is
+Claude native dispatch, other Docker targets, OS/network isolation claims and
+full frozen hook/worker execution remain unverified. The source-minimal Docker
+path passed on the hosted runner; the local namespace probe was denied.
+Direct `RemoteConversation.execute_tool()` is
 unsupported; the native model-driven server loop remains separate from the
 verified MCP read path. These gates must pass in an appropriate runtime before
 claiming full workshop acceptance.

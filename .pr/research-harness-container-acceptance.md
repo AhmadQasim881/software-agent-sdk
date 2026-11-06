@@ -1,11 +1,57 @@
 # Research harness container acceptance gate
 
-Status: the first hosted run built the image and passed installed-package,
-initial-server and pre-restart MCP checks, then failed external readiness after
-restart. The driver now refreshes the observed published endpoint before probing
-the restarted server. Eight local regression tests pass; a new hosted run must
-still verify the complete gate and post-restart memory persistence. Docker is not
-installed in the local workspace.
+Status: **passed** in [run 42263099121](https://github.com/AhmadQasim881/software-agent-sdk/actions/runs/42263099121)
+on 2026-11-06. The normal source image, installed package checks, authenticated
+server, actual MCP memory reads, same-container restart persistence and cleanup
+all passed. The run also passed all eight focused driver tests. No model call was
+made. The unaltered [runtime evidence](research-harness-container-runtime.json)
+is retained in the repository.
+
+## Successful hosted result
+
+The corrected run tested commit
+`48364f5ea90ac6b9d67da08bcbc1374c6da46a59`, complete tree
+`cb2906019aa8b25eedfe22f7e520957128ff06b5`. The harness runtime subtree remained
+`c2bcb08d967f1f3e4d0bffa49bceec46f1d273c4`, matching the separate 411-test
+[installed-wheel acceptance](research-harness-hosted-acceptance.md).
+
+| Check | Actual successful result |
+| --- | --- |
+| Driver regressions | Eight passed, zero errors, failures or skips; JUnit duration 0.657 seconds. |
+| Standard source image | Existing `linux/amd64` `source-minimal` target built and loaded successfully from the exact root source archive. |
+| Installed files and skill | All 30 selected files matched checkout, archive and image bytes; the strict skill loader accepted `research-review`. |
+| Installed packages | SDK, tools, workspace and Agent Server all reported version `1.60.1` and `editable: false`. |
+| Normal image runtime | User `openhands`, UID `10001`, isolated `/agent-server/.venv/bin/python`, Python `3.13.17`. |
+| Server readiness and authentication | All nine doctor checks passed before restart and all nine passed after restart; reported build SHA matched the tested commit. |
+| Actual MCP calls | Five successful server-side reads: get/recall before restart, then get/recall/history after restart. HTTP, outer connection and inner tool outcomes all passed. |
+| Memory and provenance | Exact updated version-2 note, source, evidence reference and history versions 1/2 survived; the matching note from another thread was excluded. |
+| Restart identity | Same container ID and image, with a changed start timestamp. |
+| Model activity | Zero conversations before/after and no model call. |
+| Cleanup | No remaining MCP child after each call; container, image tag, two verification profiles and private state removed; final owned loopback port closed. |
+
+The run directly observed Docker changing the same container's published binding
+from **`127.0.0.1:32768`** to **`127.0.0.1:32769`**. Its start time changed from
+`17:37:46.168830956Z` to `17:38:15.224930038Z`. The driver created the new
+authenticated profile before readiness, and subsequent doctor and memory calls
+used that profile. This confirms the behavior implicated by the first run's
+failure; that earlier run itself did not retain its changed binding.
+
+Runtime verification ran from `17:37:46.045045 UTC` to `17:38:33.810195 UTC`,
+including cleanup. The source archive SHA-256 was
+`f2fdabbdf652dd4bc1ddb41679262f1c8e846f8f3c82a419257ea619bf8f4733`.
+The image ID matched Buildx's config digest:
+`sha256:9edde2f4027467411cfd77519b242d0c66c9aaf6f8abbca6d64de46052c92629`.
+
+The [uploaded artifact](https://github.com/AhmadQasim881/software-agent-sdk/actions/runs/42263099121/artifacts/13525782275)
+has ID **13525782275**, size **81,874 bytes**, and scheduled expiry
+**2026-11-13 17:38:34 UTC**. Its downloaded ZIP matched the GitHub-reported SHA-256
+`d3cff0d67f3f35bc78ad185245c556611a31b2033a72ccfd62eb62525a81c751`.
+The retained runtime JSON SHA-256 is
+`c1067df48792429bd50c8a138b51225defe1bec2791720a52c94336f2f5b7581`;
+the JUnit XML SHA-256 is
+`4895a749d9f9cf2b12674e199ce408b78d9fe4db9c3de102f1f97f6c092f1b21`.
+The complete downloaded evidence was inspected at
+`/tmp/research-harness-container-ci-42263099121-zd825fcj`.
 
 ## Scope
 
@@ -21,7 +67,7 @@ The host installs the existing locked development group and runs the eight focus
 driver tests before building the image. This workflow has its own concurrency
 group and does not modify the separate installed-wheel acceptance workflow.
 
-## Required runtime evidence
+## First hosted result
 
 | Surface | Assertion made by the gate | First hosted result |
 | --- | --- | --- |
@@ -120,9 +166,9 @@ keys only if a failed container removal needs the always-run retry.
   and records that run's exact commit and hashes.
 - `git diff --check` passed. No production files were changed for this gate.
 
-Local checks establish the endpoint-refresh behavior and archive expectations;
-they do not substitute for a successful hosted restart and memory persistence
-check.
+Local checks established endpoint-refresh behavior and archive expectations.
+The subsequent successful hosted run above supplies the actual Docker restart
+and memory persistence evidence.
 
 ## Hosted results to review
 

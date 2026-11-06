@@ -371,8 +371,12 @@ through the model-driven server loop is a distinct acceptance gate.
 
 An actual source archive and frozen server binary now preserve the skill asset,
 and the frozen server passed readiness, authentication and tool-catalog checks.
-Docker execution, OS isolation, deployment to another host, and complete frozen
-subprocess/hook behavior still require their corresponding acceptance checks.
+The normal source-minimal Docker image also passed installed-file integrity,
+authenticated readiness, memory recovery across a same-container restart and
+cleanup; see [container acceptance](../.pr/research-harness-container-acceptance.md).
+All four workspace packages in that image were non-editable. Other Docker targets,
+OS isolation guarantees and complete frozen subprocess/hook behavior still
+require their corresponding acceptance checks.
 The fixture is an owned readiness check, not a
 general launcher or isolation boundary. API immutability cannot protect data from
 another process with the same filesystem permissions. Queries report recorded
@@ -383,6 +387,9 @@ facts without vulnerability classification or exploit reproduction.
 The [hosted acceptance run](../.pr/research-harness-hosted-acceptance.md) passed all
 411 tests, built and installed a standard tools wheel in a fresh locked runtime,
 and verified actual CLI/MCP memory operations plus a live GitHub response.
+The separate [container run](../.pr/research-harness-container-acceptance.md)
+passed eight driver tests and actual installed-image memory recovery across a
+server restart, with complete owned-resource cleanup.
 See the [completion follow-up](../.pr/research-harness-followup-verification.md),
 [staged verification](../.pr/security-harness-verification.md) and
 [installed-wheel verification](../.pr/research-harness-wheel-verification.md)
@@ -476,6 +483,11 @@ The [first hosted run](../.pr/research-harness-hosted-acceptance.md) passed both
 fresh-install and live-response checks.
 
 ### Container acceptance workflow
+
+The [hosted container run](../.pr/research-harness-container-acceptance.md) passed
+the complete gate, including both sets of nine doctor checks and all five actual
+server-side MCP reads. It recovered the exact version-2 note, provenance and
+history after restarting the same container.
 
 The separate [container workflow](../.github/workflows/research-harness-container-acceptance.yml)
 builds the existing `source-minimal` image from an exact workspace source archive.

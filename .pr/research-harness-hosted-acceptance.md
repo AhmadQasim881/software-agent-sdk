@@ -13,6 +13,10 @@ This run closes the fresh dependency-installation and actual live public GitHub
 response gates left open by the local environment. It does not establish native
 model/client behavior, Docker execution or full frozen subprocess parity.
 
+The later [container acceptance run](research-harness-container-acceptance.md)
+separately passed the normal source-minimal Docker image, non-editable workspace
+packages and actual server memory recovery across a same-container restart.
+
 The uploaded artifact was downloaded, its SHA-256 matched GitHub's artifact
 metadata, and its JUnit XML and installed-package JSON were inspected. The
 unaltered [installed-package report](research-harness-hosted-install.json) is
